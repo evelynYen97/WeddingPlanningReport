@@ -1,0 +1,107 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.Venue>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ShopId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VenueFunction)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VenueStyle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InOurDoor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoadApplication)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VenueName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TableCapacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GuestCapacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VenueRentalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VenueImg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VenueInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvailableTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShopId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueFunction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueStyle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InOurDoor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoadApplication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TableCapacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GuestCapacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueRentalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueImg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueInfo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VenueId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VenueId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VenueId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

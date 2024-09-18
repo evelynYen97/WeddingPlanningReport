@@ -1,0 +1,84 @@
+﻿@model WeddingPlanningReport.Models.Cake
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Cake</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ShopId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ShopId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CakeStyles)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CakeStyles)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CakeName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CakeName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CakeImg)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CakeImg)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CakeDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CakeDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CakePrice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CakePrice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CakeStatus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CakeStatus)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CakeStock)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CakeStock)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CakeAnnotation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CakeAnnotation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AllergenInfo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AllergenInfo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CakeContent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CakeContent)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.CakeId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

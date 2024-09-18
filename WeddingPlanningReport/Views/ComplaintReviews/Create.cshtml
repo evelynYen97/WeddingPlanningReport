@@ -1,0 +1,78 @@
+﻿@model WeddingPlanningReport.Models.ComplaintReview
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ComplaintReview</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ReporterMemberId" class="control-label"></label>
+                <input asp-for="ReporterMemberId" class="form-control" />
+                <span asp-validation-for="ReporterMemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RespondentMemberId" class="control-label"></label>
+                <input asp-for="RespondentMemberId" class="form-control" />
+                <span asp-validation-for="RespondentMemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReportTime" class="control-label"></label>
+                <input asp-for="ReportTime" class="form-control" />
+                <span asp-validation-for="ReportTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReportDetail" class="control-label"></label>
+                <input asp-for="ReportDetail" class="form-control" />
+                <span asp-validation-for="ReportDetail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewStatus" class="control-label"></label>
+                <input asp-for="ReviewStatus" class="form-control" />
+                <span asp-validation-for="ReviewStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewTime" class="control-label"></label>
+                <input asp-for="ReviewTime" class="form-control" />
+                <span asp-validation-for="ReviewTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewerId" class="control-label"></label>
+                <input asp-for="ReviewerId" class="form-control" />
+                <span asp-validation-for="ReviewerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewerName" class="control-label"></label>
+                <input asp-for="ReviewerName" class="form-control" />
+                <span asp-validation-for="ReviewerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewNotes" class="control-label"></label>
+                <input asp-for="ReviewNotes" class="form-control" />
+                <span asp-validation-for="ReviewNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewResultDescription" class="control-label"></label>
+                <input asp-for="ReviewResultDescription" class="form-control" />
+                <span asp-validation-for="ReviewResultDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

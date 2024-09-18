@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.SharingWeddingPlan>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CaseId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SharedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SharedName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SharedStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaseId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SharedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SharedName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SharedStatus)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SharedRecordId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SharedRecordId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SharedRecordId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

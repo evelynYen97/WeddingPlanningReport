@@ -1,0 +1,93 @@
+﻿@model WeddingPlanningReport.Models.ToDo
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ToDo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MemberId" class="control-label"></label>
+                <input asp-for="MemberId" class="form-control" />
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDoName" class="control-label"></label>
+                <input asp-for="ToDoName" class="form-control" />
+                <span asp-validation-for="ToDoName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDoDetail" class="control-label"></label>
+                <input asp-for="ToDoDetail" class="form-control" />
+                <span asp-validation-for="ToDoDetail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpiringDate" class="control-label"></label>
+                <input asp-for="ExpiringDate" class="form-control" />
+                <span asp-validation-for="ExpiringDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precedence" class="control-label"></label>
+                <input asp-for="Precedence" class="form-control" />
+                <span asp-validation-for="Precedence" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskStatus" class="control-label"></label>
+                <input asp-for="TaskStatus" class="form-control" />
+                <span asp-validation-for="TaskStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonInCharge" class="control-label"></label>
+                <input asp-for="PersonInCharge" class="form-control" />
+                <span asp-validation-for="PersonInCharge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaskSort" class="control-label"></label>
+                <input asp-for="TaskSort" class="form-control" />
+                <span asp-validation-for="TaskSort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RemindTime" class="control-label"></label>
+                <input asp-for="RemindTime" class="form-control" />
+                <span asp-validation-for="RemindTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdditionalData" class="control-label"></label>
+                <input asp-for="AdditionalData" class="form-control" />
+                <span asp-validation-for="AdditionalData" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreateToDoTime" class="control-label"></label>
+                <input asp-for="CreateToDoTime" class="form-control" />
+                <span asp-validation-for="CreateToDoTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateToDoTime" class="control-label"></label>
+                <input asp-for="UpdateToDoTime" class="form-control" />
+                <span asp-validation-for="UpdateToDoTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RepetitiveTask" class="control-label"></label>
+                <input asp-for="RepetitiveTask" class="form-control" />
+                <span asp-validation-for="RepetitiveTask" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.BudgetChart>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChartType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChartName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChartUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RentDetailId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MenuDetailId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakeDetailId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VenueId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChartType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChartName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChartUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentDetailId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MenuDetailId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakeDetailId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VenueId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BudgetChartId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BudgetChartId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BudgetChartId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

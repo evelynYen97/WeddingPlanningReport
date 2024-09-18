@@ -1,0 +1,22 @@
+[
+  {
+    "outputFileName": "wwwroot/assets/js/sneat-bundle.js",
+    "inputFiles": [
+      "wwwroot/assets/js/config.js",
+      "wwwroot/assets/js/dashboards-analytics.js",
+      "wwwroot/assets/js/extended-ui-perfect-scrollbar.js",
+      "wwwroot/assets/js/form-basic-inputs.js",
+      "wwwroot/assets/js/main.js",
+      "wwwroot/assets/js/pages-account-settings-account.js",
+      "wwwroot/assets/js/ui-modals.js",
+      "wwwroot/assets/js/ui-popover.js",
+      "wwwroot/assets/js/ui-toasts.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/css/demo.min.css",
+    "inputFiles": [
+      "wwwroot/assets/css/demo.css"
+    ]
+  }
+]

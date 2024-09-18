@@ -1,0 +1,65 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.MemberBudgetItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BudgetItemDetail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BudgetItemPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BudgetItemAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BudgetItemSubtotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BudgetItemSort)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BudgetItemDetail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BudgetItemPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BudgetItemAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BudgetItemSubtotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BudgetItemSort)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BudgetItemId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BudgetItemId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BudgetItemId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

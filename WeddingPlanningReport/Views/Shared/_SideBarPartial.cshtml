@@ -1,0 +1,174 @@
+﻿<ul class="menu-inner py-1">
+    <!-- Home -->
+    <li class="menu-item">
+        <a class="menu-link" asp-area="" asp-controller="Home" asp-action="Index">
+            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+            <div data-i18n="Analytics">Home</div>
+        </a>
+    </li>
+
+    <!-- 會員管理 -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon bi bi-people-fill"></i>
+            <div data-i18n="Layouts">會員</div>
+        </a>
+
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="Members" asp-action="Index">
+                    <div>會員資料管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="MemberToDo" asp-action="Index">
+                    <div>會員待辦事項清單管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="MemberBudgetItems" asp-action="Index">
+                    <div>會員新增預算項目管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="Home" asp-action="會員預算圖管理">
+                    <div>會員預算圖管理</div>
+                </a>
+            </li>
+        </ul>
+
+        <!-- 會員訂單管理 -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon bi bi-clipboard-check"></i>
+            <div data-i18n="Layouts">會員訂單管理</div>
+        </a>
+
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="Home" asp-action="婚禮場地訂單管理">
+                    <div>婚禮場地訂單管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="Home" asp-action="喜餅訂單管理">
+                    <div>喜餅訂單管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="Home" asp-action="禮車訂單管理">
+                    <div>禮車訂單管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="Home" asp-action="菜品訂單管理">
+                    <div>菜品訂單管理</div>
+                </a>
+            </li>
+        </ul>
+
+        <!-- 商家資料管理 -->
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">商家</span>
+    </li>
+
+    <li class="menu-item ">
+        <a href="javascript:void(0);" class="menu-link">
+            <i class="menu-icon bi bi-shop-window"></i>
+            <div data-i18n="Analytics">商家資料管理</div>
+        </a>
+    </li>
+
+    <!-- 商品管理 -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon bi bi-box-seam-fill"></i>
+            <div data-i18n="Layouts">商品管理</div>
+        </a>
+
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="venue" asp-action="Index">
+                    <div>婚禮場地</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a asp-area="" asp-controller="Cakes" asp-action="Index" class="menu-link">
+                    <div>喜餅</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="" class="menu-link">
+                    <div>禮車</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="" class="menu-link">
+                    <div>菜品</div>
+                </a>
+            </li>
+        </ul>
+
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">婚禮計劃</span>
+    </li>
+
+    <!-- 婚禮計劃書管理 -->
+    <li class="menu-item">
+        <a class="menu-link" asp-area="" asp-controller="WeddingPlans" asp-action="Index">
+            <i class="menu-icon bi bi-calendar-heart-fill"></i>
+            <div data-i18n="Analytics">婚禮計劃書管理</div>
+        </a>
+    </li>
+
+    <!-- 計劃書共享管理 -->
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon bi bi-calendar-plus"></i>
+            <div data-i18n="Layouts">計劃書共享管理</div>
+        </a>
+
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link">
+                    <div>計劃共享發佈管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link">
+                    <div>審核舉報管理</div>
+                </a>
+            </li>
+        </ul>
+
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">圖像</span>
+    </li>
+
+    <!-- 圖片素材管理 -->
+    <li class="menu-item ">
+        <a class="menu-link" asp-area="" asp-controller="Materials" asp-action="Index">
+            <i class="menu-icon bi bi-image"></i>
+            <div data-i18n="Analytics">圖片素材管理</div>
+        </a>
+    </li>
+
+    <!-- 圖層資料管理 -->
+    <li class="menu-item ">
+        <a class="menu-link" asp-area="" asp-controller="EditingImgFile" asp-action="Index">
+            <i class="menu-icon bi bi-images"></i>
+            <div data-i18n="Analytics">圖層資料管理</div>
+        </a>
+    </li>
+
+    <!-- 網站管理 -->
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">網站管理</span></li>
+
+    <!-- 網站首頁管理 -->
+    <li class="menu-item ">
+        <a href="javascript:void(0);" class="menu-link">
+            <i class="menu-icon bi bi-tools"></i>
+            <div data-i18n="Analytics">網站維護</div>
+        </a>
+    </li>
+</ul>

@@ -1,0 +1,59 @@
+﻿@model WeddingPlanningReport.Models.CakeOrder
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CakeOrder</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CakeOrderId" />
+            <div class="form-group">
+                <label asp-for="MemberId" class="control-label"></label>
+                <input asp-for="MemberId" class="form-control" />
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeOrderTotal" class="control-label"></label>
+                <input asp-for="CakeOrderTotal" class="form-control" />
+                <span asp-validation-for="CakeOrderTotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeOrderAnnotation" class="control-label"></label>
+                <input asp-for="CakeOrderAnnotation" class="form-control" />
+                <span asp-validation-for="CakeOrderAnnotation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Delivery" class="control-label"></label>
+                <input asp-for="Delivery" class="form-control" />
+                <span asp-validation-for="Delivery" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Payment" class="control-label"></label>
+                <input asp-for="Payment" class="form-control" />
+                <span asp-validation-for="Payment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeOrderStatus" class="control-label"></label>
+                <input asp-for="CakeOrderStatus" class="form-control" />
+                <span asp-validation-for="CakeOrderStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,58 @@
+﻿@model WeddingPlanningReport.Models.MemberBudgetItem
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>MemberBudgetItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MemberId" class="control-label"></label>
+                <input asp-for="MemberId" class="form-control" />
+                <span asp-validation-for="MemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetItemDetail" class="control-label"></label>
+                <input asp-for="BudgetItemDetail" class="form-control" />
+                <span asp-validation-for="BudgetItemDetail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetItemPrice" class="control-label"></label>
+                <input asp-for="BudgetItemPrice" class="form-control" />
+                <span asp-validation-for="BudgetItemPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetItemAmount" class="control-label"></label>
+                <input asp-for="BudgetItemAmount" class="form-control" />
+                <span asp-validation-for="BudgetItemAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetItemSubtotal" class="control-label"></label>
+                <input asp-for="BudgetItemSubtotal" class="form-control" />
+                <span asp-validation-for="BudgetItemSubtotal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetItemSort" class="control-label"></label>
+                <input asp-for="BudgetItemSort" class="form-control" />
+                <span asp-validation-for="BudgetItemSort" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

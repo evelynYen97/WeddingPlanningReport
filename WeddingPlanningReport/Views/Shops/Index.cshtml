@@ -1,0 +1,89 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.Shop>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ShopName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShopSort)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactPerson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShopRating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShopLogo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShopImg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceArea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShopStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShopName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShopSort)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPerson)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShopRating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShopLogo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShopImg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Payment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShopStatus)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ShopId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ShopId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ShopId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

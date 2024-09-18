@@ -1,0 +1,83 @@
+﻿@model WeddingPlanningReport.Models.Cake
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Cake</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ShopId" class="control-label"></label>
+                <input asp-for="ShopId" class="form-control" />
+                <span asp-validation-for="ShopId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeStyles" class="control-label"></label>
+                <input asp-for="CakeStyles" class="form-control" />
+                <span asp-validation-for="CakeStyles" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeName" class="control-label"></label>
+                <input asp-for="CakeName" class="form-control" />
+                <span asp-validation-for="CakeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeImg" class="control-label"></label>
+                <input asp-for="CakeImg" class="form-control" />
+                <span asp-validation-for="CakeImg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeDescription" class="control-label"></label>
+                <input asp-for="CakeDescription" class="form-control" />
+                <span asp-validation-for="CakeDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakePrice" class="control-label"></label>
+                <input asp-for="CakePrice" class="form-control" />
+                <span asp-validation-for="CakePrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeStatus" class="control-label"></label>
+                <input asp-for="CakeStatus" class="form-control" />
+                <span asp-validation-for="CakeStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeStock" class="control-label"></label>
+                <input asp-for="CakeStock" class="form-control" />
+                <span asp-validation-for="CakeStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeAnnotation" class="control-label"></label>
+                <input asp-for="CakeAnnotation" class="form-control" />
+                <span asp-validation-for="CakeAnnotation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AllergenInfo" class="control-label"></label>
+                <input asp-for="AllergenInfo" class="form-control" />
+                <span asp-validation-for="AllergenInfo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CakeContent" class="control-label"></label>
+                <input asp-for="CakeContent" class="form-control" />
+                <span asp-validation-for="CakeContent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

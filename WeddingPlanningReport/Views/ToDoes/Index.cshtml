@@ -1,0 +1,107 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.ToDo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDoName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDoDetail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpiringDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precedence)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersonInCharge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskSort)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemindTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdditionalData)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateToDoTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdateToDoTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepetitiveTask)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToDoName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToDoDetail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpiringDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precedence)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PersonInCharge)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskSort)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RemindTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdditionalData)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateToDoTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateToDoTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepetitiveTask)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ToDoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ToDoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ToDoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

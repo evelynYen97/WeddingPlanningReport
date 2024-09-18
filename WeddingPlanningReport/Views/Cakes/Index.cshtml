@@ -1,0 +1,95 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.Cake>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ShopId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakeStyles)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakeImg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakeDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakeStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakeStock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakeAnnotation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllergenInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CakeContent)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShopId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakeStyles)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakeImg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakeDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakeStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakeStock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakeAnnotation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllergenInfo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CakeContent)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CakeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CakeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CakeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

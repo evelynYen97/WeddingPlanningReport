@@ -1,0 +1,49 @@
+﻿@model WeddingPlanningReport.Models.SharingWeddingPlan
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>SharingWeddingPlan</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SharedRecordId" />
+            <div class="form-group">
+                <label asp-for="CaseId" class="control-label"></label>
+                <input asp-for="CaseId" class="form-control" />
+                <span asp-validation-for="CaseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SharedTime" class="control-label"></label>
+                <input asp-for="SharedTime" class="form-control" />
+                <span asp-validation-for="SharedTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SharedName" class="control-label"></label>
+                <input asp-for="SharedName" class="form-control" />
+                <span asp-validation-for="SharedName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SharedStatus" class="control-label"></label>
+                <input asp-for="SharedStatus" class="form-control" />
+                <span asp-validation-for="SharedStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
