@@ -1,5 +1,13 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.WeddingPlan>
 
+@section Styles {
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/css/btn18settype.min.css" rel="stylesheet" />
+    <style>
+        
+    </style>
+}
+
 <!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
@@ -30,10 +38,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">會員新增預算項目管理</li>
+                                <li class="breadcrumb-item active" aria-current="page">婚禮計劃書管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">會員新增預算項目管理</h5>
+                                <h5 class="currentPage">婚禮計劃書管理</h5>
                             </div>
                         </nav>
 
@@ -99,16 +107,37 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        <h4 class="card-header bg-light bg-gradient ">會員新增預算項目</h4>
+                        <h4 class="card-header bg-light bg-gradient ">婚禮計劃書</h4>
                         <div id="dash" class="border-top border-bottom"></div>
                         <div class="table-responsive text-nowrap">
 
                             <p>
-                                <a asp-action="Create">Create New</a>
+                                @* <a asp-controller="WeddingPlans" asp-action="Create">Create New</a> *@
+                               
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="AddBtn">
+                                    <i class="bi bi-plus-lg" ></i> 新增
+                                </button>
                             </p>
-                            <table class="table">
-                                <thead>
+
+                            <!-- Modal start-->
+                            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal end -->
+
+                            <table class="table" id="myTable">
+                                <thead class="table-primary">
                                     <tr>
+                                        <th></th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.MemberId)
                                         </th>
@@ -124,10 +153,9 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.WeddingLocation)
                                         </th>
-                                        <th></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                @* <tbody>
                                     @foreach (var weddingplanitem in Model)
                                     {
                                         <tr>
@@ -150,10 +178,9 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.WeddingLocation)
                                             </td>
-                                           
                                         </tr>
                                     }
-                                </tbody>
+                                </tbody> *@
                             </table>
 
                         </div>
@@ -170,7 +197,86 @@
 </body>
 </html>
 
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myTable").dataTable({
+                ajax: {
+                    type: "GET",
+                    url: "/WeddingPlans/IndexJson",
+                    datatype: "json",
+                    dataSrc: function (json) {
+                        return json;
+                    },
+                },
+                columns: [
+                    {
+                        "data": "caseId", "render": function (data) {
+                            return "<button class='button-18 edit-btn' data-id='" + data + "'  data-bs-toggle='modal' data-bs-target='#myModal'>✒️</button>" +
+                                "<button class='button-18 delete-btn' data-id='" + data + "'>🗑️</button>";
+                        }, "orderable": false
+                    },
+                    { "data": "memberId", "width": "5%" },
+                    { "data": "weddingName", "width": "20%" },
+                    { "data": "introduction", "width": "25%" },
+                    { "data": "weddingTime", "width": "10%" },
+                    { "data": "weddingLocation", "width": "10%" },
+                    
 
+                ],
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                }
+            });
+
+            // $('#AddBtn').on('click', function () {
+            //     $.ajax({
+            //         url: '@Url.Action("Create", "WeddingPlans")',
+            //         type: 'GET',
+            //         success: function (data) {
+            //             $(".modal-body").html(data);
+            //         },
+            //         error: function () {
+            //             alert('内容加载失败');
+            //         }
+            //     });
+                
+            // });
+
+            $('#AddBtn').on('click', function () {
+                $('.modal-body').load('/WeddingPlans/Create #formCreate', function () {
+                    $('#myModal').modal('show');
+                }); // 動態加載內容
+            });
+
+            $('#myTable').on('click', '.edit-btn', function () {
+                var id = $(this).data('id');
+                $('.modal-body').load(`/WeddingPlans/Edit/${id} #formEdit`, function () {
+                    $('#myModal').modal('show');
+                }); // 動態加載內容
+            });
+
+            // $('#myTable').on('click', '.edit-btn', function () {
+            //     var id = $(this).data('id');
+            //     $.ajax({
+            //         url: '@Url.Action("Edit", "MemberBudgetItems")',
+            //         type: 'POST',
+            //         data: { id: id },
+            //         success: function (data) {
+            //             window.location.href = '@Url.Action("Edit", "MemberBudgetItems")' + '?id=' + id;
+            //         },
+            //         error: function () {
+            //             alert('内容加载失败');
+            //         }
+            //     });});
+        });
+    </script>
+}
 
 
 

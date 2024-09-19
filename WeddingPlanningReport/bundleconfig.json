@@ -18,5 +18,11 @@
     "inputFiles": [
       "wwwroot/assets/css/demo.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/css/btn18SetType.min.css",
+    "inputFiles": [
+      "wwwroot/css/btn18SetType.css"
+    ]
   }
 ]

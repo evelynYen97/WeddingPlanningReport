@@ -1,8 +1,5 @@
 ﻿@model WeddingPlanningReport.Models.WeddingPlan
 
-@{
-    ViewData["Title"] = "Create";
-}
 
 <h1>Create</h1>
 
@@ -10,7 +7,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" id="formCreate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="MemberId" class="control-label"></label>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WeddingPlanningReport.Models;
+using WeddingPlanningReport.Models.Metadata;
 
 namespace WeddingPlanningReport.Controllers
 {
@@ -21,7 +22,13 @@ namespace WeddingPlanningReport.Controllers
         // GET: WeddingPlans
         public async Task<IActionResult> Index()
         {
-            return View(await _context.WeddingPlans.ToListAsync());
+            return View( _context.WeddingPlans);
+        }
+
+        // GET: WeddingPlans/IndexJson
+        public JsonResult IndexJson()
+        {
+            return Json(_context.WeddingPlans);
         }
 
         // GET: WeddingPlans/Details/5
