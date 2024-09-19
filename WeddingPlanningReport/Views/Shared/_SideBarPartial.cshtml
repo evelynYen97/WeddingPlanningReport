@@ -115,10 +115,33 @@
 
     <!-- 婚禮計劃書管理 -->
     <li class="menu-item">
-        <a class="menu-link" asp-area="" asp-controller="WeddingPlans" asp-action="Index">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon bi bi-calendar-heart-fill"></i>
-            <div data-i18n="Analytics">婚禮計劃書管理</div>
+            <div data-i18n="Layouts">婚禮計劃書管理</div>
         </a>
+
+        <ul class="menu-sub">
+            <li class="menu-item">
+                <a asp-area="" asp-controller="WeddingPlans" asp-action="Index" class="menu-link">
+                    <div>婚禮計劃書管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link">
+                    <div>計劃書活動項目</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link">
+                    <div>活動排程管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link">
+                    <div>排程相關工作人員</div>
+                </a>
+            </li>
+        </ul>
     </li>
 
     <!-- 計劃書共享管理 -->
@@ -140,6 +163,7 @@
                 </a>
             </li>
         </ul>
+    </li>
 
     <li class="menu-header small text-uppercase">
         <span class="menu-header-text">圖像</span>
