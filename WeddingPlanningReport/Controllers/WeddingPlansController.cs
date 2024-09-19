@@ -152,7 +152,7 @@ namespace WeddingPlanningReport.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true});
         }
 
         private bool WeddingPlanExists(int id)

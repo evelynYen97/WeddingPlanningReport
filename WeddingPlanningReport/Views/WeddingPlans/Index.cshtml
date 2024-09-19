@@ -7,6 +7,9 @@
         .modal-body{
             padding-top:0
         }
+        .detail-btn{
+            background-color: #9271AC
+        }
     </style>
 }
 
@@ -217,8 +220,9 @@
                 columns: [
                     {
                         "data": "caseId", "render": function (data) {
-                            return "<button class='button-18 edit-btn' data-id='" + data + "'  data-bs-toggle='modal' data-bs-target='#myModal'>✒️</button>" +
-                                "<button class='button-18 delete-btn' data-id='" + data + "'>🗑️</button>";
+                            return "<button class='btn button-18 fs-6 detail-btn border' data-id='" + data + "' >查看活動項目</button>" + " " +
+                            "<button class='button-18 edit-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>✒️</button>" + " " +
+                                "<button class='button-18 delete-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>🗑️</button>";
                         }, "orderable": false
                     },
                     { "data": "memberId", "width": "5%" },
@@ -234,20 +238,6 @@
                     url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
                 }
             });
-
-            // $('#AddBtn').on('click', function () {
-            //     $.ajax({
-            //         url: '@Url.Action("Create", "WeddingPlans")',
-            //         type: 'GET',
-            //         success: function (data) {
-            //             $(".modal-body").html(data);
-            //         },
-            //         error: function () {
-            //             alert('内容加载失败');
-            //         }
-            //     });
-                
-            // });
 
             $('#AddBtn').on('click', function () {
                 $('.modal-body').load('/WeddingPlans/Create #formCreate', function () {
@@ -266,7 +256,7 @@
                                     location.reload();
                                 }
                                 else {
-                                    alert("請確實填寫必填欄位！");
+                                    alert("請確實填寫必填欄位會員ID及計劃書名稱");
                                 }
                             }
                         })
@@ -292,7 +282,7 @@
                                     location.reload();
                                 }
                                 else {
-                                    alert("請確實填寫必填欄位！");
+                                    alert("請確實填寫必填欄位會員ID及計劃書名稱");
                                 }
                             }
                         })
@@ -301,6 +291,28 @@
                 }); 
             });
 
+            $('#myTable').on('click', '.delete-btn', function () {
+                var id = $(this).data('id');
+                $('.modal-body').load(`/WeddingPlans/Delete/${id} #Deleteview`, function () {
+                    $('#myModalLabel').text("刪除婚禮計劃書");
+                    $('#myModal').modal('show');
+                    $(document).off('submit', '#formDelete').on('submit', '#formDelete', function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: $(this).attr('action'),
+                            type: 'POST',
+                            data: $(this).serialize(),
+                            success: function (response) {
+                                if (response.success) {
+                                    alert("婚禮計劃書刪除成功");
+                                    $('#myModal').modal('hide');
+                                    location.reload();
+                                }
+                            }
+                        })
+                    })
+                });
+            });
             
         });
     </script>
