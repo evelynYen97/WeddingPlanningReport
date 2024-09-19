@@ -120,7 +120,10 @@
                         <div class="table-responsive text-nowrap position-relative">
 
                             <p>
-                                <a asp-action="Create">Create New</a>
+                                @* <a asp-action="Create">Create New</a> *@
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="AddBtn">
+                                    <i class="bi bi-plus-lg"></i> 新增
+                                </button>
                             </p>
                             <table class="table" id="budgetItemsTable">
                                 <thead class="table-primary">
