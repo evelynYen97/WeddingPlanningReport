@@ -1,12 +1,22 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.MemberBudgetItem>
 
-@{
-    ViewData["Title"] = "Index";
+@section Styles {
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/css/btn18settype.min.css" rel="stylesheet" />
+    <style>
+        .modal-body{
+            padding-top:0
+        }
+        .detail-btn{
+            background-color: #9271AC
+        }
+        .table-responsive{
+            width:1000px;
+            margin:auto;
+        }
+    </style>
 }
 
-
-
-<!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
       dir="ltr"
@@ -107,14 +117,15 @@
                     <div class="card">
                         <h4 class="card-header bg-light bg-gradient ">會員新增預算項目</h4>
                         <div id="dash" class="border-top border-bottom"></div>
-                        <div class="table-responsive text-nowrap">
+                        <div class="table-responsive text-nowrap position-relative">
 
                             <p>
                                 <a asp-action="Create">Create New</a>
                             </p>
-                            <table class="table">
-                                <thead>
+                            <table class="table" id="budgetItemsTable">
+                                <thead class="table-primary">
                                     <tr>
+                                        <th></th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.MemberId)
                                         </th>
@@ -133,7 +144,7 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.BudgetItemSort)
                                         </th>
-                                        <th></th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -182,7 +193,45 @@
 </body>
 </html>
 
-
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#budgetItemsTable").dataTable({
+                ajax: {
+                    type: "GET",
+                    url: "/MemberBudgetItems/IndexJson",
+                    datatype: "json",
+                    dataSrc: function (json) {
+                        return json;
+                    },
+                },
+                columns: [
+                    {
+                        "data": "budgetItemId", "render": function (data) {
+                            return "<button class='button-18 edit-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>✒️</button>" + " " +
+                                "<button class='button-18 delete-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>🗑️</button>";
+                        }, "orderable": false, "width": "5%"
+                    },
+                    { "data": "memberId", "width": "5%" },
+                    { "data": "budgetItemDetail", "width": "20%" },
+                    { "data": "budgetItemPrice", "width": "10%" },
+                    { "data": "budgetItemAmount", "width": "10%" },
+                    { "data": "budgetItemSubtotal", "width": "10%" },
+                    { "data": "budgetItemSort", "width": "10%" },
+                ],
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                }
+            });
+        });
+    </script>
+}
 
 
 

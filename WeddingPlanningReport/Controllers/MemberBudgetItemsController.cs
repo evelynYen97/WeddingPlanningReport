@@ -24,6 +24,12 @@ namespace WeddingPlanningReport.Controllers
             return View(await _context.MemberBudgetItems.ToListAsync());
         }
 
+        //GET: MemberBudgetItems/IndexJson
+        public JsonResult IndexJson()
+        {
+            return Json(_context.MemberBudgetItems);
+        }
+
         // GET: MemberBudgetItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
