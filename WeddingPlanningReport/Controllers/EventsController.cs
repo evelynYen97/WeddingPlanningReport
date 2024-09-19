@@ -4,34 +4,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using WeddingPlanningReport.Models;
-using WeddingPlanningReport.Models.Metadata;
 
 namespace WeddingPlanningReport.Controllers
 {
-    public class WeddingPlansController : Controller
+    public class EventsController : Controller
     {
         private readonly WeddingPlanningContext _context;
 
-        public WeddingPlansController(WeddingPlanningContext context)
+        public EventsController(WeddingPlanningContext context)
         {
             _context = context;
         }
 
-        // GET: WeddingPlans
-        public async Task<IActionResult> Index()
+        // GET: Events
+        public async Task<IActionResult> Index(int? id)
         {
-            return View( _context.WeddingPlans);
+            var eventItem =  _context.Events
+                                   .Where(e => e.CaseId == id);
+
+            if (eventItem == null)
+            {
+                return NotFound();
+            }
+
+            return View(eventItem );
         }
 
-        // GET: WeddingPlans/IndexJson
-        public JsonResult IndexJson()
-        {
-            return Json(_context.WeddingPlans);
-        }
-
-        // GET: WeddingPlans/Details/5
+        // GET: Events/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,39 +41,39 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var events = await _context.Events
-                .FirstOrDefaultAsync(m => m.CaseId == id);
-            if (events == null)
+            var @event = await _context.Events
+                .FirstOrDefaultAsync(m => m.EventId == id);
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return View(events);
+            return View(@event);
         }
 
-        // GET: WeddingPlans/Create
+        // GET: Events/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: WeddingPlans/Create
+        // POST: Events/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation")] WeddingPlan weddingPlan)
+        public async Task<IActionResult> Create([Bind("EventId,CaseId,EventName,EventTime,EventLocation,EventNotes,EventLocationImg,EventVenueImg1,EventVenueImg2")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(weddingPlan);
+                _context.Add(@event);
                 await _context.SaveChangesAsync();
-                return Json(new { success = true, message = "成功創建！" });
+                return RedirectToAction(nameof(Index));
             }
-            return View(weddingPlan);
+            return View(@event);
         }
 
-        // GET: WeddingPlans/Edit/5
+        // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -79,22 +81,22 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var weddingPlan = await _context.WeddingPlans.FindAsync(id);
-            if (weddingPlan == null)
+            var @event = await _context.Events.FindAsync(id);
+            if (@event == null)
             {
                 return NotFound();
             }
-            return View(weddingPlan);
+            return View(@event);
         }
 
-        // POST: WeddingPlans/Edit/5
+        // POST: Events/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation")] WeddingPlan weddingPlan)
+        public async Task<IActionResult> Edit(int id, [Bind("EventId,CaseId,EventName,EventTime,EventLocation,EventNotes,EventLocationImg,EventVenueImg1,EventVenueImg2")] Event @event)
         {
-            if (id != weddingPlan.CaseId)
+            if (id != @event.EventId)
             {
                 return NotFound();
             }
@@ -103,12 +105,12 @@ namespace WeddingPlanningReport.Controllers
             {
                 try
                 {
-                    _context.Update(weddingPlan);
+                    _context.Update(@event);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!WeddingPlanExists(weddingPlan.CaseId))
+                    if (!EventExists(@event.EventId))
                     {
                         return NotFound();
                     }
@@ -117,12 +119,12 @@ namespace WeddingPlanningReport.Controllers
                         throw;
                     }
                 }
-                return Json(new { success = true, message = "成功創建！" });
+                return RedirectToAction(nameof(Index));
             }
-            return View(weddingPlan);
+            return View(@event);
         }
 
-        // GET: WeddingPlans/Delete/5
+        // GET: Events/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,34 +132,34 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var weddingPlan = await _context.WeddingPlans
-                .FirstOrDefaultAsync(m => m.CaseId == id);
-            if (weddingPlan == null)
+            var @event = await _context.Events
+                .FirstOrDefaultAsync(m => m.EventId == id);
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return View(weddingPlan);
+            return View(@event);
         }
 
-        // POST: WeddingPlans/Delete/5
+        // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var weddingPlan = await _context.WeddingPlans.FindAsync(id);
-            if (weddingPlan != null)
+            var @event = await _context.Events.FindAsync(id);
+            if (@event != null)
             {
-                _context.WeddingPlans.Remove(weddingPlan);
+                _context.Events.Remove(@event);
             }
 
             await _context.SaveChangesAsync();
-            return Json(new { success = true});
+            return RedirectToAction(nameof(Index));
         }
 
-        private bool WeddingPlanExists(int id)
+        private bool EventExists(int id)
         {
-            return _context.WeddingPlans.Any(e => e.CaseId == id);
+            return _context.Events.Any(e => e.EventId == id);
         }
     }
 }

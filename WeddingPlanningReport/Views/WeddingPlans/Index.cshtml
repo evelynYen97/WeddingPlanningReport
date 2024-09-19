@@ -291,6 +291,7 @@
                 }); 
             });
 
+            //delete start
             $('#myTable').on('click', '.delete-btn', function () {
                 var id = $(this).data('id');
                 $('.modal-body').load(`/WeddingPlans/Delete/${id} #Deleteview`, function () {
@@ -313,8 +314,14 @@
                     })
                 });
             });
-            
+            //delete end
+            //To event start
+            $('#myTable').on('click', '.detail-btn', function (){
+                var id = $(this).data('id');
+                window.location.href = '@Url.Action("Index", "Events")?id=' + id;
+            //To event end
         });
+    });
     </script>
 }
 
