@@ -145,13 +145,13 @@
                                             @Html.DisplayNameFor(model => model.WeddingName)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Introduction)
-                                        </th>
-                                        <th>
                                             @Html.DisplayNameFor(model => model.WeddingTime)
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.WeddingLocation)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Introduction)
                                         </th>
                                     </tr>
                                 </thead>
@@ -220,11 +220,9 @@
                     },
                     { "data": "memberId", "width": "5%" },
                     { "data": "weddingName", "width": "20%" },
-                    { "data": "introduction", "width": "25%" },
-                    { "data": "weddingTime", "width": "10%" },
-                    { "data": "weddingLocation", "width": "10%" },
-                    
-
+                    { "data": "weddingTime", "width": "20%" },
+                    { "data": "weddingLocation", "width": "20%" },
+                    { "data": "introduction", "width": "35%" },
                 ],
                 fixedHeader: {
                     header: true
@@ -258,7 +256,7 @@
                 var id = $(this).data('id');
                 $('.modal-body').load(`/WeddingPlans/Edit/${id} #formEdit`, function () {
                     $('#myModal').modal('show');
-                }); // 動態加載內容
+                }); 
             });
 
             // $('#myTable').on('click', '.edit-btn', function () {
