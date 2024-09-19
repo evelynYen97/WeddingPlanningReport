@@ -9,6 +9,7 @@
     <div class="col-md-4">
         <form asp-action="Create" id="formCreate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <hr />
             <div class="form-group">
                 <label asp-for="MemberId" class="control-label"></label>
                 <input asp-for="MemberId" class="form-control" />
@@ -21,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Introduction" class="control-label"></label>
-                <input asp-for="Introduction" class="form-control" />
+                <textarea asp-for="Introduction" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="Introduction" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,6 +35,7 @@
                 <input asp-for="WeddingLocation" class="form-control" />
                 <span asp-validation-for="WeddingLocation" class="text-danger"></span>
             </div>
+            <hr />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

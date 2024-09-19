@@ -7,11 +7,11 @@ namespace WeddingPlanningReport.Models.Metadata
         
         public int CaseId { get; set; }
 
-        [Display(Name = "會員ID")]
+        [Display(Name = "會員ID (必填)")]
         [Required(ErrorMessage = "請確實填寫會員ID")]
         public int MemberId { get; set; }
 
-        [Display(Name = "婚禮計劃書名稱")]
+        [Display(Name = "婚禮計劃書名稱 (必填)")]
         [Required(ErrorMessage = "婚禮計劃書名稱必填")]
         public string? WeddingName { get; set; }
 

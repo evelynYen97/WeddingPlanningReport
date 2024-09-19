@@ -66,7 +66,7 @@ namespace WeddingPlanningReport.Controllers
             {
                 _context.Add(weddingPlan);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true, message = "成功創建！" });
             }
             return View(weddingPlan);
         }
@@ -117,7 +117,7 @@ namespace WeddingPlanningReport.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Json(new { success = true, message = "成功創建！" });
             }
             return View(weddingPlan);
         }

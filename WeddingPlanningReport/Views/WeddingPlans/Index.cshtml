@@ -4,7 +4,9 @@
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <style>
-        
+        .modal-body{
+            padding-top:0
+        }
     </style>
 }
 
@@ -124,7 +126,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
@@ -138,19 +140,19 @@
                                 <thead class="table-primary">
                                     <tr>
                                         <th></th>
-                                        <th>
+                                        <th class="fs-6">
                                             @Html.DisplayNameFor(model => model.MemberId)
                                         </th>
-                                        <th>
+                                        <th class ="fs-6">
                                             @Html.DisplayNameFor(model => model.WeddingName)
                                         </th>
-                                        <th>
+                                        <th class="fs-6">
                                             @Html.DisplayNameFor(model => model.WeddingTime)
                                         </th>
-                                        <th>
+                                        <th class="fs-6">
                                             @Html.DisplayNameFor(model => model.WeddingLocation)
                                         </th>
-                                        <th>
+                                        <th class="fs-6">
                                             @Html.DisplayNameFor(model => model.Introduction)
                                         </th>
                                     </tr>
@@ -200,6 +202,7 @@
 @section Scripts {
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
         $(document).ready(function(){
             $("#myTable").dataTable({
@@ -248,30 +251,57 @@
 
             $('#AddBtn').on('click', function () {
                 $('.modal-body').load('/WeddingPlans/Create #formCreate', function () {
+                    $('#myModalLabel').text("新增婚禮計劃書");
                     $('#myModal').modal('show');
+                    $(document).off('submit', '#formCreate').on('submit', '#formCreate', function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: $(this).attr('action'),
+                            type: 'POST',
+                            data: $(this).serialize(),
+                            success: function (response){
+                                if (response.success) {
+                                    alert("婚禮計劃書創建成功");
+                                    $('#myModal').modal('hide');
+                                    location.reload();
+                                }
+                                else {
+                                    alert("請確實填寫必填欄位！");
+                                }
+                            }
+                        })
+                    })
                 }); // 動態加載內容
             });
 
             $('#myTable').on('click', '.edit-btn', function () {
                 var id = $(this).data('id');
                 $('.modal-body').load(`/WeddingPlans/Edit/${id} #formEdit`, function () {
+                    $('#myModalLabel').text("編輯婚禮計劃書");
                     $('#myModal').modal('show');
+                    $(document).off('submit', '#formEdit').on('submit', '#formEdit', function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: $(this).attr('action'),
+                            type: 'POST',
+                            data: $(this).serialize(),
+                            success: function (response) {
+                                if (response.success) {
+                                    alert("婚禮計劃書更新成功");
+                                    $('#myModal').modal('hide');
+                                    location.reload();
+                                }
+                                else {
+                                    alert("請確實填寫必填欄位！");
+                                }
+                            }
+                        })
+                    })
+
                 }); 
             });
 
-            // $('#myTable').on('click', '.edit-btn', function () {
-            //     var id = $(this).data('id');
-            //     $.ajax({
-            //         url: '@Url.Action("Edit", "MemberBudgetItems")',
-            //         type: 'POST',
-            //         data: { id: id },
-            //         success: function (data) {
-            //             window.location.href = '@Url.Action("Edit", "MemberBudgetItems")' + '?id=' + id;
-            //         },
-            //         error: function () {
-            //             alert('内容加载失败');
-            //         }
-            //     });});
+            
         });
     </script>
 }
