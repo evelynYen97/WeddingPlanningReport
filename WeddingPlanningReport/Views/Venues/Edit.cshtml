@@ -4,91 +4,198 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="../assets/"
+      data-template="vertical-menu-template-free">
+<head>
 
-<h4>Venue</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="VenueId" />
-            <div class="form-group">
-                <label asp-for="ShopId" class="control-label"></label>
-                <input asp-for="ShopId" class="form-control" />
-                <span asp-validation-for="ShopId" class="text-danger"></span>
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+                    <!-- header start  -->
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb py-1 mb-0 mt-2">
+                                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">婚禮場地管理</li>
+                            </ol>
+                            <div class="row d-block">
+                                <h5 class="currentPage">創建</h5>
+                            </div>
+                        </nav>
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">登入者姓名</span>
+                                                    <small class="text-muted">Admin</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-cog me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="login.html">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">Log Out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+                    <!-- header end  -->
+                </nav>
+
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-controller="Venues" asp-action="Edit" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="VenueId" />
+                                <div class="form-group">
+                                    <label asp-for="ShopId" class="control-label"></label>
+                                    <input asp-for="ShopId" class="form-control" />
+                                    <span asp-validation-for="ShopId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="MemberId" class="control-label"></label>
+                                    <input asp-for="MemberId" class="form-control" />
+                                    <span asp-validation-for="MemberId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="VenueFunction" class="control-label"></label>
+                                    <input asp-for="VenueFunction" class="form-control" />
+                                    <span asp-validation-for="VenueFunction" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="VenueStyle" class="control-label"></label>
+                                    <input asp-for="VenueStyle" class="form-control" />
+                                    <span asp-validation-for="VenueStyle" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="InOurDoor" class="control-label"></label>
+                                    <input asp-for="InOurDoor" class="form-control" />
+                                    <span asp-validation-for="InOurDoor" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="RoadApplication" class="control-label"></label>
+                                    <input asp-for="RoadApplication" class="form-control" />
+                                    <span asp-validation-for="RoadApplication" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="VenueName" class="control-label"></label>
+                                    <input asp-for="VenueName" class="form-control" />
+                                    <span asp-validation-for="VenueName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="TableCapacity" class="control-label"></label>
+                                    <input asp-for="TableCapacity" class="form-control" />
+                                    <span asp-validation-for="TableCapacity" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="GuestCapacity" class="control-label"></label>
+                                    <input asp-for="GuestCapacity" class="form-control" />
+                                    <span asp-validation-for="GuestCapacity" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="VenueRentalPrice" class="control-label"></label>
+                                    <input asp-for="VenueRentalPrice" class="form-control" />
+                                    <span asp-validation-for="VenueRentalPrice" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="VenueImg" class="control-label"></label>
+                                    <label class="control-label">選擇資料夾
+                                        <input asp-for="VenueImg" type="file" class="form-control" accept="image/*" />
+                                    </label>
+                                    <span asp-validation-for="VenueImg" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="VenueInfo" class="control-label"></label>
+                                    <input asp-for="VenueInfo" class="form-control" />
+                                    <span asp-validation-for="VenueInfo" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AvailableTime" class="control-label"></label>
+                                    <input asp-for="AvailableTime" class="form-control" />
+                                    <span asp-validation-for="AvailableTime" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+
+                    @section Scripts {
+                        @{
+                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                        }
+                    }
+
+                </div>
+                <!-- Content wrapper -->
             </div>
-            <div class="form-group">
-                <label asp-for="MemberId" class="control-label"></label>
-                <input asp-for="MemberId" class="form-control" />
-                <span asp-validation-for="MemberId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VenueFunction" class="control-label"></label>
-                <input asp-for="VenueFunction" class="form-control" />
-                <span asp-validation-for="VenueFunction" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VenueStyle" class="control-label"></label>
-                <input asp-for="VenueStyle" class="form-control" />
-                <span asp-validation-for="VenueStyle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InOurDoor" class="control-label"></label>
-                <input asp-for="InOurDoor" class="form-control" />
-                <span asp-validation-for="InOurDoor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoadApplication" class="control-label"></label>
-                <input asp-for="RoadApplication" class="form-control" />
-                <span asp-validation-for="RoadApplication" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VenueName" class="control-label"></label>
-                <input asp-for="VenueName" class="form-control" />
-                <span asp-validation-for="VenueName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TableCapacity" class="control-label"></label>
-                <input asp-for="TableCapacity" class="form-control" />
-                <span asp-validation-for="TableCapacity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GuestCapacity" class="control-label"></label>
-                <input asp-for="GuestCapacity" class="form-control" />
-                <span asp-validation-for="GuestCapacity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VenueRentalPrice" class="control-label"></label>
-                <input asp-for="VenueRentalPrice" class="form-control" />
-                <span asp-validation-for="VenueRentalPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VenueImg" class="control-label"></label>
-                <input asp-for="VenueImg" class="form-control" />
-                <span asp-validation-for="VenueImg" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VenueInfo" class="control-label"></label>
-                <input asp-for="VenueInfo" class="form-control" />
-                <span asp-validation-for="VenueInfo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AvailableTime" class="control-label"></label>
-                <input asp-for="AvailableTime" class="form-control" />
-                <span asp-validation-for="AvailableTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            <!-- / Layout page -->
+        </div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</body>
+</html>

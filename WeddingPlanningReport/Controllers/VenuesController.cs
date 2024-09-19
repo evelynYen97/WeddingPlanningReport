@@ -72,7 +72,7 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var venue = await _context.Venues.FindAsync(id);
+            var venue = await _context.Venues.FindAsync(id);//藉由id抓出venue物件
             if (venue == null)
             {
                 return NotFound();

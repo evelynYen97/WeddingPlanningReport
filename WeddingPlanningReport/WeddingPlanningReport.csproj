@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Metadata\" />
+    <Folder Include="wwwroot\VenueImage\更換圖片區\" />
   </ItemGroup>
 
 </Project>
