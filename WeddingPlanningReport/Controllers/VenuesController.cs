@@ -12,10 +12,12 @@ namespace WeddingPlanningReport.Controllers
     public class VenuesController : Controller
     {
         private readonly WeddingPlanningContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;//0919新增
 
-        public VenuesController(WeddingPlanningContext context)
+        public VenuesController(WeddingPlanningContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Venues
@@ -23,6 +25,7 @@ namespace WeddingPlanningReport.Controllers
         {
             return View(await _context.Venues.ToListAsync());
         }
+
 
         // GET: Venues/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -85,22 +88,47 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VenueId,ShopId,MemberId,VenueFunction,VenueStyle,InOurDoor,RoadApplication,VenueName,TableCapacity,GuestCapacity,VenueRentalPrice,VenueImg,VenueInfo,AvailableTime")] Venue venue)
+
+        public async Task<IActionResult> Edit(int id, [Bind("VenueId,ShopId,MemberId,VenueFunction,VenueStyle,InOurDoor,RoadApplication,VenueName,TableCapacity,GuestCapacity,VenueRentalPrice,VenueImg,VenueInfo,AvailableTime")] Venue venue, IFormFile? file)
         {
             if (id != venue.VenueId)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid)//這會檢查表單提交的資料是否合法，確保所有資料符合模型的驗證規則
             {
                 try
                 {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    if (file != null)
+                    {
+                        //string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);為圖片生成一個唯一的檔名 (Guid.NewGuid())
+                        string fileName = file.FileName;
+                        string productPath = Path.Combine(wwwRootPath, @"Ven1");
+
+                        // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
+                        string filePath = Path.Combine(productPath, fileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
+                            string fileExtension = Path.GetExtension(fileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                            fileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, fileName);
+                        }
+                        // 儲存圖片到指定路徑
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+                        venue.VenueImg = fileName;// 更新 venue 的圖片屬性為上傳的檔案名
+                    }
                     _context.Update(venue);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
-                {
+                {//在資料庫更新過程中，可能會遇到並發更新的問題這段代碼捕獲異常，如果 Venue 不存在，則返回 NotFound()，否則重新拋出異常
                     if (!VenueExists(venue.VenueId))
                     {
                         return NotFound();
@@ -110,7 +138,7 @@ namespace WeddingPlanningReport.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));//更新成功後，使用導向到 Index 頁面
             }
             return View(venue);
         }

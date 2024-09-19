@@ -157,9 +157,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="VenueImg" class="control-label"></label>
-                                    <label class="control-label">選擇資料夾
-                                        <input asp-for="VenueImg" type="file" class="form-control" accept="image/*" />
-                                    </label>
+                                    <input asp-for="VenueImg" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="VenueImg" name="file" class=" form-control" type="file" accept="image/*"/>
                                     <span asp-validation-for="VenueImg" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
