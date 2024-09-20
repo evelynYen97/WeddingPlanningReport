@@ -7,7 +7,7 @@ public partial class ToDo
 {
     public int ToDoId { get; set; }
 
-    public int? MemberId { get; set; }
+    public int MemberId { get; set; }
 
     public string? ToDoName { get; set; }
 
@@ -32,4 +32,6 @@ public partial class ToDo
     public DateTime? UpdateToDoTime { get; set; }
 
     public bool? RepetitiveTask { get; set; }
+
+    public virtual Member Member { get; set; } = null!;
 }

@@ -14,4 +14,6 @@ public partial class CarRentalDetail
     public int? LeaseDays { get; set; }
 
     public int? LeaseSubtotal { get; set; }
+
+    public virtual CarRental Rental { get; set; } = null!;
 }

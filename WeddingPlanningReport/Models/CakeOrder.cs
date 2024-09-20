@@ -18,4 +18,6 @@ public partial class CakeOrder
     public string? Payment { get; set; }
 
     public string? CakeOrderStatus { get; set; }
+
+    public virtual ICollection<CakeOrderDetail> CakeOrderDetails { get; set; } = new List<CakeOrderDetail>();
 }

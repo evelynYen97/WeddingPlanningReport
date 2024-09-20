@@ -15,11 +15,13 @@ public partial class BudgetChart
 
     public string? ChartUnit { get; set; }
 
-    public int? RentDetailId { get; set; }
+    public int? RentalDetailId { get; set; }
 
-    public int? MenuDetailId { get; set; }
+    public int? DishesOrderDetailId { get; set; }
 
     public int? CakeDetailId { get; set; }
 
     public int? VenueId { get; set; }
+
+    public virtual Member Member { get; set; } = null!;
 }

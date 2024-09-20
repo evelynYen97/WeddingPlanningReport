@@ -14,4 +14,8 @@ public partial class EditingImgFile
     public string? Screenshot { get; set; }
 
     public string? ImgEditingName { get; set; }
+
+    public virtual ICollection<ImgUsing> ImgUsings { get; set; } = new List<ImgUsing>();
+
+    public virtual Member Member { get; set; } = null!;
 }

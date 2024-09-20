@@ -11,6 +11,8 @@ public partial class ComplaintReview
 
     public int RespondentMemberId { get; set; }
 
+    public int SharedRecordId { get; set; }
+
     public DateTime? ReportTime { get; set; }
 
     public string? ReportDetail { get; set; }
@@ -26,4 +28,6 @@ public partial class ComplaintReview
     public string? ReviewNotes { get; set; }
 
     public string? ReviewResultDescription { get; set; }
+
+    public virtual SharingWeddingPlan SharedRecord { get; set; } = null!;
 }

@@ -14,4 +14,6 @@ public partial class MemberMaterial
     public int? EstimatedLength { get; set; }
 
     public int? EstimatedWidth { get; set; }
+
+    public virtual ICollection<ImgUsing> ImgUsings { get; set; } = new List<ImgUsing>();
 }

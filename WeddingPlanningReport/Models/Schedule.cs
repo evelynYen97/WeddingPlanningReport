@@ -17,5 +17,7 @@ public partial class Schedule
 
     public string? ScheduleStageImg1 { get; set; }
 
-    public string? ScheduleStageImg2 { get; set; }
+    public virtual Event Event { get; set; } = null!;
+
+    public virtual ICollection<ScheduledStaff> ScheduledStaffs { get; set; } = new List<ScheduledStaff>();
 }

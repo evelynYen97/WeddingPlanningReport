@@ -26,4 +26,12 @@ public partial class Shop
     public string? ServiceArea { get; set; }
 
     public int? ShopStatus { get; set; }
+
+    public virtual ICollection<Cake> Cakes { get; set; } = new List<Cake>();
+
+    public virtual ICollection<Car> Cars { get; set; } = new List<Car>();
+
+    public virtual ICollection<Dish> Dishes { get; set; } = new List<Dish>();
+
+    public virtual ICollection<Venue> Venues { get; set; } = new List<Venue>();
 }

@@ -28,4 +28,6 @@ public partial class Cake
     public string? AllergenInfo { get; set; }
 
     public string? CakeContent { get; set; }
+
+    public virtual Shop Shop { get; set; } = null!;
 }

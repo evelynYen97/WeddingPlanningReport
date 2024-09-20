@@ -12,4 +12,6 @@ public partial class ScheduledStaff
     public string? PersonnelName { get; set; }
 
     public string? AssistanceContent { get; set; }
+
+    public virtual Schedule Schedule { get; set; } = null!;
 }

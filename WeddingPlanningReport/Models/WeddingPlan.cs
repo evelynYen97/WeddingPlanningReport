@@ -16,4 +16,8 @@ public partial class WeddingPlan
     public DateTime? WeddingTime { get; set; }
 
     public string? WeddingLocation { get; set; }
+
+    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+
+    public virtual Member Member { get; set; } = null!;
 }

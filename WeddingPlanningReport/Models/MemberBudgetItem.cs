@@ -18,4 +18,6 @@ public partial class MemberBudgetItem
     public int? BudgetItemSubtotal { get; set; }
 
     public string? BudgetItemSort { get; set; }
+
+    public virtual Member Member { get; set; } = null!;
 }

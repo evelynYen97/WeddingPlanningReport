@@ -18,4 +18,6 @@ public partial class Dish
     public string? DishesImg { get; set; }
 
     public string? DishesSort { get; set; }
+
+    public virtual Shop Shop { get; set; } = null!;
 }

@@ -14,4 +14,6 @@ public partial class SharingWeddingPlan
     public string? SharedName { get; set; }
 
     public string? SharedStatus { get; set; }
+
+    public virtual ICollection<ComplaintReview> ComplaintReviews { get; set; } = new List<ComplaintReview>();
 }

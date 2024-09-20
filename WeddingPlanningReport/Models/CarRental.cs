@@ -20,4 +20,6 @@ public partial class CarRental
     public int? RentalTotal { get; set; }
 
     public string? RentalStatus { get; set; }
+
+    public virtual ICollection<CarRentalDetail> CarRentalDetails { get; set; } = new List<CarRentalDetail>();
 }

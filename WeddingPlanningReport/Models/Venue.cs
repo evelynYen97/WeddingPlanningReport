@@ -17,8 +17,6 @@ public partial class Venue
 
     public string? InOurDoor { get; set; }
 
-    public bool? RoadApplication { get; set; }
-
     public string? VenueName { get; set; }
 
     public int? TableCapacity { get; set; }
@@ -32,4 +30,8 @@ public partial class Venue
     public string? VenueInfo { get; set; }
 
     public DateTime? AvailableTime { get; set; }
+
+    public string? VenueImg2 { get; set; }
+
+    public virtual Shop Shop { get; set; } = null!;
 }

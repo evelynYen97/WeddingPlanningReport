@@ -14,4 +14,6 @@ public partial class DishesOrderDetail
     public int? DishesAmount { get; set; }
 
     public int? DishesSubtotal { get; set; }
+
+    public virtual DishesOrder DishesOrder { get; set; } = null!;
 }

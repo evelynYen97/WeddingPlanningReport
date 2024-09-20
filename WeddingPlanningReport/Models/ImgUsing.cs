@@ -20,4 +20,10 @@ public partial class ImgUsing
     public string? ImgW { get; set; }
 
     public string? ImgH { get; set; }
+
+    public virtual EditingImgFile EditingImgFile { get; set; } = null!;
+
+    public virtual Material? Material { get; set; }
+
+    public virtual MemberMaterial? MemberMaterial { get; set; }
 }

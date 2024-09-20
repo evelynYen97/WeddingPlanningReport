@@ -14,4 +14,6 @@ public partial class DishesOrder
     public DateTime? DishesSupplyDate { get; set; }
 
     public int? DishesTotalPrice { get; set; }
+
+    public virtual ICollection<DishesOrderDetail> DishesOrderDetails { get; set; } = new List<DishesOrderDetail>();
 }

@@ -20,4 +20,6 @@ public partial class Car
     public string? CarImg { get; set; }
 
     public string? CarDetail { get; set; }
+
+    public virtual Shop Shop { get; set; } = null!;
 }

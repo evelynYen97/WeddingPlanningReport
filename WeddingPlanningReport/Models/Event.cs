@@ -22,4 +22,8 @@ public partial class Event
     public string? EventVenueImg1 { get; set; }
 
     public string? EventVenueImg2 { get; set; }
+
+    public virtual WeddingPlan Case { get; set; } = null!;
+
+    public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
 }
