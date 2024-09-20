@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Ven1\更換圖片區\**" />
+    <Content Remove="wwwroot\Ven1\更換圖片區\**" />
+    <EmbeddedResource Remove="wwwroot\Ven1\更換圖片區\**" />
+    <None Remove="wwwroot\Ven1\更換圖片區\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="bundleconfig.json" />
   </ItemGroup>
 
