@@ -1,10 +1,28 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.Venue>
 
-@{
-    ViewData["Title"] = "Index";
+@section Styles {
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/css/btn18settype.min.css" rel="stylesheet" />
+    <link href="~/css/cantablestyle.css" rel="stylesheet" />
+    <style>
+        .modal-body{
+            padding-top:0
+        }
+        .detail-btn{
+            background-color: #9271AC
+        }
+        .table-responsive{
+            width:1050px;
+            margin:auto;
+        }
+        /* 添加懸停效果 */
+        #ItemsTable tr:hover {
+            background-color: #A6FFFF !important; /* 懸停時高亮顏色 */
+            cursor: pointer; /* 鼠標移到行上時顯示指針 */
+        }
+    </style>
 }
 
-<!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
       dir="ltr"
@@ -34,11 +52,11 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item">商家管理</li>
+                                <li class="breadcrumb-item">商品管理</li>
                                 <li class="breadcrumb-item active" aria-current="page">婚禮場地管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage"><strong>婚禮場地管理</strong></h5>
+                                <h5 class="currentPage">婚禮場地管理</h5>
                             </div>
                         </nav>
 
@@ -104,26 +122,25 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        @* <h4 class="card-header bg-light bg-gradient ">婚禮場地</h4> *@
-                        @* <div id="dash" class="border-top border-bottom"></div> *@
-                        <div class="table-responsive text-nowrap">
+                        <div class="table-responsive text-nowrap position-relative">
                             <p>
-                                <a asp-action="Create">新建資料</a>
+                                @* <a asp-action="Create">Create New</a> *@
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="AddBtn">
+                                    <i class="bi bi-plus-lg"></i><a asp-action="Create" style="color: white;">新增</a>
+                                </button>
                             </p>
-                            <table class="table">
-                                <thead>
+                            <table class="table" id="ItemsTable">
+                                <thead class="table-primary">
                                     <tr>
-                                        <th>
-                                            編輯/詳細資料/刪除
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.MemberId)
-                                        </th>
+                                        <th></th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.ShopId)
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.VenueName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MemberId)
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.VenueFunction)
@@ -146,7 +163,6 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.AvailableTime)
                                         </th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -159,13 +175,13 @@
                                                 <a asp-action="Delete" asp-route-id="@item.VenueId">Delete</a>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.MemberId)
-                                            </td>
-                                            <td>
                                                 @Html.DisplayFor(modelItem => item.ShopId)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.VenueName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MemberId)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.VenueFunction)
@@ -183,7 +199,7 @@
                                                 @Html.DisplayFor(modelItem => item.GuestCapacity)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.VenueRentalPrice)
+                                                NT$ @Html.DisplayFor(modelItem => item.VenueRentalPrice)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.AvailableTime)
@@ -207,3 +223,36 @@
     </div>
 </body>
 </html>
+
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#ItemsTable").dataTable({
+                fixedHeader: {//確保表頭固定，但搜尋欄位能隨滾動條移動
+                    header: true
+                },
+                scrollX: true, // 啟用水平滾動
+                scrollCollapse: true, // 內容縮放時保持滾動條
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                },
+                stripeClasses: ['odd-row', 'even-row']
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+

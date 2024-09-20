@@ -1,10 +1,28 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.Material>
 
-@{
-    ViewData["Title"] = "Index";
+@section Styles {
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/css/btn18settype.min.css" rel="stylesheet" />
+    <link href="~/css/cantablestyle.css" rel="stylesheet" />
+    <style>
+        .modal-body{
+            padding-top:0
+        }
+        .detail-btn{
+            background-color: #9271AC
+        }
+        .table-responsive{
+            width:1050px;
+            margin:auto;
+        }
+        /* 添加懸停效果 */
+        #MaterialsTable tr:hover {
+            background-color: #A6FFFF !important; /* 懸停時高亮顏色 */
+            cursor: pointer; /* 鼠標移到行上時顯示指針 */
+        }
+    </style>
 }
 
-<!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
       dir="ltr"
@@ -34,10 +52,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">婚禮場地管理</li>
+                                <li class="breadcrumb-item active" aria-current="page">圖片素材管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">創建</h5>
+                                <h5 class="currentPage">圖片素材管理</h5>
                             </div>
                         </nav>
 
@@ -100,47 +118,57 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h1>Index</h1>
-                    <p>
-                        <a asp-action="Create">Create New</a>
-                    </p>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.ImageName)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.EstimatedL)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.EstimatedW)
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ImageName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EstimatedL)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.EstimatedW)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Edit" asp-route-id="@item.MaterialId">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.MaterialId">Details</a> |
-                                        <a asp-action="Delete" asp-route-id="@item.MaterialId">Delete</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+
+                    <!--  Table start -->
+                    <div class="card">
+                        <div class="table-responsive text-nowrap position-relative">
+                            <p>
+                                @* <a asp-action="Create">Create New</a> *@
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="AddBtn">
+                                    <i class="bi bi-plus-lg"></i><a asp-action="Create" style="color: white;">新增</a>
+                                </button>
+                            </p>
+                            <table class="table" id="MaterialsTable">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th></th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ImageName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.EstimatedL)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.EstimatedW)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@item.MaterialId">Edit</a> |
+                                                <a asp-action="Details" asp-route-id="@item.MaterialId">Details</a> |
+                                                <a asp-action="Delete" asp-route-id="@item.MaterialId">Delete</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ImageName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EstimatedL)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EstimatedW)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                        </table>
+
+                        </div>
+                    </div>
+                    <!-- Table end -->
                 </div>
                 <!-- Content wrapper -->
             </div>
@@ -151,3 +179,35 @@
     </div>
 </body>
 </html>
+
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#MaterialsTable").dataTable({
+                fixedHeader: {//確保表頭固定，但搜尋欄位能隨滾動條移動
+                    header: true
+                },
+                scrollCollapse: true, // 內容縮放時保持滾動條
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                },
+                stripeClasses: ['odd-row', 'even-row']
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
