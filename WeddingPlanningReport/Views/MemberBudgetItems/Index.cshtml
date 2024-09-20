@@ -203,28 +203,6 @@
     <script>
         $(document).ready(function () {
             $("#budgetItemsTable").dataTable({
-                ajax: {
-                    type: "GET",
-                    url: "/MemberBudgetItems/IndexJson",
-                    datatype: "json",
-                    dataSrc: function (json) {
-                        return json;
-                    },
-                },
-                columns: [
-                    {
-                        "data": "budgetItemId", "render": function (data) {
-                            return "<button class='button-18 edit-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>✒️</button>" + " " +
-                                "<button class='button-18 delete-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>🗑️</button>";
-                        }, "orderable": false, "width": "5%"
-                    },
-                    { "data": "memberId", "width": "5%" },
-                    { "data": "budgetItemDetail", "width": "20%" },
-                    { "data": "budgetItemPrice", "width": "10%" },
-                    { "data": "budgetItemAmount", "width": "10%" },
-                    { "data": "budgetItemSubtotal", "width": "10%" },
-                    { "data": "budgetItemSort", "width": "10%" },
-                ],
                 fixedHeader: {
                     header: true
                 },
