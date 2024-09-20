@@ -4,80 +4,219 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="../assets/"
+      data-template="vertical-menu-template-free">
+<head>
 
-<h4>Cake</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ShopId" class="control-label"></label>
-                <input asp-for="ShopId" class="form-control" />
-                <span asp-validation-for="ShopId" class="text-danger"></span>
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+                    <!-- header start  -->
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb py-1 mb-0 mt-2">
+                                <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="">上層頁面名稱(若無可刪)</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">首頁</li>
+                            </ol>
+                            <div class="row d-block">
+                                <h5 class="currentPage">首頁</h5>
+                            </div>
+                        </nav>
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">登入者姓名</span>
+                                                    <small class="text-muted">Admin</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-cog me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="login.html">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">Log Out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+                    <!-- header end  -->
+                </nav>
+
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+
+                    <!--  Table start -->
+                    <div class="card">
+                        <h5 class="card-header bg-light bg-gradient ">表格標題</h5>
+                        <div class="table-responsive text-nowrap">
+                            <h1>Create</h1>
+
+                            <h4>Cake</h4>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form asp-action="Create" enctype="multipart/form-data">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label asp-for="ShopId" class="control-label"></label>
+                                            <input asp-for="ShopId" class="form-control" />
+                                            <span asp-validation-for="ShopId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CakeStyles" class="control-label"></label>
+                                            <input asp-for="CakeStyles" class="form-control" />
+                                            <span asp-validation-for="CakeStyles" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CakeName" class="control-label"></label>
+                                            <input asp-for="CakeName" class="form-control" />
+                                            <span asp-validation-for="CakeName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>上傳圖片</label>
+                                            <input type="file" name="ImageFile" class="form-control" id="imageUpload" />
+                                        </div>
+                                        <!-- 預覽圖片區域 -->
+                                        <div class="form-group">
+                                            <img id="imagePreview" src="#" alt="ImgPreview" style="max-width: 300px; max-height: 300px; display:none;" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CakeDescription" class="control-label"></label>
+                                            <input asp-for="CakeDescription" class="form-control" />
+                                            <span asp-validation-for="CakeDescription" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CakePrice" class="control-label"></label>
+                                            <input asp-for="CakePrice" class="form-control" />
+                                            <span asp-validation-for="CakePrice" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CakeStatus" class="control-label"></label>
+                                            <input asp-for="CakeStatus" class="form-control" />
+                                            <span asp-validation-for="CakeStatus" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CakeStock" class="control-label"></label>
+                                            <input asp-for="CakeStock" class="form-control" />
+                                            <span asp-validation-for="CakeStock" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CakeAnnotation" class="control-label"></label>
+                                            <input asp-for="CakeAnnotation" class="form-control" />
+                                            <span asp-validation-for="CakeAnnotation" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="AllergenInfo" class="control-label"></label>
+                                            <input asp-for="AllergenInfo" class="form-control" />
+                                            <span asp-validation-for="AllergenInfo" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="CakeContent" class="control-label"></label>
+                                            <input asp-for="CakeContent" class="form-control" />
+                                            <span asp-validation-for="CakeContent" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Create" class="btn btn-primary" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-action="Index">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Table end -->
+                </div>
+                <!-- Content wrapper -->
             </div>
-            <div class="form-group">
-                <label asp-for="CakeStyles" class="control-label"></label>
-                <input asp-for="CakeStyles" class="form-control" />
-                <span asp-validation-for="CakeStyles" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CakeName" class="control-label"></label>
-                <input asp-for="CakeName" class="form-control" />
-                <span asp-validation-for="CakeName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CakeImg" class="control-label"></label>
-                <input asp-for="CakeImg" class="form-control" />
-                <span asp-validation-for="CakeImg" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CakeDescription" class="control-label"></label>
-                <input asp-for="CakeDescription" class="form-control" />
-                <span asp-validation-for="CakeDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CakePrice" class="control-label"></label>
-                <input asp-for="CakePrice" class="form-control" />
-                <span asp-validation-for="CakePrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CakeStatus" class="control-label"></label>
-                <input asp-for="CakeStatus" class="form-control" />
-                <span asp-validation-for="CakeStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CakeStock" class="control-label"></label>
-                <input asp-for="CakeStock" class="form-control" />
-                <span asp-validation-for="CakeStock" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CakeAnnotation" class="control-label"></label>
-                <input asp-for="CakeAnnotation" class="form-control" />
-                <span asp-validation-for="CakeAnnotation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AllergenInfo" class="control-label"></label>
-                <input asp-for="AllergenInfo" class="form-control" />
-                <span asp-validation-for="AllergenInfo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CakeContent" class="control-label"></label>
-                <input asp-for="CakeContent" class="form-control" />
-                <span asp-validation-for="CakeContent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+            <!-- / Layout page -->
+        </div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-</div>
+</body>
+</html>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <!-- 引入外部的 preview.js 文件 -->
+    
+    <script>
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                // 當文件讀取完成後，顯示圖片預覽
+                reader.onload = function(e) {
+                    const imagePreview = document.getElementById('imagePreview');
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+
+                // 開始讀取圖片文件
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 }

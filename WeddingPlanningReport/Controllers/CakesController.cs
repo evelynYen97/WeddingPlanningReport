@@ -21,8 +21,17 @@ namespace WeddingPlanningReport.Controllers
         // GET: Cakes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cakes.ToListAsync());
+            return View( _context.Cakes.ToList());
         }
+
+        //GET:Cakes/GetPicture(讀取圖片)
+        //public async Task<FileResult> GetPicture(int id)
+        //{ 
+        //    Cake c = await _context.Cakes.FindAsync(id);
+        //    byte[] ImageContent = c?.CakeImg;
+        //    return File(ImageContent, "image/jpeg");
+        //}
+
 
         // GET: Cakes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -53,8 +62,27 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CakeId,ShopId,CakeStyles,CakeName,CakeImg,CakeDescription,CakePrice,CakeStatus,CakeStock,CakeAnnotation,AllergenInfo,CakeContent")] Cake cake)
+        public async Task<IActionResult> Create([Bind("CakeId,ShopId,CakeStyles,CakeName,CakeDescription,CakePrice,CakeStatus,CakeStock,CakeAnnotation,AllergenInfo,CakeContent")] Cake cake, IFormFile ImageFile)
+            //加入圖片開始
         {
+            if (ImageFile != null)
+            {
+                // 獲取檔名
+                var fileName = Path.GetFileName(ImageFile.FileName);              
+
+                // 定義儲存路徑
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/cakesImg", fileName);
+
+                // 將圖片檔案儲存到指定位置
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ImageFile.CopyToAsync(stream);
+                }
+
+                // 將檔名儲存到Cake模型中
+                cake.CakeImg = fileName;
+            }
+            //加入圖片結束
             if (ModelState.IsValid)
             {
                 _context.Add(cake);
@@ -65,7 +93,7 @@ namespace WeddingPlanningReport.Controllers
         }
 
         // GET: Cakes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id )
         {
             if (id == null)
             {
@@ -85,34 +113,55 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CakeId,ShopId,CakeStyles,CakeName,CakeImg,CakeDescription,CakePrice,CakeStatus,CakeStock,CakeAnnotation,AllergenInfo,CakeContent")] Cake cake)
+        public async Task<IActionResult> Edit(int id, [Bind("CakeId,ShopId,CakeStyles,CakeName,CakeDescription,CakePrice,CakeStatus,CakeStock,CakeAnnotation,AllergenInfo,CakeContent")] Cake cake, IFormFile ImageFile)
         {
             if (id != cake.CakeId)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (ImageFile != null)
             {
-                try
+                // 獲取檔名
+                var fileName = Path.GetFileName(ImageFile.FileName);
+
+                // 定義儲存路徑
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/cakesImg", fileName);
+
+                // 將圖片檔案儲存到指定位置
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    _context.Update(cake);
-                    await _context.SaveChangesAsync();
+                    await ImageFile.CopyToAsync(stream);
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CakeExists(cake.CakeId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+
+                // 將檔名儲存到Cake模型中
+                cake.CakeImg = fileName;
             }
-            return View(cake);
+
+            if (!ModelState.IsValid)
+            {
+                // 如果模型狀態無效，重新顯示編輯頁面
+                return View(cake);
+            }
+
+            try
+            {
+                _context.Update(cake);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CakeExists(cake.CakeId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Cakes/Delete/5
