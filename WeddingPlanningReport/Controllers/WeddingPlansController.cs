@@ -25,11 +25,6 @@ namespace WeddingPlanningReport.Controllers
             return View( _context.WeddingPlans);
         }
 
-        // GET: WeddingPlans/IndexJson
-        public JsonResult IndexJson()
-        {
-            return Json(_context.WeddingPlans);
-        }
 
         // GET: WeddingPlans/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -66,7 +61,7 @@ namespace WeddingPlanningReport.Controllers
             {
                 _context.Add(weddingPlan);
                 await _context.SaveChangesAsync();
-                return Json(new { success = true, message = "成功創建！" });
+                return RedirectToAction(nameof(Index));
             }
             return View(weddingPlan);
         }
@@ -117,7 +112,7 @@ namespace WeddingPlanningReport.Controllers
                         throw;
                     }
                 }
-                return Json(new { success = true, message = "成功創建！" });
+                return RedirectToAction(nameof(Index));
             }
             return View(weddingPlan);
         }

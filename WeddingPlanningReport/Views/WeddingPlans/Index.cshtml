@@ -160,7 +160,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                @* <tbody>
+                                <tbody>
                                     @foreach (var weddingplanitem in Model)
                                     {
                                         <tr>
@@ -185,7 +185,7 @@
                                             </td>
                                         </tr>
                                     }
-                                </tbody> *@
+                                </tbody>
                             </table>
 
                         </div>
@@ -209,28 +209,6 @@
     <script>
         $(document).ready(function(){
             $("#myTable").dataTable({
-                ajax: {
-                    type: "GET",
-                    url: "/WeddingPlans/IndexJson",
-                    datatype: "json",
-                    dataSrc: function (json) {
-                        return json;
-                    },
-                },
-                columns: [
-                    {
-                        "data": "caseId", "render": function (data) {
-                            return "<button class='btn button-18 fs-6 detail-btn border' data-id='" + data + "' >查看活動項目</button>" + " " +
-                            "<button class='button-18 edit-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>✒️</button>" + " " +
-                                "<button class='button-18 delete-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>🗑️</button>";
-                        }, "orderable": false
-                    },
-                    { "data": "memberId", "width": "5%" },
-                    { "data": "weddingName", "width": "20%" },
-                    { "data": "weddingTime", "width": "20%" },
-                    { "data": "weddingLocation", "width": "20%" },
-                    { "data": "introduction", "width": "35%" },
-                ],
                 fixedHeader: {
                     header: true
                 },
@@ -243,24 +221,24 @@
                 $('.modal-body').load('/WeddingPlans/Create #formCreate', function () {
                     $('#myModalLabel').text("新增婚禮計劃書");
                     $('#myModal').modal('show');
-                    $(document).off('submit', '#formCreate').on('submit', '#formCreate', function (e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: $(this).attr('action'),
-                            type: 'POST',
-                            data: $(this).serialize(),
-                            success: function (response){
-                                if (response.success) {
-                                    alert("婚禮計劃書創建成功");
-                                    $('#myModal').modal('hide');
-                                    location.reload();
-                                }
-                                else {
-                                    alert("請確實填寫必填欄位會員ID及計劃書名稱");
-                                }
-                            }
-                        })
-                    })
+                    // $(document).off('submit', '#formCreate').on('submit', '#formCreate', function (e) {
+                    //     e.preventDefault();
+                    //     $.ajax({
+                    //         url: $(this).attr('action'),
+                    //         type: 'POST',
+                    //         data: $(this).serialize(),
+                    //         success: function (response){
+                    //             if (response.success) {
+                    //                 alert("婚禮計劃書創建成功");
+                    //                 $('#myModal').modal('hide');
+                    //                 location.reload();
+                    //             }
+                    //             else {
+                    //                 alert("請確實填寫必填欄位會員ID及計劃書名稱");
+                    //             }
+                    //         }
+                    //     })
+                    // })
                 }); // 動態加載內容
             });
 
@@ -327,5 +305,9 @@
 
 
 
-
+@* "data": "caseId", "render": function (data) {
+                            return "<button class='btn button-18 fs-6 detail-btn border' data-id='" + data + "'>查看活動項目</button>" + " " +
+                            "<button class='button-18 edit-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>✒️</button>" + " " +
+                                "<button class='button-18 delete-btn border' data-id='" + data + "' data-bs-toggle='modal' data-bs-target='#myModal'>🗑️</button>";
+                        }, "orderable": false *@
 
