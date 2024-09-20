@@ -33,5 +33,5 @@ public partial class Venue
 
     public string? VenueImg2 { get; set; }
 
-    public virtual Shop Shop { get; set; } = null!;
+    public bool? IsDelete { get; set; }
 }

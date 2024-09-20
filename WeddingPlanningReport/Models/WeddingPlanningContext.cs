@@ -82,10 +82,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.MemberId).HasColumnName("memberID");
             entity.Property(e => e.RentalDetailId).HasColumnName("rentalDetailID");
             entity.Property(e => e.VenueId).HasColumnName("venueID");
-
-            entity.HasOne(d => d.Member).WithMany(p => p.BudgetCharts)
-                .HasForeignKey(d => d.MemberId)
-                .HasConstraintName("FK_budgetChart_member");
         });
 
         modelBuilder.Entity<Cake>(entity =>
@@ -118,10 +114,6 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("cakeStyles");
             entity.Property(e => e.ShopId).HasColumnName("shopID");
-
-            entity.HasOne(d => d.Shop).WithMany(p => p.Cakes)
-                .HasForeignKey(d => d.ShopId)
-                .HasConstraintName("FK_cake_shop");
         });
 
         modelBuilder.Entity<CakeOrder>(entity =>
@@ -155,10 +147,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.CakeOrderId).HasColumnName("cakeOrderID");
             entity.Property(e => e.CakePrice).HasColumnName("cakePrice");
             entity.Property(e => e.CakeSubtotal).HasColumnName("cakeSubtotal");
-
-            entity.HasOne(d => d.CakeOrder).WithMany(p => p.CakeOrderDetails)
-                .HasForeignKey(d => d.CakeOrderId)
-                .HasConstraintName("FK_cakeOrderDetail_cakeOrder");
         });
 
         modelBuilder.Entity<Car>(entity =>
@@ -183,10 +171,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.PassengerCapacity).HasColumnName("passengerCapacity");
             entity.Property(e => e.RentalPerDay).HasColumnName("rentalPerDay");
             entity.Property(e => e.ShopId).HasColumnName("shopID");
-
-            entity.HasOne(d => d.Shop).WithMany(p => p.Cars)
-                .HasForeignKey(d => d.ShopId)
-                .HasConstraintName("FK_car_shop");
         });
 
         modelBuilder.Entity<CarRental>(entity =>
@@ -226,10 +210,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.LeaseDays).HasColumnName("leaseDays");
             entity.Property(e => e.LeaseSubtotal).HasColumnName("leaseSubtotal");
             entity.Property(e => e.RentalId).HasColumnName("rentalID");
-
-            entity.HasOne(d => d.Rental).WithMany(p => p.CarRentalDetails)
-                .HasForeignKey(d => d.RentalId)
-                .HasConstraintName("FK_carRentalDetail_carRental");
         });
 
         modelBuilder.Entity<ComplaintReview>(entity =>
@@ -264,10 +244,6 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("reviewerName");
             entity.Property(e => e.SharedRecordId).HasColumnName("sharedRecordID");
-
-            entity.HasOne(d => d.SharedRecord).WithMany(p => p.ComplaintReviews)
-                .HasForeignKey(d => d.SharedRecordId)
-                .HasConstraintName("FK_complaintReview_complaintReview");
         });
 
         modelBuilder.Entity<Dish>(entity =>
@@ -291,10 +267,6 @@ public partial class WeddingPlanningContext : DbContext
                 .HasColumnName("dishesSort");
             entity.Property(e => e.PricePerTable).HasColumnName("pricePerTable");
             entity.Property(e => e.ShopId).HasColumnName("shopID");
-
-            entity.HasOne(d => d.Shop).WithMany(p => p.Dishes)
-                .HasForeignKey(d => d.ShopId)
-                .HasConstraintName("FK_dishes_shop");
         });
 
         modelBuilder.Entity<DishesOrder>(entity =>
@@ -321,10 +293,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.DishesId).HasColumnName("dishesID");
             entity.Property(e => e.DishesOrderId).HasColumnName("dishesOrderID");
             entity.Property(e => e.DishesSubtotal).HasColumnName("dishesSubtotal");
-
-            entity.HasOne(d => d.DishesOrder).WithMany(p => p.DishesOrderDetails)
-                .HasForeignKey(d => d.DishesOrderId)
-                .HasConstraintName("FK_dishesOrderDetail_dishesOrder");
         });
 
         modelBuilder.Entity<EditingImgFile>(entity =>
@@ -344,10 +312,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.Screenshot)
                 .HasMaxLength(200)
                 .HasColumnName("screenshot");
-
-            entity.HasOne(d => d.Member).WithMany(p => p.EditingImgFiles)
-                .HasForeignKey(d => d.MemberId)
-                .HasConstraintName("FK_editingImgFile_member");
         });
 
         modelBuilder.Entity<Event>(entity =>
@@ -379,10 +343,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.EventVenueImg2)
                 .HasMaxLength(200)
                 .HasColumnName("eventVenueImg2");
-
-            entity.HasOne(d => d.Case).WithMany(p => p.Events)
-                .HasForeignKey(d => d.CaseId)
-                .HasConstraintName("FK_event_weddingPlan");
         });
 
         modelBuilder.Entity<ImgUsing>(entity =>
@@ -405,20 +365,6 @@ public partial class WeddingPlanningContext : DbContext
                 .HasColumnName("imgY");
             entity.Property(e => e.MaterialId).HasColumnName("materialID");
             entity.Property(e => e.MemberMaterialId).HasColumnName("memberMaterialID");
-
-            entity.HasOne(d => d.EditingImgFile).WithMany(p => p.ImgUsings)
-                .HasForeignKey(d => d.EditingImgFileId)
-                .HasConstraintName("FK_imgUsing_editingImgFile");
-
-            entity.HasOne(d => d.Material).WithMany(p => p.ImgUsings)
-                .HasForeignKey(d => d.MaterialId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_imgUsing_material");
-
-            entity.HasOne(d => d.MemberMaterial).WithMany(p => p.ImgUsings)
-                .HasForeignKey(d => d.MemberMaterialId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_imgUsing_memberMaterial");
         });
 
         modelBuilder.Entity<Material>(entity =>
@@ -507,10 +453,6 @@ public partial class WeddingPlanningContext : DbContext
                 .HasColumnName("budgetItemSort");
             entity.Property(e => e.BudgetItemSubtotal).HasColumnName("budgetItemSubtotal");
             entity.Property(e => e.MemberId).HasColumnName("memberID");
-
-            entity.HasOne(d => d.Member).WithMany(p => p.MemberBudgetItems)
-                .HasForeignKey(d => d.MemberId)
-                .HasConstraintName("FK_memberBudgetItems_member");
         });
 
         modelBuilder.Entity<MemberMaterial>(entity =>
@@ -544,10 +486,6 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(500)
                 .HasColumnName("scheduleStageNotes");
             entity.Property(e => e.ScheduleTime).HasColumnName("scheduleTime");
-
-            entity.HasOne(d => d.Event).WithMany(p => p.Schedules)
-                .HasForeignKey(d => d.EventId)
-                .HasConstraintName("FK_schedule_event");
         });
 
         modelBuilder.Entity<ScheduledStaff>(entity =>
@@ -564,10 +502,6 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("personnelName");
             entity.Property(e => e.ScheduleId).HasColumnName("scheduleID");
-
-            entity.HasOne(d => d.Schedule).WithMany(p => p.ScheduledStaffs)
-                .HasForeignKey(d => d.ScheduleId)
-                .HasConstraintName("FK_scheduledStaff_schedule");
         });
 
         modelBuilder.Entity<SharingWeddingPlan>(entity =>
@@ -664,10 +598,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.UpdateToDoTime)
                 .HasPrecision(0)
                 .HasColumnName("updateToDoTime");
-
-            entity.HasOne(d => d.Member).WithMany(p => p.ToDos)
-                .HasForeignKey(d => d.MemberId)
-                .HasConstraintName("FK_ToDo_member");
         });
 
         modelBuilder.Entity<Venue>(entity =>
@@ -702,10 +632,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.VenueStyle)
                 .HasMaxLength(50)
                 .HasColumnName("venueStyle");
-
-            entity.HasOne(d => d.Shop).WithMany(p => p.Venues)
-                .HasForeignKey(d => d.ShopId)
-                .HasConstraintName("FK_venue_shop");
         });
 
         modelBuilder.Entity<WeddingPlan>(entity =>
@@ -726,10 +652,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.WeddingTime)
                 .HasPrecision(0)
                 .HasColumnName("weddingTime");
-
-            entity.HasOne(d => d.Member).WithMany(p => p.WeddingPlans)
-                .HasForeignKey(d => d.MemberId)
-                .HasConstraintName("FK_weddingPlan_member");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -19,5 +19,5 @@ public partial class Dish
 
     public string? DishesSort { get; set; }
 
-    public virtual Shop Shop { get; set; } = null!;
+    public bool? IsDelete { get; set; }
 }

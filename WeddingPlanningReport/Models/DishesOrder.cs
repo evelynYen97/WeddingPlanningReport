@@ -15,5 +15,5 @@ public partial class DishesOrder
 
     public int? DishesTotalPrice { get; set; }
 
-    public virtual ICollection<DishesOrderDetail> DishesOrderDetails { get; set; } = new List<DishesOrderDetail>();
+    public bool? IsDelete { get; set; }
 }

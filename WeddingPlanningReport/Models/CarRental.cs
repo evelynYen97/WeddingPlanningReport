@@ -21,5 +21,5 @@ public partial class CarRental
 
     public string? RentalStatus { get; set; }
 
-    public virtual ICollection<CarRentalDetail> CarRentalDetails { get; set; } = new List<CarRentalDetail>();
+    public bool? IsDelete { get; set; }
 }

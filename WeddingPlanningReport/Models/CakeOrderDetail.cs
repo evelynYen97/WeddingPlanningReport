@@ -16,6 +16,4 @@ public partial class CakeOrderDetail
     public int? CakeAmount { get; set; }
 
     public int? CakeSubtotal { get; set; }
-
-    public virtual CakeOrder CakeOrder { get; set; } = null!;
 }

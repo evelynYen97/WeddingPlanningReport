@@ -13,5 +13,5 @@ public partial class ScheduledStaff
 
     public string? AssistanceContent { get; set; }
 
-    public virtual Schedule Schedule { get; set; } = null!;
+    public bool? IsDelete { get; set; }
 }

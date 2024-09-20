@@ -43,13 +43,5 @@ public partial class Member
 
     public string? BudgetTableImg { get; set; }
 
-    public virtual ICollection<BudgetChart> BudgetCharts { get; set; } = new List<BudgetChart>();
-
-    public virtual ICollection<EditingImgFile> EditingImgFiles { get; set; } = new List<EditingImgFile>();
-
-    public virtual ICollection<MemberBudgetItem> MemberBudgetItems { get; set; } = new List<MemberBudgetItem>();
-
-    public virtual ICollection<ToDo> ToDos { get; set; } = new List<ToDo>();
-
-    public virtual ICollection<WeddingPlan> WeddingPlans { get; set; } = new List<WeddingPlan>();
+    public bool? IsDelete { get; set; }
 }

@@ -19,5 +19,5 @@ public partial class CakeOrder
 
     public string? CakeOrderStatus { get; set; }
 
-    public virtual ICollection<CakeOrderDetail> CakeOrderDetails { get; set; } = new List<CakeOrderDetail>();
+    public bool? IsDelete { get; set; }
 }

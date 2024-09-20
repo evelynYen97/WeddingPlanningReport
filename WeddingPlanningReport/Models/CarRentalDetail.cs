@@ -15,5 +15,5 @@ public partial class CarRentalDetail
 
     public int? LeaseSubtotal { get; set; }
 
-    public virtual CarRental Rental { get; set; } = null!;
+    public bool? IsDelete { get; set; }
 }

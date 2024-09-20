@@ -32,6 +32,4 @@ public partial class ToDo
     public DateTime? UpdateToDoTime { get; set; }
 
     public bool? RepetitiveTask { get; set; }
-
-    public virtual Member Member { get; set; } = null!;
 }

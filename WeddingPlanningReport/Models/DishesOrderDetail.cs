@@ -15,5 +15,5 @@ public partial class DishesOrderDetail
 
     public int? DishesSubtotal { get; set; }
 
-    public virtual DishesOrder DishesOrder { get; set; } = null!;
+    public bool? IsDelete { get; set; }
 }

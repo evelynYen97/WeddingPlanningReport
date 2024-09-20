@@ -22,6 +22,4 @@ public partial class BudgetChart
     public int? CakeDetailId { get; set; }
 
     public int? VenueId { get; set; }
-
-    public virtual Member Member { get; set; } = null!;
 }

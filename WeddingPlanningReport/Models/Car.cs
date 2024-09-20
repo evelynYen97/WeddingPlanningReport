@@ -21,5 +21,5 @@ public partial class Car
 
     public string? CarDetail { get; set; }
 
-    public virtual Shop Shop { get; set; } = null!;
+    public bool? IsDelete { get; set; }
 }

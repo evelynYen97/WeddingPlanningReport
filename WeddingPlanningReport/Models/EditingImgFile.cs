@@ -15,7 +15,5 @@ public partial class EditingImgFile
 
     public string? ImgEditingName { get; set; }
 
-    public virtual ICollection<ImgUsing> ImgUsings { get; set; } = new List<ImgUsing>();
-
-    public virtual Member Member { get; set; } = null!;
+    public bool? IsDelete { get; set; }
 }

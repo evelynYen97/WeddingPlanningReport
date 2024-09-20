@@ -29,5 +29,5 @@ public partial class ComplaintReview
 
     public string? ReviewResultDescription { get; set; }
 
-    public virtual SharingWeddingPlan SharedRecord { get; set; } = null!;
+    public bool? IsDelete { get; set; }
 }

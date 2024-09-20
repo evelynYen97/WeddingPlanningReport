@@ -17,7 +17,5 @@ public partial class WeddingPlan
 
     public string? WeddingLocation { get; set; }
 
-    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
-
-    public virtual Member Member { get; set; } = null!;
+    public bool? IsDelete { get; set; }
 }
