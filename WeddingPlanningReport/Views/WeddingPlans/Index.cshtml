@@ -165,8 +165,9 @@
                                     {
                                         <tr>
                                             <td>
-                                                <a asp-controller="WeddingPlans" asp-action="Edit" asp-route-id="@weddingplanitem.CaseId">Edit</a> |
-                                                <a asp-controller="WeddingPlans" asp-action="Delete" asp-route-id="@weddingplanitem.CaseId">Delete</a>
+                                                <button class="btn fs-6 detail-btn border" data-id="@weddingplanitem.CaseId">查看活動項目</button> |
+                                                <button class="btn fs-5 detail-btn border" asp-controller="WeddingPlans" asp-action="Edit" asp-route-id="@weddingplanitem.CaseId">✒️</button> |
+                                                <button class="btn fs-5 detail-btn border" asp-controller="WeddingPlans" asp-action="Delete" asp-route-id="@weddingplanitem.CaseId">🗑️</button>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.MemberId)
@@ -221,24 +222,24 @@
                 $('.modal-body').load('/WeddingPlans/Create #formCreate', function () {
                     $('#myModalLabel').text("新增婚禮計劃書");
                     $('#myModal').modal('show');
-                    // $(document).off('submit', '#formCreate').on('submit', '#formCreate', function (e) {
-                    //     e.preventDefault();
-                    //     $.ajax({
-                    //         url: $(this).attr('action'),
-                    //         type: 'POST',
-                    //         data: $(this).serialize(),
-                    //         success: function (response){
-                    //             if (response.success) {
-                    //                 alert("婚禮計劃書創建成功");
-                    //                 $('#myModal').modal('hide');
-                    //                 location.reload();
-                    //             }
-                    //             else {
-                    //                 alert("請確實填寫必填欄位會員ID及計劃書名稱");
-                    //             }
-                    //         }
-                    //     })
-                    // })
+                    $(document).off('submit', '#formCreate').on('submit', '#formCreate', function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: $(this).attr('action'),
+                            type: 'POST',
+                            data: $(this).serialize(),
+                            success: function (response){
+                                if (response.success) {
+                                    alert("婚禮計劃書創建成功");
+                                    $('#myModal').modal('hide');
+                                    location.reload();
+                                }
+                                else {
+                                    alert("請確實填寫必填欄位會員ID及計劃書名稱");
+                                }
+                            }
+                        })
+                    })
                 }); // 動態加載內容
             });
 
