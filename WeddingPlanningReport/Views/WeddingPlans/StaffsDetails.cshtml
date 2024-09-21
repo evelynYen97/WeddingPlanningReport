@@ -20,6 +20,9 @@
             margin:auto;
         }
 
+        #thName, #tdName{
+            width:500px
+        }
     </style>
 }
 
@@ -123,12 +126,6 @@
                         <div id="dash" class="border-top border-bottom"></div>
                         <div class="table-responsive text-nowrap position-relative">
 
-                            <p>
-                                @* <a asp-action="Create">Create New</a> *@
-                                <a class="btn btn-primary" asp-action="Create" id="AddBtn">
-                                    <i class="bi bi-plus-lg"></i> 新增
-                                </a>
-                            </p>
                             <table class="table" id="budgetItemsTable">
                                 <thead class="table-primary">
                                     <tr>
@@ -136,14 +133,11 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.ScheduleId)
                                         </th>
-                                        <th>
+                                        <th >
                                             @Html.DisplayNameFor(model => model.PersonnelName)
                                         </th>
-                                        <th>
+                                        <th id ="thName">
                                             @Html.DisplayNameFor(model => model.AssistanceContent)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.IsDelete)
                                         </th>
                                         @* <th>
                                         @Html.DisplayNameFor(model => model.IsDelete)
@@ -155,20 +149,16 @@
                                     {
                                         <tr>
                                             <td>
-                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.PersonnelId">✒️</a> |
-                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.PersonnelId">🗑️</a>
+                                                <a class="btn button-18 border" asp-controller="ScheduledStaffs" asp-action="Edit" asp-route-id="@item.PersonnelId">✒️</a>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ScheduleId)
                                             </td>
-                                            <td>
+                                            <td >
                                                 @Html.DisplayFor(modelItem => item.PersonnelName)
                                             </td>
-                                            <td>
+                                            <td id ="tdName">
                                                 @Html.DisplayFor(modelItem => item.AssistanceContent)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.IsDelete)
                                             </td>
                                             @* <td>
                                         @Html.DisplayFor(modelItem => item.IsDelete)

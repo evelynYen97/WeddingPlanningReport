@@ -14,6 +14,11 @@
         .detail-btn{
             background-color: #9271AC
         }
+
+        .button-18 {
+            background-color: #ffffff;
+            color: #62536F;
+        }
         .table-responsive{
             width:1000px;
             margin:auto;
@@ -148,8 +153,8 @@
                                     {
                                         <tr>
                                             <td>
-                                                <a class="btn button-18" asp-controller="WeddingPlans" asp-action="StaffsDetails" asp-route-id="@item.EventId">查看工作人員</a> |
-                                                <a class="btn button-18" asp-controller="Schedules" asp-action="Edit" asp-route-id="@item.EventId">✒️</a>
+                                                <a class="btn button-18 border" asp-controller="WeddingPlans" asp-action="StaffsDetails" asp-route-id="@item.EventId">查看工作人員</a> |
+                                                <a class="btn button-18 border" asp-controller="Schedules" asp-action="Edit" asp-route-id="@item.EventId">✒️</a>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EventId)
