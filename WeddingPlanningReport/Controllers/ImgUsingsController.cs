@@ -18,14 +18,18 @@ namespace WeddingPlanningReport.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.ImgUsings.ToListAsync());
+        }
+
         // GET: ImgUsings
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> IndexMore(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
             // 根据传入的 id 过滤 ImgUsings 数据
             var imgUsings = await _context.ImgUsings
                 .Where(iu => iu.EditingImgFileId == id) // 假设 ImgUsings 表中有一个外键字段来关联到 EditingImgFiles
@@ -37,7 +41,6 @@ namespace WeddingPlanningReport.Controllers
             }
             return View(imgUsings); // 返回过滤后的数据
         }
-
 
         // GET: ImgUsings/Details/5
         public async Task<IActionResult> Details(int? id)

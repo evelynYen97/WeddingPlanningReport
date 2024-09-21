@@ -39,7 +39,7 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
             // 假设 `ImgUsingsController` 的 `Index` 方法接受一个 `id` 参数
-            return RedirectToAction("Index", "ImgUsings", new { id = editingImgFile.EditingImgFileId });
+            return RedirectToAction("IndexMore", "ImgUsings", new { id = editingImgFile.EditingImgFileId });
         }
 
 

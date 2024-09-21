@@ -1,26 +1,24 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.ImgUsing>
 
-@{
-    ViewData["Title"] = "Index";
-}
-
 @section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <link href="~/css/cantablestyle.css" rel="stylesheet" />
     <style>
-        .modal-body{
-            padding-top:0
+        .modal-body {
+            padding-top: 0
         }
-        .detail-btn{
+
+        .detail-btn {
             background-color: #9271AC
         }
-        .table-responsive{
-            width:1050px;
-            margin:auto;
+
+        .table-responsive {
+            width: 1050px;
+            margin: auto;
         }
         /* 添加懸停效果 */
-        #ImageUseTable tr:hover {
+        #ItemsTable tr:hover {
             background-color: #A6FFFF !important; /* 懸停時高亮顏色 */
             cursor: pointer; /* 鼠標移到行上時顯示指針 */
         }
@@ -122,10 +120,11 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
+
                     <!--  Table start -->
                     <div class="card">
                         <div class="table-responsive text-nowrap position-relative">
-                            <table class="table" id="ImageUseTable">
+                            <table class="table" id="ImageUseTable1">
                                 <thead class="table-primary">
                                     <tr>
                                         <th>
@@ -166,8 +165,7 @@
                                                 @Html.DisplayFor(modelItem => item.MemberMaterialId)
                                             </td>
                                             <td>
-                                                @* 要去素材庫用id查素材名稱 *@
-                                                <img src="~/圖片與圖層/圖片/網站/@Html.DisplayFor(modelItem => item.MaterialId)" width="40px" height="auto"/>
+                                                @Html.DisplayFor(modelItem => item.MaterialId)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ImgX)
@@ -185,7 +183,6 @@
                                                 @Html.DisplayFor(modelItem => item.IsDelete)
                                             </td>
                                             <td>
-                                                <a asp-action="Edit" asp-route-id="@item.ImgUsingId">Edit</a> |
                                                 <a asp-action="Delete" asp-route-id="@item.ImgUsingId">Delete</a>
                                             </td>
                                         </tr>
@@ -212,7 +209,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("#ImageUseTable").dataTable({
+            $("#ImageUseTable1").dataTable({
                 fixedHeader: {//確保表頭固定，但搜尋欄位能隨滾動條移動
                     header: true
                 },
@@ -225,13 +222,3 @@
         });
     </script>
 }
-
-
-
-
-
-
-
-
-
-

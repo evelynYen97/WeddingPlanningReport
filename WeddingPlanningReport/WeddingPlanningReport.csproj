@@ -34,7 +34,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\圖片與圖層\圖層\" />
-    <Folder Include="wwwroot\圖片與圖層\圖片\" />
+    <Folder Include="wwwroot\圖片與圖層\圖片\會員提供圖\" />
   </ItemGroup>
 
 </Project>
