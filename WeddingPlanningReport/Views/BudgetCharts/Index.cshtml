@@ -122,12 +122,6 @@
                         <div id="dash" class="border-top border-bottom"></div>
                         <div class="table-responsive text-nowrap position-relative">
 
-                            <p>
-                                @* <a asp-action="Create">Create New</a> *@
-                                <a class="btn btn-primary" asp-action="Create" id="AddBtn">
-                                    <i class="bi bi-plus-lg"></i> 新增
-                                </a>
-                            </p>
                             <table class="table" id="budgetItemsTable">
                                 <thead class="table-primary">
                                     <tr>
@@ -163,8 +157,9 @@
                                                 @Html.DisplayFor(modelItem => item.ChartUnit)
                                             </td>
                                             <td>
-                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.BudgetChartId">✒️</a> |
-                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.BudgetChartId">🗑️</a>
+                                                <button class="btn btn-primary" onclick="getOrderDetails('@item.BudgetChartId,@item.ChartName')">查看圖表明細</button>
+                                                @* <a class="btn button-18" asp-action="Edit" asp-route-id="@item.BudgetChartId">✒️</a> |
+                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.BudgetChartId">🗑️</a> *@
                                             </td>
                                         </tr>
                                     }

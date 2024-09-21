@@ -147,8 +147,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="ScheduleStageImg1" class="control-label"></label>
-                                        <input asp-for="ScheduleStageImg1" class="form-control" />
-                                        <span asp-validation-for="ScheduleStageImg1" class="text-danger"></span>
+                                        <input asp-for="ScheduleStageImg1" class="form-control" name="file" type="file" accept="image/*" />
+                                        @* <span asp-validation-for="ScheduleStageImg1" class="text-danger"></span> *@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="IsDelete" class="control-label"></label>

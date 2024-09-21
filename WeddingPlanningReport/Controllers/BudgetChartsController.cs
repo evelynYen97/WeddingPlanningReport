@@ -152,5 +152,60 @@ namespace WeddingPlanningReport.Controllers
         {
             return _context.BudgetCharts.Any(e => e.BudgetChartId == id);
         }
+
+        [HttpPost]
+        public IActionResult GetOrderDetails(int chartID,string imageName)
+        {
+            List<int>? orderId = null;
+            int memberID = _context.BudgetCharts.Where(cID => cID.BudgetChartId == chartID).Select(cID => cID.MemberId).FirstOrDefault();
+
+            if (imageName == "總預算分配")
+            {
+               
+            }
+            else if (imageName == "婚禮場地細項")
+            {
+                List<int> orderID =_context.Venues.Where(v=>v.MemberId==memberID).Select(oid=>oid.VenueId).ToList();
+
+                orderId = orderID;
+            }
+            else if (imageName == "喜餅訂購細項")
+            {
+                List<int> orderID =_context.CakeOrders.Where(v => v.MemberId == memberID).Select(oid => oid.CakeOrderId).ToList();
+                List<int> orderDID =_context.CakeOrderDetails.Where(cod=> orderID.Contains(cod.CakeId)).Select(cod=>cod.CakeOrderDetailId).ToList();
+                orderId = orderDID;
+            }
+            else if (imageName == "禮車預訂細項")
+            {
+                List<int> orderID = _context.CarRentals.Where(v => v.MemberId == memberID).Select(oid => oid.RentalId).ToList();
+                List<int> orderDID =_context.CarRentalDetails.Where(cod => orderID.Contains(cod.RentalId)).Select(cod => cod.RentalDetailId).ToList();
+                orderId = orderDID;
+            }
+            else if (imageName == "菜品訂購細項")
+            {
+                List<int> orderID = _context.DishesOrders.Where(v => v.MemberId == memberID).Select(oid => oid.DishesOrderId).ToList();
+                List<int> orderDID = _context.DishesOrderDetails.Where(cod =>orderID.Contains(cod.DishesId)).Select(cod => cod.DishesOrderDetailId).ToList();
+                orderId=orderDID;
+            }
+            else if (imageName == "其他細項")
+            {
+                List<int> orderID =_context.MemberBudgetItems.Where(v => v.MemberId== memberID).Select(oid => oid.BudgetItemId).ToList();
+                orderId = orderID;
+            }
+
+            return Json(new { id = orderId });
+        }
+
+        // 新的Action方法，显示订单明细
+        public IActionResult OrderDetails(int id)
+        {
+            // 根据ID查询订单明细
+            var orderDetail = _context.BudgetCharts.FirstOrDefault(budgetChart => budgetChart.BudgetChartId == id);
+            if (orderDetail == null)
+            {
+                return NotFound();
+            }
+            return View(orderDetail);
+        }
     }
 }
