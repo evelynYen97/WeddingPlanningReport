@@ -1,26 +1,22 @@
-﻿@model WeddingPlanningReport.Models.EditingImgFile
-
-@{
-    ViewData["Title"] = "Details";
-}
+﻿@model WeddingPlanningReport.Models.ImgUsing
 
 @section Styles
 {
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <style>
-        .modal-body {
-            padding-top: 0
+        .modal-body{
+            padding-top:0
         }
-
-        .detail-btn {
+        .detail-btn{
             background-color: #9271AC
         }
-
-        .table-responsive {
-            width: 1000px;
-            margin: auto;
+        .table-responsive{
+            width:1000px;
+            margin:auto;
         }
     </style>
 }
+
 <!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
@@ -54,7 +50,7 @@
                                 <li class="breadcrumb-item active" aria-current="page"><a asp-controller="Venues" asp-action="Index">婚禮場地管理</a></li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">詳細資料</h5>
+                                <h5 class="currentPage">創建</h5>
                             </div>
                         </nav>
 
@@ -117,48 +113,76 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.MemberId)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.MemberId)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.EditTime)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.EditTime)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Screenshot)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Screenshot)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.ImgEditingName)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.ImgEditingName)
-                        </dd>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-controller="ImgUsings" asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="ImgUsingId" />
+                                <div class="form-group">
+                                    <label asp-for="EditingImgFileId" class="control-label"></label>
+                                    <input asp-for="EditingImgFileId" class="form-control" />
+                                    <span asp-validation-for="EditingImgFileId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="MemberMaterialId" class="control-label"></label>
+                                    <input asp-for="MemberMaterialId" class="form-control" />
+                                    <span asp-validation-for="MemberMaterialId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
 
-                    </dl>
-                    <div class="form-group" style="margin-top: 20px;">
-                        <input type="submit" value="Save" class="btn btn-danger" />
-                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                                    <label asp-for="MaterialId" class="control-label"></label>
+                                    <input asp-for="MaterialId" class="form-control" />
+                                    <span asp-validation-for="MaterialId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ImgX" class="control-label"></label>
+                                    <input asp-for="ImgX" class="form-control" />
+                                    <span asp-validation-for="ImgX" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ImgY" class="control-label"></label>
+                                    <input asp-for="ImgY" class="form-control" />
+                                    <span asp-validation-for="ImgY" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ImgW" class="control-label"></label>
+                                    <input asp-for="ImgW" class="form-control" />
+                                    <span asp-validation-for="ImgW" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ImgH" class="control-label"></label>
+                                    <input asp-for="ImgH" class="form-control" />
+                                    <span asp-validation-for="ImgH" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="IsDelete" class="control-label"></label>
+                                    <select asp-for="IsDelete" class="form-control">
+                                        <option value="True">True</option>
+                                        <option value="False">False</option>
+                                    </select>
+                                    <span asp-validation-for="IsDelete" class="text-danger"></span>
+                                </div>
+                                <div class="form-group" style="margin-top: 20px;">
+                                    <input type="submit" value="Save" class="btn btn-danger" />
+                                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
+                    @section Scripts {
+                        @{
+                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                        }
+                    }
                 </div>
-
+                <!-- Content wrapper -->
             </div>
-
+            <!-- / Layout page -->
         </div>
-        <!-- Content wrapper -->
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-    <!-- / Layout page -->
-    </div>
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
+
 </body>
 </html>
+

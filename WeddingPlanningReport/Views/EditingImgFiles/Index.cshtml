@@ -121,13 +121,7 @@
                     <!--  Table start -->
                     <div class="card">
                         <div class="table-responsive text-nowrap position-relative">
-                            <p>
-                                @* <a asp-action="Create">Create New</a> *@
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="AddBtn">
-                                    <i class="bi bi-plus-lg"></i><a asp-action="Create" style="color: white;">新增</a>
-                                </button>
-                            </p>
-                            <table class="table" id="ImageUsingTable">
+                            <table class="table" id="EditImageTable">
                                 <thead class="table-primary">
                                     <tr>
                                         <th>
@@ -156,13 +150,12 @@
                                                 @Html.DisplayFor(modelItem => item.EditTime)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Screenshot)
+                                                <img src="~/圖片與圖層/圖層/@Html.DisplayFor(modelItem => item.Screenshot)" width="40px" height="auto"/>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ImgEditingName)
                                             </td>
                                             <td>
-                                                <a asp-action="Edit" asp-route-id="@item.EditingImgFileId">Edit</a> |
                                                 <a asp-action="Details" asp-route-id="@item.EditingImgFileId">Details</a> |
                                                 <a asp-action="Delete" asp-route-id="@item.EditingImgFileId">Delete</a>
                                             </td>
@@ -191,7 +184,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("#ImageUsingTable").dataTable({
+            $("#EditImageTable").dataTable({
                 fixedHeader: {//確保表頭固定，但搜尋欄位能隨滾動條移動
                     header: true
                 },

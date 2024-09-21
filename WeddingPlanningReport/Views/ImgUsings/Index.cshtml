@@ -1,4 +1,8 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.Venue>
+﻿@model IEnumerable<WeddingPlanningReport.Models.ImgUsing>
+
+@{
+    ViewData["Title"] = "Index";
+}
 
 @section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
@@ -16,7 +20,7 @@
             margin:auto;
         }
         /* 添加懸停效果 */
-        #ItemsTable tr:hover {
+        #ImageUseTable tr:hover {
             background-color: #A6FFFF !important; /* 懸停時高亮顏色 */
             cursor: pointer; /* 鼠標移到行上時顯示指針 */
         }
@@ -52,11 +56,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item">商品管理</li>
-                                <li class="breadcrumb-item active" aria-current="page">婚禮場地管理</li>
+                                <li class="breadcrumb-item active" aria-current="page"><a asp-area="" asp-controller="EditingImgFiles" asp-action="Index">圖層管理</a></li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">婚禮場地管理</h5>
+                                <h5 class="currentPage">素材詳細資訊</h5>
                             </div>
                         </nav>
 
@@ -119,50 +122,37 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-
                     <!--  Table start -->
                     <div class="card">
                         <div class="table-responsive text-nowrap position-relative">
-                            <p>
-                                @* <a asp-action="Create">Create New</a> *@
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="AddBtn">
-                                    <i class="bi bi-plus-lg"></i><a asp-action="Create" style="color: white;">新增</a>
-                                </button>
-                            </p>
-                            <table class="table" id="ItemsTable">
+                            <table class="table" id="ImageUseTable">
                                 <thead class="table-primary">
                                     <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.EditingImgFileId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MemberMaterialId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MaterialId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ImgX)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ImgY)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ImgW)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ImgH)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.IsDelete)
+                                        </th>
                                         <th></th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.ShopId)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.VenueName)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.MemberId)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.VenueFunction)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.VenueStyle)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.InOurDoor)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.TableCapacity)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.GuestCapacity)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.VenueRentalPrice)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.AvailableTime)
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -170,46 +160,38 @@
                                     {
                                         <tr>
                                             <td>
-                                                <a asp-action="Edit" asp-route-id="@item.VenueId">Edit</a> |
-                                                <a asp-action="Details" asp-route-id="@item.VenueId">Details</a> |
-                                                <a asp-action="Delete" asp-route-id="@item.VenueId">Delete</a>
+                                                @Html.DisplayFor(modelItem => item.EditingImgFileId)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ShopId)
+                                                @Html.DisplayFor(modelItem => item.MemberMaterialId)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.VenueName)
+                                                @* 要去素材庫用id查素材名稱 *@
+                                                <img src="~/圖片與圖層/圖片/網站/@Html.DisplayFor(modelItem => item.MaterialId)" width="40px" height="auto"/>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.MemberId)
+                                                @Html.DisplayFor(modelItem => item.ImgX)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.VenueFunction)
+                                                @Html.DisplayFor(modelItem => item.ImgY)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.VenueStyle)
+                                                @Html.DisplayFor(modelItem => item.ImgW)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.InOurDoor)
+                                                @Html.DisplayFor(modelItem => item.ImgH)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.TableCapacity)
+                                                @Html.DisplayFor(modelItem => item.IsDelete)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.GuestCapacity)
+                                                <a asp-action="Edit" asp-route-id="@item.ImgUsingId">Edit</a> |
+                                                <a asp-action="Delete" asp-route-id="@item.ImgUsingId">Delete</a>
                                             </td>
-                                            <td>
-                                                NT$ @Html.DisplayFor(modelItem => item.VenueRentalPrice)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.AvailableTime)
-                                            </td>
-                                            
                                         </tr>
                                     }
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                     <!-- Table end -->
@@ -230,11 +212,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("#ItemsTable").dataTable({
+            $("#ImageUseTable").dataTable({
                 fixedHeader: {//確保表頭固定，但搜尋欄位能隨滾動條移動
                     header: true
                 },
-                scrollX: true, // 啟用水平滾動
                 scrollCollapse: true, // 內容縮放時保持滾動條
                 language: {
                     url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
@@ -244,3 +225,13 @@
         });
     </script>
 }
+
+
+
+
+
+
+
+
+
+
