@@ -125,9 +125,10 @@
                                 <form asp-action="Edit" enctype="multipart/form-data">
                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <input type="hidden" asp-for="EventId" />
+                                    <input type="hidden" asp-for="CaseId" />
                                     <div class="form-group">
                                         <label asp-for="CaseId" class="control-label"></label>
-                                        <input asp-for="CaseId" class="form-control" />
+                                        <div class="my-2"><label>@ViewBag.caseIDName</label></div>
                                         <span asp-validation-for="CaseId" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">

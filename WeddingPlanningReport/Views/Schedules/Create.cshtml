@@ -3,51 +3,184 @@
 @{
     ViewData["Title"] = "Create";
 }
+@section Styles {
+    <link href="~/css/btn18settype.min.css" rel="stylesheet" />
+    <style>
+        .modal-body {
+            padding-top: 0
+        }
 
-<h1>Create</h1>
+        .detail-btn {
+            background-color: #9271AC
+        }
 
-<h4>Schedule</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="EventId" class="control-label"></label>
-                <input asp-for="EventId" class="form-control" />
-                <span asp-validation-for="EventId" class="text-danger"></span>
+        .table-responsive {
+            width: 1000px;
+            margin: auto;
+        }
+
+        .card {
+            padding: 30px 100px
+        }
+
+        #Insidechange {
+            margin-left: 30%
+        }
+    </style>
+}
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+                    <!-- header start  -->
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb py-1 mb-0 mt-2">
+                                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">活動排程管理</li>
+                            </ol>
+                            <div class="row d-block">
+                                <h5 class="currentPage">活動排程管理</h5>
+                            </div>
+                        </nav>
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">登入者姓名</span>
+                                                    <small class="text-muted">Admin</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-cog me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="login.html">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">Log Out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+                    <!-- header end  -->
+                </nav>
+
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+
+                    <!--  Table start -->
+                    <div class="card">
+                        <h4 class="card-header bg-light bg-gradient ">新增 活動排程</h4>
+                        <div id="dash" class="border-top border-bottom"></div>
+                        @* 替換start *@
+                        <div class="row">
+                            <div class="col-md-4" id="Insidechange">
+                                <form asp-action="Create">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="EventId" class="control-label"></label>
+                                        <input asp-for="EventId" class="form-control" />
+                                        <span asp-validation-for="EventId" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ScheduleTime" class="control-label"></label>
+                                        <input asp-for="ScheduleTime" class="form-control" />
+                                        <span asp-validation-for="ScheduleTime" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ScheduleStageName" class="control-label"></label>
+                                        <input asp-for="ScheduleStageName" class="form-control" />
+                                        <span asp-validation-for="ScheduleStageName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ScheduleStageNotes" class="control-label"></label>
+                                        <input asp-for="ScheduleStageNotes" class="form-control" />
+                                        <span asp-validation-for="ScheduleStageNotes" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ScheduleStageImg1" class="control-label"></label>
+                                        <input asp-for="ScheduleStageImg1" class="form-control" />
+                                        <span asp-validation-for="ScheduleStageImg1" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Create" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                                <div>
+                                    <a asp-action="Index">返回</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        @* 替換end *@
+
+                    </div>
+                    <!-- Table end -->
+                </div>
+                <!-- Content wrapper -->
             </div>
-            <div class="form-group">
-                <label asp-for="ScheduleTime" class="control-label"></label>
-                <input asp-for="ScheduleTime" class="form-control" />
-                <span asp-validation-for="ScheduleTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ScheduleStageName" class="control-label"></label>
-                <input asp-for="ScheduleStageName" class="form-control" />
-                <span asp-validation-for="ScheduleStageName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ScheduleStageNotes" class="control-label"></label>
-                <input asp-for="ScheduleStageNotes" class="form-control" />
-                <span asp-validation-for="ScheduleStageNotes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ScheduleStageImg1" class="control-label"></label>
-                <input asp-for="ScheduleStageImg1" class="form-control" />
-                <span asp-validation-for="ScheduleStageImg1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+            <!-- / Layout page -->
+        </div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-</div>
+</body>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+

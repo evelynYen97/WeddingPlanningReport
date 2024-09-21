@@ -49,6 +49,13 @@ namespace WeddingPlanningReport.Controllers
         // GET: Events1/Create
         public IActionResult Create()
         {
+            var CaseName = _context.WeddingPlans.Select(m => new {
+                m.CaseId,
+                DisplayName = m.CaseId + " - " + m.WeddingName
+            }).ToList();
+
+            // 建立下拉選單
+            ViewBag.CaseNameID = new SelectList(CaseName, "CaseId", "DisplayName");
             return View();
         }
 
@@ -80,6 +87,19 @@ namespace WeddingPlanningReport.Controllers
             if (@event == null)
             {
                 return NotFound();
+            }
+            var caseId = _context.Events
+                .Where(c => c.EventId == id)
+                .Select(c => c.CaseId)
+                .FirstOrDefault();
+            if (caseId != null)
+            {
+                var caseName = _context.WeddingPlans
+                    .Where(m => m.CaseId == caseId) // 确保使用正确的字段名
+                    .Select(m => m.WeddingName) // 假设姓名字段为 Name
+                    .FirstOrDefault();
+
+                ViewBag.caseIDName = caseId +"-"+caseName;
             }
             return View(@event);
         }

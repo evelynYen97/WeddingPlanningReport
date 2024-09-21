@@ -61,6 +61,13 @@ namespace WeddingPlanningReport.Controllers
         // GET: WeddingPlans/Create
         public IActionResult Create()
         {
+            var CreateMembers = _context.Members.Select(m => new {
+                m.MemberId,
+                DisplayName = m.MemberId + " - " + m.MemberName
+            }).ToList();
+
+            // 建立下拉選單
+            ViewBag.memberId = new SelectList(CreateMembers, "MemberId", "DisplayName");
             return View();
         }
 
@@ -93,6 +100,17 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var allMembers = _context.Members.Select(m => new {
+                m.MemberId,
+                DisplayName = m.MemberId + " - " + m.MemberName
+            }).ToList();
+
+            var defaultMemberId = _context.MemberBudgetItems
+                .Where(c => c.BudgetItemId == id)
+                .Select(c => c.MemberId)
+                .FirstOrDefault();
+
+            ViewBag.memberId = new SelectList(allMembers, "MemberId", "DisplayName", defaultMemberId);
             return View(weddingPlan);
         }
 
