@@ -37,7 +37,17 @@ namespace WeddingPlanningReport.Controllers
             return View(returnEvents);
         }
 
-        
+        public async Task<IActionResult> SchedulesDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var returnSchedules = _context.Schedules.Where(sche => sche.EventId == id).ToList();
+            return View(returnSchedules);
+        }
+
+
 
         // GET: WeddingPlans/Create
         public IActionResult Create()

@@ -101,34 +101,36 @@ namespace WeddingPlanningReport.Controllers
                 try
                 {
                     string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = @event.EventLocationImg; // 保留现有的图片名
                     if (file != null)
                     {
                         //string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);為圖片生成一個唯一的檔名 (Guid.NewGuid())
-                        string fileName = file.FileName;
+                        string newFileName = file.FileName;
                         string productPath = Path.Combine(wwwRootPath, @"eventImg");
-
                         // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
-                        string filePath = Path.Combine(productPath, fileName);
+                        string filePath = Path.Combine(productPath, newFileName);
                         if (System.IO.File.Exists(filePath))
                         {
                             // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
-                            string fileExtension = Path.GetExtension(fileName);
-                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-                            fileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
-                            filePath = Path.Combine(productPath, fileName);
+                            string fileExtension = Path.GetExtension(newFileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
+                            newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, newFileName);
                         }
                         // 儲存圖片到指定路徑
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             await file.CopyToAsync(fileStream);
                         }
-                        @event.EventLocationImg = fileName;// 更新圖片屬性為上傳的檔案名
+                        fileName = newFileName;
                     }
+
+                    @event.EventLocationImg = fileName;
                     _context.Update(@event);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
-                {
+                {//在資料庫更新過程中，可能會遇到並發更新的問題這段代碼捕獲異常，如果 Venue 不存在，則返回 NotFound()，否則重新拋出異常
                     if (!EventExists(@event.EventId))
                     {
                         return NotFound();
@@ -138,7 +140,7 @@ namespace WeddingPlanningReport.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));//更新成功後，使用導向到 Index 頁面
             }
             return View(@event);
         }

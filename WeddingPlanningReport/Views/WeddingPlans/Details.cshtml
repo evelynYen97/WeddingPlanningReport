@@ -149,17 +149,6 @@
                                             @Html.DisplayNameFor(model => model.EventNotes)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventLocationImg)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventVenueImg1)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventVenueImg2)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.IsDelete)
-                                        </th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -183,20 +172,8 @@
                                                 @Html.DisplayFor(modelItem => item.EventNotes)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventLocationImg)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EventVenueImg1)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EventVenueImg2)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.IsDelete)
-                                            </td>
-                                            <td>
-                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.EventId">✒️</a> |
-                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.EventId">🗑️</a>
+                                                <a class="btn button-18" asp-controller="Events1" asp-action="Edit" asp-route-id="@item.EventId">✒️</a> |
+                                                <a class="btn button-18" asp-controller="Events1" asp-action="Delete" asp-route-id="@item.EventId">🗑️</a>
                                             </td>
                                         </tr>
                                     }
