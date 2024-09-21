@@ -172,7 +172,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                <button class="btn button-18 fs-6 detail-btn border" data-id="@weddingplanitem.CaseId">查看活動</button> |
+                                                <a class="btn button-18 fs-6 detail-btn border" asp-controller="WeddingPlans" asp-action="Details" asp-route-id="@weddingplanitem.CaseId">查看活動</a> |
                                                 <a class="btn button-18 fs-5 detail-btn border edit-btn" asp-controller="WeddingPlans" asp-action="Edit" asp-route-id="@weddingplanitem.CaseId">✒️</a> |
                                                 <a class="btn button-18 fs-5 detail-btn border delete-btn" asp-controller="WeddingPlans" asp-action="Delete" asp-route-id="@weddingplanitem.CaseId">🗑️</a>
                                             </td>
@@ -250,63 +250,63 @@
                 }); // 動態加載內容
             });
 
-            $('#myTable').on('click', '.edit-btn', function () {
-                var id = $(this).data('id');
-                $('.modal-body').load(`/WeddingPlans/Edit/${id} #formEdit`, function () {
-                    $('#myModalLabel').text("編輯婚禮計劃書");
-                    $('#myModal').modal('show');
-                    $(document).off('submit', '#formEdit').on('submit', '#formEdit', function (e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: $(this).attr('action'),
-                            type: 'POST',
-                            data: $(this).serialize(),
-                            success: function (response) {
-                                if (response.success) {
-                                    alert("婚禮計劃書更新成功");
-                                    $('#myModal').modal('hide');
-                                    location.reload();
-                                }
-                                else {
-                                    alert("請確實填寫必填欄位會員ID及計劃書名稱");
-                                }
-                            }
-                        })
-                    })
+        //     $('#myTable').on('click', '.edit-btn', function () {
+        //         var id = $(this).data('id');
+        //         $('.modal-body').load(`/WeddingPlans/Edit/${id} #formEdit`, function () {
+        //             $('#myModalLabel').text("編輯婚禮計劃書");
+        //             $('#myModal').modal('show');
+        //             $(document).off('submit', '#formEdit').on('submit', '#formEdit', function (e) {
+        //                 e.preventDefault();
+        //                 $.ajax({
+        //                     url: $(this).attr('action'),
+        //                     type: 'POST',
+        //                     data: $(this).serialize(),
+        //                     success: function (response) {
+        //                         if (response.success) {
+        //                             alert("婚禮計劃書更新成功");
+        //                             $('#myModal').modal('hide');
+        //                             location.reload();
+        //                         }
+        //                         else {
+        //                             alert("請確實填寫必填欄位會員ID及計劃書名稱");
+        //                         }
+        //                     }
+        //                 })
+        //             })
 
-                }); 
-            });
+        //         }); 
+        //     });
 
-            //delete start
-            $('#myTable').on('click', '.delete-btn', function () {
-                var id = $(this).data('id');
-                $('.modal-body').load(`/WeddingPlans/Delete/${id} #Deleteview`, function () {
-                    $('#myModalLabel').text("刪除婚禮計劃書");
-                    $('#myModal').modal('show');
-                    $(document).off('submit', '#formDelete').on('submit', '#formDelete', function (e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: $(this).attr('action'),
-                            type: 'POST',
-                            data: $(this).serialize(),
-                            success: function (response) {
-                                if (response.success) {
-                                    alert("婚禮計劃書刪除成功");
-                                    $('#myModal').modal('hide');
-                                    location.reload();
-                                }
-                            }
-                        })
-                    })
-                });
-            });
-            //delete end
-            //To event start
-            $('#myTable').on('click', '.detail-btn', function (){
-                var id = $(this).data('id');
-                window.location.href = '@Url.Action("Index", "Events")?id=' + id;
-            //To event end
-        });
+        //     //delete start
+        //     $('#myTable').on('click', '.delete-btn', function () {
+        //         var id = $(this).data('id');
+        //         $('.modal-body').load(`/WeddingPlans/Delete/${id} #Deleteview`, function () {
+        //             $('#myModalLabel').text("刪除婚禮計劃書");
+        //             $('#myModal').modal('show');
+        //             $(document).off('submit', '#formDelete').on('submit', '#formDelete', function (e) {
+        //                 e.preventDefault();
+        //                 $.ajax({
+        //                     url: $(this).attr('action'),
+        //                     type: 'POST',
+        //                     data: $(this).serialize(),
+        //                     success: function (response) {
+        //                         if (response.success) {
+        //                             alert("婚禮計劃書刪除成功");
+        //                             $('#myModal').modal('hide');
+        //                             location.reload();
+        //                         }
+        //                     }
+        //                 })
+        //             })
+        //         });
+        //     });
+        //     //delete end
+        //     //To event start
+        //     $('#myTable').on('click', '.detail-btn', function (){
+        //         var id = $(this).data('id');
+        //         window.location.href = '@Url.Action("Index", "Events")?id=' + id;
+        //     //To event end
+        // });
     });
     </script>
 }

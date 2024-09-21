@@ -33,16 +33,11 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
-
-            var events = await _context.Events
-                .FirstOrDefaultAsync(m => m.CaseId == id);
-            if (events == null)
-            {
-                return NotFound();
-            }
-
-            return View(events);
+            var returnEvents = _context.Events.Where(eve => eve.CaseId == id).ToList();
+            return View(returnEvents);
         }
+
+        
 
         // GET: WeddingPlans/Create
         public IActionResult Create()
