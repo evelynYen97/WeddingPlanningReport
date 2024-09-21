@@ -132,12 +132,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="BudgetItemPrice" class="control-label"></label>
-                                            <input asp-for="BudgetItemPrice" class="form-control" />
+                                        <input asp-for="BudgetItemPrice" class="form-control" oninput="calculateSubtotal()"  />
                                             <span asp-validation-for="BudgetItemPrice" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="BudgetItemAmount" class="control-label"></label>
-                                            <input asp-for="BudgetItemAmount" class="form-control" />
+                                        <input asp-for="BudgetItemAmount" class="form-control" oninput="calculateSubtotal()" />
                                             <span asp-validation-for="BudgetItemAmount" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
@@ -179,5 +179,13 @@
 
 
 @section Scripts {
+    <script>
+         function calculateSubtotal() {
+            const price = parseFloat(document.querySelector('[name="BudgetItemPrice"]').value) || 0;
+            const amount = parseFloat(document.querySelector('[name="BudgetItemAmount"]').value) || 0;
+            const subtotal = price * amount;
+            document.querySelector('[name="BudgetItemSubtotal"]').value = subtotal;
+        }
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -45,7 +45,13 @@ namespace WeddingPlanningReport.Controllers
         // GET: MemberBudgetItems/Create
         public IActionResult Create()
         {
-            ViewBag.memberId = new SelectList(_context.Members.Select(c => c.MemberId).Distinct());
+            var CreateMembers = _context.Members.Select(m => new {
+                m.MemberId,
+                DisplayName = m.MemberId + " - " + m.MemberName
+            }).ToList();
+
+            // 建立下拉選單
+            ViewBag.memberId = new SelectList(CreateMembers, "MemberId", "DisplayName");
             return View();
         }
 
@@ -78,6 +84,19 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var allMembers = _context.Members.Select(m => new {
+                m.MemberId,
+                DisplayName = m.MemberId + " - " + m.MemberName
+            }).ToList();
+
+            // 獲取與特定 BudgetItemId 相關聯的 MemberId
+            var defaultMemberId = _context.MemberBudgetItems
+                .Where(c => c.BudgetItemId == id)
+                .Select(c => c.MemberId)
+                .FirstOrDefault();
+
+            // 建立下拉選單
+            ViewBag.memberId = new SelectList(allMembers, "MemberId", "DisplayName", defaultMemberId);
             return View(memberBudgetItem);
         }
 
