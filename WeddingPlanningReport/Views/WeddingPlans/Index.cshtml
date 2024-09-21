@@ -5,15 +5,22 @@
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <style>
         .modal-body{
-            padding-top:0
+            padding-top:0;
         }
         .detail-btn{
-            background-color: #9271AC
+            background-color: #9271AC;
+        }
+        .button-18{
+            background-color: #ffffff;
+            color: #62536F;
+        }
+
+        .dataTables_filter {
+            margin-bottom:15px;
         }
     </style>
 }
 
-<!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
       dir="ltr"
@@ -165,9 +172,9 @@
                                     {
                                         <tr>
                                             <td>
-                                                <button class="btn fs-6 detail-btn border" data-id="@weddingplanitem.CaseId">查看活動項目</button> |
-                                                <button class="btn fs-5 detail-btn border" asp-controller="WeddingPlans" asp-action="Edit" asp-route-id="@weddingplanitem.CaseId">✒️</button> |
-                                                <button class="btn fs-5 detail-btn border" asp-controller="WeddingPlans" asp-action="Delete" asp-route-id="@weddingplanitem.CaseId">🗑️</button>
+                                                <button class="btn button-18 fs-6 detail-btn border" data-id="@weddingplanitem.CaseId">查看活動</button> |
+                                                <a class="btn button-18 fs-5 detail-btn border edit-btn" asp-controller="WeddingPlans" asp-action="Edit" asp-route-id="@weddingplanitem.CaseId">✒️</a> |
+                                                <a class="btn button-18 fs-5 detail-btn border delete-btn" asp-controller="WeddingPlans" asp-action="Delete" asp-route-id="@weddingplanitem.CaseId">🗑️</a>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.MemberId)
@@ -176,13 +183,13 @@
                                                 @Html.DisplayFor(modelItem => weddingplanitem.WeddingName)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => weddingplanitem.Introduction)
-                                            </td>
-                                            <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.WeddingTime)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.WeddingLocation)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => weddingplanitem.Introduction)
                                             </td>
                                         </tr>
                                     }
