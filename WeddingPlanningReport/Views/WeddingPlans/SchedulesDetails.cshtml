@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.Event>
+﻿@model IEnumerable<WeddingPlanningReport.Models.Schedule>
 
 @{
     ViewData["Title"] = "Index";
@@ -8,22 +8,15 @@
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <style>
-        .modal-body {
-            padding-top: 0
+        .modal-body{
+            padding-top:0
         }
-
-        .detail-btn {
+        .detail-btn{
             background-color: #9271AC
         }
-
-        .button-18 {
-            background-color: #ffffff;
-            color: #62536F;
-        }
-
-        .table-responsive {
-            width: 1000px;
-            margin: auto;
+        .table-responsive{
+            width:1000px;
+            margin:auto;
         }
 
     </style>
@@ -56,10 +49,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">計劃書活動項目</li>
+                                <li class="breadcrumb-item active" aria-current="page">活動排程管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">計劃書活動項目</h5>
+                                <h5 class="currentPage">活動排程管理</h5>
                             </div>
                         </nav>
 
@@ -68,7 +61,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -77,7 +70,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -125,29 +118,28 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        <h4 class="card-header bg-light bg-gradient ">婚禮活動項目</h4>
+                        <h4 class="card-header bg-light bg-gradient ">活動排程</h4>
                         <div id="dash" class="border-top border-bottom"></div>
                         <div class="table-responsive text-nowrap position-relative">
 
-                            
                             <table class="table" id="budgetItemsTable">
                                 <thead class="table-primary">
                                     <tr>
                                         <th></th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.CaseId)
+                                            @Html.DisplayNameFor(model => model.EventId)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventName)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageName)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventTime)
+                                            @Html.DisplayNameFor(model => model.ScheduleTime)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventLocation)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageNotes)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventNotes)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageImg1)
                                         </th>
                                     </tr>
                                 </thead>
@@ -156,23 +148,23 @@
                                     {
                                         <tr>
                                             <td>
-                                                <a class="btn button-18 border" asp-controller="WeddingPlans" asp-action="SchedulesDetails" asp-route-id="@item.EventId">查看排程</a> |
-                                                <a class="btn button-18 border" asp-controller="Events1" asp-action="Edit" asp-route-id="@item.EventId">✒️</a> 
+                                                <a class="btn button-18" asp-controller="WeddingPlans" asp-action="StaffsDetails" asp-route-id="@item.EventId">查看工作人員</a> |
+                                                <a class="btn button-18" asp-controller="Schedules" asp-action="Edit" asp-route-id="@item.EventId">✒️</a>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.CaseId)
+                                                @Html.DisplayFor(modelItem => item.EventId)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventName)
+                                                @Html.DisplayFor(modelItem => item.ScheduleStageName)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventTime)
+                                                @Html.DisplayFor(modelItem => item.ScheduleTime)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventLocation)
+                                                @Html.DisplayFor(modelItem => item.ScheduleStageNotes)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventNotes)
+                                                <partial name="_ShowScheduleImgPartial" model="item" />
                                             </td>
                                         </tr>
                                     }

@@ -61,7 +61,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -70,7 +70,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -131,6 +131,7 @@
                             <table class="table" id="budgetItemsTable">
                                 <thead class="table-primary">
                                     <tr>
+                                        <th></th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.CaseId)
                                         </th>
@@ -155,16 +156,19 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.EventVenueImg2)
                                         </th>
-                                        <th>
+                                        @* <th>
                                             @Html.DisplayNameFor(model => model.IsDelete)
-                                        </th>
-                                        <th></th>
+                                        </th> *@
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
                                         <tr>
+                                            <td>
+                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.EventId">✒️</a> |
+                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.EventId">🗑️</a>
+                                            </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.CaseId)
                                             </td>
@@ -189,13 +193,10 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EventVenueImg2)
                                             </td>
-                                            <td>
+                                            @* <td>
                                                 @Html.DisplayFor(modelItem => item.IsDelete)
-                                            </td>
-                                            <td>
-                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.EventId">✒️</a> |
-                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.EventId">🗑️</a>
-                                            </td>
+                                            </td> *@
+                                            
                                         </tr>
                                     }
                                 </tbody>

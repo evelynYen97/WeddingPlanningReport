@@ -47,6 +47,15 @@ namespace WeddingPlanningReport.Controllers
             return View(returnSchedules);
         }
 
+        public async Task<IActionResult> StaffsDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var returnSchedulesStaff = _context.ScheduledStaffs.Where(scheS => scheS.ScheduleId == id).ToList();
+            return View(returnSchedulesStaff);
+        }
 
 
         // GET: WeddingPlans/Create
@@ -137,6 +146,20 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
+            var defaultMemberId = _context.WeddingPlans
+                .Where(c => c.CaseId == id)
+                .Select(c => c.MemberId)
+                .FirstOrDefault();
+            if (defaultMemberId != null)
+            {
+                var memberName = _context.Members
+                    .Where(m => m.MemberId == defaultMemberId) // 确保使用正确的字段名
+                    .Select(m => m.MemberName) // 假设姓名字段为 Name
+                    .FirstOrDefault();
+
+                ViewBag.MemberName = memberName;
+            }
+
             return View(weddingPlan);
         }
 
@@ -152,7 +175,7 @@ namespace WeddingPlanningReport.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return Json(new { success = true});
+            return RedirectToAction(nameof(Index)); ;
         }
 
         private bool WeddingPlanExists(int id)
