@@ -45,7 +45,7 @@ namespace WeddingPlanningReport.Controllers
         // GET: MemberBudgetItems/Create
         public IActionResult Create()
         {
-
+            ViewBag.memberId = new SelectList(_context.Members.Select(c => c.MemberId).Distinct());
             return View();
         }
 

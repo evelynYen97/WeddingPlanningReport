@@ -19,6 +19,10 @@
         .card{
             padding:30px 100px
         }
+
+        #Insidechange {
+            margin-left: 30%
+        }
     </style>
 }
 <body>
@@ -111,15 +115,14 @@
                     <div class="card">
                         <h4 class="card-header bg-light bg-gradient ">新增會員預算項目</h4>
                         <div id="dash" class="border-top border-bottom"></div>
-                        <div class="table-responsive text-nowrap position-relative">
                             @* 替換start *@
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4" id="Insidechange">
                                     <form asp-action="Create">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="form-group">
                                             <label asp-for="MemberId" class="control-label"></label>
-                                            <input asp-for="MemberId" class="form-control" />
+                                            <select asp-for="MemberId"  class="form-control" asp-items="@ViewBag.memberId"></select>
                                             <span asp-validation-for="MemberId" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
@@ -152,14 +155,16 @@
                                             <input type="submit" value="Create" class="btn btn-primary" />
                                         </div>
                                     </form>
+                                    <div>
+                                        <a asp-action="Index">返回</a>
+                                    </div>
                                 </div>
+                                
                             </div>
 
-                            <div>
-                                <a asp-action="Index">返回</a>
-                            </div>
+                            
                             @* 替換end *@
-                        </div>
+                       
                     </div>
                     <!-- Table end -->
                 </div>
