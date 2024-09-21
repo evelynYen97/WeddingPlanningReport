@@ -13,6 +13,7 @@ namespace WeddingPlanningReport.Models.Metadata
         public int ScheduleId { get; set; }
 
         [Display(Name = "工作人員姓名")]
+        [Required(ErrorMessage = "請確實填寫工作人員姓名")]
         public string? PersonnelName { get; set; }
 
         [Display(Name = "協助項目")]

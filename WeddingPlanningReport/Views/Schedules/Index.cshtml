@@ -147,6 +147,7 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.ScheduleStageImg1)
                                         </th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -171,6 +172,9 @@
                                             </td>
                                             <td>
                                                 <partial name="_ShowScheduleImgPartial" model="item" />
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IsDelete)
                                             </td>
                                         </tr>
                                     }

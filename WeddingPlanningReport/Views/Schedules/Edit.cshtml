@@ -152,7 +152,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="IsDelete" class="control-label"></label>
-                                        <input asp-for="IsDelete" class="form-control" />
+                                        @* <input asp-for="IsDelete" class="form-control" /> *@
+                                        <select asp-for="IsDelete" class="form-control">
+                                            <option>False</option>
+                                            <option>True</option>
+                                        </select>
                                         <span asp-validation-for="IsDelete" class="text-danger"></span>
                                     </div>
                                     <hr />

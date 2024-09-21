@@ -60,7 +60,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,ScheduleStageImg2")] Schedule schedule)
+        public async Task<IActionResult> Create([Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,IsDelete")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
