@@ -32,4 +32,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\圖片與圖層\圖層\" />
+    <Folder Include="wwwroot\圖片與圖層\圖片\" />
+  </ItemGroup>
+
 </Project>

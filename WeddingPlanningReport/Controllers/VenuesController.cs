@@ -56,10 +56,61 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VenueId,ShopId,MemberId,VenueFunction,VenueStyle,InOurDoor,RoadApplication,VenueName,TableCapacity,GuestCapacity,VenueRentalPrice,VenueImg,VenueInfo,AvailableTime")] Venue venue)
+        public async Task<IActionResult> Create([Bind("VenueId,ShopId,MemberId,VenueFunction,VenueStyle,InOurDoor,RoadApplication,VenueName,TableCapacity,GuestCapacity,VenueRentalPrice,VenueImg,VenueInfo,AvailableTime,VenueImg2,IsDelete")] Venue venue,IFormFile? file, IFormFile? file4)
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string fileName = "noimage.jpg"; // 保留现有的图片名
+                string fileName2 = "noimage.jpg"; // 保留第二张图片名
+                if (file != null)
+                {
+                    //string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);為圖片生成一個唯一的檔名 (Guid.NewGuid())
+                    string newFileName = file.FileName;
+                    string productPath = Path.Combine(wwwRootPath, @"Ven1");
+
+                    // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
+                    string filePath = Path.Combine(productPath, newFileName);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
+                        string fileExtension = Path.GetExtension(newFileName);
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
+                        newFileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                        filePath = Path.Combine(productPath, newFileName);
+                    }
+                    // 儲存圖片到指定路徑
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    fileName = newFileName;
+                }
+                venue.VenueImg = fileName;
+
+                if (file4 != null)
+                {
+                    string newFileName2 = file4.FileName;
+                    string productPath2 = Path.Combine(wwwRootPath, @"Ven1");
+
+                    // 防止檔名衝突
+                    string filePath2 = Path.Combine(productPath2, newFileName2);
+                    if (System.IO.File.Exists(filePath2))
+                    {
+                        // 檔案已存在，添加时间戳
+                        string fileExtension2 = Path.GetExtension(newFileName2);
+                        string fileNameWithoutExtension2 = Path.GetFileNameWithoutExtension(newFileName2);
+                        newFileName2 = $"{fileNameWithoutExtension2}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension2}";
+                        filePath2 = Path.Combine(productPath2, newFileName2);
+                    }
+                    // 儲存第二张图片
+                    using (var fileStream2 = new FileStream(filePath2, FileMode.Create))
+                    {
+                        await file4.CopyToAsync(fileStream2);
+                    }
+                    fileName2 = newFileName2;
+                }
+                venue.VenueImg2 = fileName2;
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -89,7 +140,7 @@ namespace WeddingPlanningReport.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> Edit(int id, [Bind("VenueId,ShopId,MemberId,VenueFunction,VenueStyle,InOurDoor,RoadApplication,VenueName,TableCapacity,GuestCapacity,VenueRentalPrice,VenueImg,VenueInfo,AvailableTime")] Venue venue, IFormFile? file)
+        public async Task<IActionResult> Edit(int id, [Bind("VenueId,ShopId,MemberId,VenueFunction,VenueStyle,InOurDoor,RoadApplication,VenueName,TableCapacity,GuestCapacity,VenueRentalPrice,VenueImg,VenueInfo,AvailableTime,VenueImg2,IsDelete")] Venue venue, IFormFile? file, IFormFile? file4)
         {
             if (id != venue.VenueId)
             {
@@ -101,29 +152,56 @@ namespace WeddingPlanningReport.Controllers
                 try
                 {
                     string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = venue.VenueImg; // 保留现有的图片名
+                    string fileName2 = venue.VenueImg2; // 保留第二张图片名
                     if (file != null)
                     {
                         //string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);為圖片生成一個唯一的檔名 (Guid.NewGuid())
-                        string fileName = file.FileName;
+                        string newFileName = file.FileName;
                         string productPath = Path.Combine(wwwRootPath, @"Ven1");
 
                         // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
-                        string filePath = Path.Combine(productPath, fileName);
+                        string filePath = Path.Combine(productPath, newFileName);
                         if (System.IO.File.Exists(filePath))
                         {
                             // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
-                            string fileExtension = Path.GetExtension(fileName);
-                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-                            fileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
-                            filePath = Path.Combine(productPath, fileName);
+                            string fileExtension = Path.GetExtension(newFileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
+                            newFileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, newFileName);
                         }
                         // 儲存圖片到指定路徑
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             await file.CopyToAsync(fileStream);
                         }
-                        venue.VenueImg = fileName;// 更新 venue 的圖片屬性為上傳的檔案名
+                        fileName = newFileName;
                     }
+                    venue.VenueImg = fileName;
+
+                    if (file4 != null)
+                    {
+                        string newFileName2 = file4.FileName;
+                        string productPath2 = Path.Combine(wwwRootPath, @"Ven1");
+
+                        // 防止檔名衝突
+                        string filePath2 = Path.Combine(productPath2, newFileName2);
+                        if (System.IO.File.Exists(filePath2))
+                        {
+                            // 檔案已存在，添加时间戳
+                            string fileExtension2 = Path.GetExtension(newFileName2);
+                            string fileNameWithoutExtension2 = Path.GetFileNameWithoutExtension(newFileName2);
+                            newFileName2 = $"{fileNameWithoutExtension2}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension2}";
+                            filePath2 = Path.Combine(productPath2, newFileName2);
+                        }
+                        // 儲存第二张图片
+                        using (var fileStream2 = new FileStream(filePath2, FileMode.Create))
+                        {
+                            await file4.CopyToAsync(fileStream2);
+                        }
+                        fileName2 = newFileName2;
+                    }
+                    venue.VenueImg2 = fileName2;
                     _context.Update(venue);
                     await _context.SaveChangesAsync();
                 }

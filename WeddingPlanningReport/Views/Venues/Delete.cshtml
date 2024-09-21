@@ -134,46 +134,16 @@
                                 @Html.DisplayFor(model => model.MemberId)
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.VenueFunction)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.VenueFunction)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.VenueStyle)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.VenueStyle)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.InOurDoor)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.InOurDoor)
-                            </dd>
-                            <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.VenueName)
                             </dt>
                             <dd class="col-sm-10">
                                 @Html.DisplayFor(model => model.VenueName)
                             </dd>
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.TableCapacity)
+                                @Html.DisplayNameFor(model => model.AvailableTime)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.TableCapacity)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.GuestCapacity)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.GuestCapacity)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.VenueRentalPrice)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.VenueRentalPrice)
+                                @Html.DisplayFor(model => model.AvailableTime)
                             </dd>
                             <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.VenueImg)
@@ -181,18 +151,6 @@
                             <dd class="col-sm-10">
                                 <img src="~/Ven1/@Html.DisplayFor(model=> model.VenueImg)" width="320px" height="240px" />
                                 <img src="~/Ven1/@Html.DisplayFor(model=> model.VenueImg2)" width="320px" height="240px" />
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.VenueInfo)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.VenueInfo)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.AvailableTime)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.AvailableTime)
                             </dd>
                             <dt class="col-sm-2">
                                 @Html.DisplayNameFor(model => model.IsDelete)
@@ -204,8 +162,8 @@
                     </div>
                     <form asp-action="Delete">
                         <input type="hidden" asp-for="VenueId" />
-                        <input type="submit" value="Delete" class="btn btn-danger" /> |
-                        <a asp-action="Index">Back to List</a>
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
                     </form>
 
                 </div>
