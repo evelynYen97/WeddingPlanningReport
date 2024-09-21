@@ -125,7 +125,7 @@
                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <div class="form-group">
                                         <label asp-for="EventId" class="control-label"></label>
-                                        <input asp-for="EventId" class="form-control" />
+                                        <select asp-for="EventId" class="form-control" asp-items="@ViewBag.eventID"></select>
                                         <span asp-validation-for="EventId" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
@@ -148,6 +148,7 @@
                                         <input asp-for="ScheduleStageImg1" class="form-control" />
                                         <span asp-validation-for="ScheduleStageImg1" class="text-danger"></span>
                                     </div>
+                                    <hr />
                                     <div class="form-group">
                                         <input type="submit" value="Create" class="btn btn-primary" />
                                     </div>

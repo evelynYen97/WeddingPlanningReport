@@ -45,6 +45,12 @@ namespace WeddingPlanningReport.Controllers
         // GET: ScheduledStaffs/Create
         public IActionResult Create()
         {
+            var CreateSchedule = _context.Schedules.Select(m => new {
+                m.ScheduleId,
+                DisplayName = m.ScheduleId + " - " + m.ScheduleStageName
+            }).ToList();
+
+            ViewBag.scheduleID = new SelectList(CreateSchedule, "ScheduleId", "DisplayName");
             return View();
         }
 
@@ -77,6 +83,16 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var CreateSchedule = _context.Schedules.Select(m => new {
+                m.ScheduleId,
+                DisplayName = m.ScheduleId + " - " + m.ScheduleStageName
+            }).ToList();
+
+            var defaultScheduleId = _context.ScheduledStaffs
+                .Where(c => c.PersonnelId == id)
+                .Select(c => c.ScheduleId)
+                .FirstOrDefault();
+            ViewBag.scheduleID = new SelectList(CreateSchedule, "ScheduleId", "DisplayName", defaultScheduleId);
             return View(scheduledStaff);
         }
 
@@ -130,6 +146,19 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
+            var stageId = _context.ScheduledStaffs
+                .Where(c => c.PersonnelId == id)
+                .Select(c => c.ScheduleId)
+                .FirstOrDefault();
+            if (stageId != null)
+            {
+                var stageName = _context.Schedules
+                    .Where(m => m.ScheduleId == stageId) // 确保使用正确的字段名
+                    .Select(m => m.ScheduleStageName) // 假设姓名字段为 Name
+                    .FirstOrDefault();
+
+                ViewBag.stageName = stageName;
+            }
             return View(scheduledStaff);
         }
 

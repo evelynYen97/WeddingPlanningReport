@@ -180,6 +180,19 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
+            var caseId = _context.Events
+                .Where(c => c.EventId == id)
+                .Select(c => c.CaseId)
+                .FirstOrDefault();
+            if (caseId != null)
+            {
+                var caseName = _context.WeddingPlans
+                    .Where(m => m.CaseId == caseId)
+                    .Select(m => m.WeddingName)
+                    .FirstOrDefault();
+
+                ViewBag.caseName = caseName;
+            }
             return View(@event);
         }
 

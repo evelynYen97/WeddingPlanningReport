@@ -32,5 +32,8 @@ namespace WeddingPlanningReport.Models.Metadata
 
         [Display(Name = "婚宴場地説明圖片")]
         public string? EventVenueImg2 { get; set; }
+
+        [Display(Name = "刪除狀態")]
+        public bool? IsDelete { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace WeddingPlanningReport.Models.Metadata
         [Display(Name = "協助項目")]
         public string? AssistanceContent { get; set; }
 
+        [Display(Name = "刪除狀態")]
         public bool? IsDelete { get; set; }
     }
 }

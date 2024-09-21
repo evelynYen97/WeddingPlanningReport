@@ -24,6 +24,7 @@ namespace WeddingPlanningReport.Models.Metadata
         [Display(Name = "排程相關圖片")]
         public string? ScheduleStageImg1 { get; set; }
 
+        [Display(Name = "刪除狀態")]
         public bool? IsDelete { get; set; }
     }
 }

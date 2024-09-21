@@ -45,6 +45,13 @@ namespace WeddingPlanningReport.Controllers
         // GET: Schedules/Create
         public IActionResult Create()
         {
+            var CreateEvent = _context.Events.Select(m => new {
+                m.EventId,
+                DisplayName = m.EventId + " - " + m.EventName
+            }).ToList();
+
+            // 建立下拉選單
+            ViewBag.eventID = new SelectList(CreateEvent, "EventId", "DisplayName");
             return View();
         }
 
@@ -77,6 +84,18 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var CreateEvent = _context.Events.Select(m => new {
+                m.EventId,
+                DisplayName = m.EventId + " - " + m.EventName
+            }).ToList();
+
+            var defaultEventId = _context.Schedules
+                .Where(c => c.ScheduleId == id)
+                .Select(c => c.EventId)
+                .FirstOrDefault();
+
+            // 建立下拉選單
+            ViewBag.eventID = new SelectList(CreateEvent, "EventId", "DisplayName", defaultEventId);
             return View(schedule);
         }
 
@@ -85,7 +104,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,ScheduleStageImg2")] Schedule schedule)
+        public async Task<IActionResult> Edit(int id, [Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,IsDelete")] Schedule schedule)
         {
             if (id != schedule.ScheduleId)
             {
@@ -129,7 +148,19 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var eventId = _context.Schedules
+                .Where(c => c.ScheduleId == id)
+                .Select(c => c.EventId)
+                .FirstOrDefault();
+            if (eventId != null)
+            {
+                var eventName = _context.Events
+                    .Where(m => m.EventId== eventId) 
+                    .Select(m => m.EventName)
+                    .FirstOrDefault();
 
+                ViewBag.eventName = eventName;
+            }
             return View(schedule);
         }
 
