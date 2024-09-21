@@ -8,7 +8,7 @@ namespace WeddingPlanningReport.Models
         [Required(ErrorMessage = "請確實填寫婚禮計劃書編號")]
         public int BudgetItemId { get; set; }
 
-        [Display(Name = "會員ID")]
+        [Display(Name = "會員")]
         [Required(ErrorMessage = "請確實填寫會員編號")]
         public int MemberId { get; set; }
 

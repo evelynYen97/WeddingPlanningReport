@@ -149,7 +149,19 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var defaultMemberId = _context.MemberBudgetItems
+                .Where(c => c.BudgetItemId == id)
+                .Select(c => c.MemberId)
+                .FirstOrDefault();
+            if (defaultMemberId != null)
+            {
+                var memberName = _context.Members
+                    .Where(m => m.MemberId == defaultMemberId) // 确保使用正确的字段名
+                    .Select(m => m.MemberName) // 假设姓名字段为 Name
+                    .FirstOrDefault();
 
+                ViewBag.MemberName = memberName;
+            }
             return View(memberBudgetItem);
         }
 
