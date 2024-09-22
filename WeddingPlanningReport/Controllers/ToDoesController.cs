@@ -18,11 +18,29 @@ namespace WeddingPlanningReport.Controllers
             _context = context;
         }
 
-        // GET: ToDoes
-        public async Task<IActionResult> Index()
+        //// GET: ToDoes
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.ToDos.ToListAsync());
+        //}
+
+
+        public IActionResult Index()
         {
-            return View(await _context.ToDos.ToListAsync());
+            // 獲取所有有待辦事項的會員
+            var membersWithToDos = _context.Members
+                .Where(m => _context.ToDos.Any(t => t.MemberId == m.MemberId))
+                .ToList();
+
+            return View(membersWithToDos);
         }
+
+        public IActionResult GetToDosByMemberId(int memberId)
+        {
+            var toDos = _context.ToDos.Where(t => t.MemberId == memberId).ToList();
+            return PartialView("_ToDosPartial", toDos);
+        }
+
 
         // GET: ToDoes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -40,6 +58,8 @@ namespace WeddingPlanningReport.Controllers
             }
 
             return View(toDo);
+
+
         }
 
         // GET: ToDoes/Create
@@ -78,6 +98,7 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
             return View(toDo);
+
         }
 
         // POST: ToDoes/Edit/5

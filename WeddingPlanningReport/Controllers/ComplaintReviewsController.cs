@@ -18,11 +18,24 @@ namespace WeddingPlanningReport.Controllers
             _context = context;
         }
 
-        // GET: ComplaintReviews
-        public async Task<IActionResult> Index()
+        //// GET: ComplaintReviews
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.ComplaintReviews.ToListAsync());
+        //}
+
+        // Get: ComplaintReviews/Index
+        public IActionResult Index()
         {
-            return View(await _context.ComplaintReviews.ToListAsync());
+            return View();
         }
+
+        // Get: ComplaintReviews/IndexJson
+        public JsonResult IndexJson()
+        {
+            return Json(_context.ComplaintReviews);
+        }
+
 
         // GET: ComplaintReviews/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -39,7 +52,8 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            return View(complaintReview);
+            return PartialView("_Details", complaintReview); // 返回部分視圖
+
         }
 
         // GET: ComplaintReviews/Create
@@ -53,7 +67,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ComplaintRecordId,ReporterMemberId,RespondentMemberId,ReportTime,ReportDetail,ReviewStatus,ReviewTime,ReviewerId,ReviewerName,ReviewNotes,ReviewResultDescription")] ComplaintReview complaintReview)
+        public async Task<IActionResult> Create([Bind("ComplaintRecordId,ReporterMemberId,RespondentMemberId,SharedRecordId,ReportTime,ReportDetail,ReviewStatus,ReviewTime,ReviewerId,ReviewerName,ReviewNotes,ReviewResultDescription")] ComplaintReview complaintReview)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +91,9 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
-            return View(complaintReview);
+           
+            return PartialView("_Edit", complaintReview); // 返回部分視圖
+
         }
 
         // POST: ComplaintReviews/Edit/5
@@ -85,7 +101,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ComplaintRecordId,ReporterMemberId,RespondentMemberId,ReportTime,ReportDetail,ReviewStatus,ReviewTime,ReviewerId,ReviewerName,ReviewNotes,ReviewResultDescription")] ComplaintReview complaintReview)
+        public async Task<IActionResult> Edit(int id, [Bind("ComplaintRecordId,ReporterMemberId,RespondentMemberId,SharedRecordId,ReportTime,ReportDetail,ReviewStatus,ReviewTime,ReviewerId,ReviewerName,ReviewNotes,ReviewResultDescription")] ComplaintReview complaintReview)
         {
             if (id != complaintReview.ComplaintRecordId)
             {

@@ -18,11 +18,24 @@ namespace WeddingPlanningReport.Controllers
             _context = context;
         }
 
-        // GET: Members
-        public async Task<IActionResult> Index()
+        //// GET: Members
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Members.ToListAsync());
+        //}
+
+        // Get: Members/Index
+        public IActionResult Index()
         {
-            return View(await _context.Members.ToListAsync());
+            return View();
         }
+
+        // Get: Members/IndexJson
+        public JsonResult IndexJson()
+        {
+            return Json(_context.Members);
+        }
+
 
         // GET: Members/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -39,7 +52,7 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            return View(member);
+            return PartialView("_Details", member); // 返回部分視圖
         }
 
         // GET: Members/Create
@@ -77,7 +90,7 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
-            return View(member);
+            return PartialView("_Edit", member); // 返回部分視圖
         }
 
         // POST: Members/Edit/5

@@ -18,10 +18,22 @@ namespace WeddingPlanningReport.Controllers
             _context = context;
         }
 
-        // GET: SharingWeddingPlans
-        public async Task<IActionResult> Index()
+        //// GET: SharingWeddingPlans
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.SharingWeddingPlans.ToListAsync());
+        //}
+
+        // Get: SharingWeddingPlans/Index
+        public IActionResult Index()
         {
-            return View(await _context.SharingWeddingPlans.ToListAsync());
+            return View();
+        }
+
+        // Get: SharingWeddingPlans/IndexJson
+        public JsonResult IndexJson()
+        {
+            return Json(_context.SharingWeddingPlans);
         }
 
         // GET: SharingWeddingPlans/Details/5
@@ -39,7 +51,8 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            return View(sharingWeddingPlan);
+            return PartialView("_Details", sharingWeddingPlan); // 返回部分視圖
+
         }
 
         // GET: SharingWeddingPlans/Create
@@ -77,7 +90,8 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
-            return View(sharingWeddingPlan);
+            return PartialView("_Edit", sharingWeddingPlan); // 返回部分視圖
+            ;
         }
 
         // POST: SharingWeddingPlans/Edit/5
