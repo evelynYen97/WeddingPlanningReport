@@ -1,53 +1,70 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.DishesOrder>
-
-@{
-    ViewData["Title"] = "Index";
+﻿@section Styles
+{
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <style>
+        .btn-margin {
+            margin-right: 5px; /* 調整按鈕之間的間距 */
+        }
+    </style>
 }
 
-<h1>Index</h1>
-
+<h1>菜餚訂單介面</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success"><i class="fa-solid fa-user-plus mb-3"></i>新增明細</a>
 </p>
-<table class="table">
+
+
+<table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MemberId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DishesOrderName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DishesSupplyDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DishesTotalPrice)
-            </th>
-            <th></th>
+            <th>dishesOrderId</th>
+            <th>memberId</th>
+            <th>dishesOrderName</th>
+            <th>dishesSupplyDate</th>
+            <th>dishesTotalPrice</th>
+            <th>Actions</th> <!-- 新增一個表頭用於動作按鈕 -->
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MemberId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DishesOrderName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DishesSupplyDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DishesTotalPrice)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DishesOrderId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DishesOrderId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DishesOrderId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
 </table>
+
+@section Scripts
+{
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("table").dataTable({
+                ajax: {
+                    type: "GET",
+                    url: "/DishesOrders/IndexJson",
+                    dataSrc: function (json) {
+                        return json;
+                    },
+                },
+                columns: [
+                    { "data": "dishesOrderId", "width": "10%" },
+                    { "data": "memberId", "width": "10%" },
+                    { "data": "dishesOrderName", "width": "10%" },
+                    { "data": "dishesSupplyDate", "width": "10%" },
+                    { "data": "dishesTotalPrice", "width": "10%" },
+                    {
+                        // 動作按鈕列
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return `
+                         <a href="/DishesOrders/Edit/${row.dishesOrderId}" class="btn btn-info btn-margin">Edit</a>
+                         <a href="/DishesOrders/Details/${row.dishesOrderId}" class="btn btn-secondary btn-margin">Details</a>
+                         <a href="/DishesOrders/Delete/${row.dishesOrderId}" class="btn btn-danger btn-margin">Delete</a>
+                                    `;
+                        },
+                        "width": "20%"
+                    }
+                ],
+                fixedHeader: {},
+                language: {},
+                        "initComplete": function (settings, json) {
+            
+                }
+            });
+        });
+    </script>
+}

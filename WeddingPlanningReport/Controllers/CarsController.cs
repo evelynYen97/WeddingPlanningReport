@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Humanizer.Localisation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,17 +13,47 @@ namespace WeddingPlanningReport.Controllers
     public class CarsController : Controller
     {
         private readonly WeddingPlanningContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CarsController(WeddingPlanningContext context)
+        // 使用建構子注入 DbContext
+        public CarsController(WeddingPlanningContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
+        }
+        // GET: Cars/Index
+        public IActionResult Index()
+        {
+            return View();
         }
 
-        // GET: Cars
-        public async Task<IActionResult> Index()
+        // GET: Cars/IndexJson
+        public JsonResult IndexJson()
         {
-            return View(await _context.Cars.ToListAsync());
+            return Json(_context.Cars);
         }
+
+        //// GET: Cars/Index
+        //public async Task<IActionResult> Index(string searchString)
+        //{
+        //    // 如果有搜尋條件，將其儲存到 ViewData 供視圖顯示
+        //    ViewData["CurrentFilter"] = searchString;
+
+        //    // 查詢所有車輛
+        //    var cars = from c in _context.Cars
+        //               select c;
+
+        //    // 如果搜尋字串不為空，篩選車輛名稱包含搜尋字串的車輛
+        //    if (!String.IsNullOrEmpty(searchString))
+        //    {
+        //        cars = cars.Where(s => s.CarName.Contains(searchString) ||
+        //    s.CarStatus.Contains(searchString) ||
+        //    s.RentalPerDay.ToString().Contains(searchString) || s.ShopId.ToString().Contains(searchString));
+        //    }
+
+        //    // 返回篩選後的結果，而不是重新撈取所有資料
+        //    return View(await cars.ToListAsync());
+        //}
 
         // GET: Cars/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -45,7 +76,8 @@ namespace WeddingPlanningReport.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
-            return View();
+            var car = new Cars(); // 確保創建一個新的模型實例
+            return View(car);
         }
 
         // POST: Cars/Create
@@ -53,7 +85,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CarId,ShopId,CarName,PassengerCapacity,RentalPerDay,CarStatus,CarImg,CarDetail")] Car car)
+        public async Task<IActionResult> Create([Bind("CarId,ShopId,CarName,PassengerCapacity,RentalPerDay,CarStatus,CarImg,CarDetail")] Cars car)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +117,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CarId,ShopId,CarName,PassengerCapacity,RentalPerDay,CarStatus,CarImg,CarDetail")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("CarId,ShopId,CarName,PassengerCapacity,RentalPerDay,CarStatus,CarImg,CarDetail")] Cars car, IFormFile? file)
         {
             if (id != car.CarId)
             {
@@ -96,6 +128,37 @@ namespace WeddingPlanningReport.Controllers
             {
                 try
                 {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    if (file != null)
+                    {
+                        string fileName = file.FileName;
+                        string productPath = Path.Combine(wwwRootPath, "Car1");
+
+                        if (!Directory.Exists(productPath))
+                        {
+                            Directory.CreateDirectory(productPath);
+                        }
+
+                        // 防止檔案名衝突處理
+                        string filePath = Path.Combine(productPath, fileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            string fileExtension = Path.GetExtension(fileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                            fileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, fileName);
+                        }
+
+
+                        // 儲存新圖片
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+
+                        car.CarImg = fileName;
+                    }
+
                     _context.Update(car);
                     await _context.SaveChangesAsync();
                 }
@@ -110,8 +173,10 @@ namespace WeddingPlanningReport.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(car);
         }
 

@@ -17,12 +17,23 @@ namespace WeddingPlanningReport.Controllers
         {
             _context = context;
         }
-
-        // GET: CarRentals
-        public async Task<IActionResult> Index()
+        // GET: CarRentals/Index
+        public IActionResult Index()
         {
-            return View(await _context.CarRentals.ToListAsync());
+            return View();
         }
+
+        // GET: CarRentals/IndexJson
+        public JsonResult IndexJson()
+        {
+            return Json(_context.CarRentals);
+        }
+
+        //// GET: CarRentals
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.CarRentals.ToListAsync());
+        //}
 
         // GET: CarRentals/Details/5
         public async Task<IActionResult> Details(int? id)

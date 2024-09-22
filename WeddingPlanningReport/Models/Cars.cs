@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WeddingPlanningReport.Models;
 
-public partial class Car
+public partial class Cars
 {
     public int CarId { get; set; }
 
@@ -13,7 +13,9 @@ public partial class Car
 
     public int? PassengerCapacity { get; set; }
 
-    public int? RentalPerDay { get; set; }
+    public int? RentalPerDay { get; set; }    
+
+    public int? quantity { get; set; }
 
     public string? CarStatus { get; set; }
 
@@ -22,4 +24,5 @@ public partial class Car
     public string? CarDetail { get; set; }
 
     public bool? IsDelete { get; set; }
+
 }

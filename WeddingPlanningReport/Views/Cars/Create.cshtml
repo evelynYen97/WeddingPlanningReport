@@ -1,4 +1,4 @@
-﻿@model WeddingPlanningReport.Models.Car
+﻿@model WeddingPlanningReport.Models.Cars
 
 @{
     ViewData["Title"] = "Create";
@@ -6,8 +6,7 @@
 
 <h1>Create</h1>
 
-<h4>Car</h4>
-<hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -33,13 +32,18 @@
                 <span asp-validation-for="RentalPerDay" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="quantity" class="control-label"></label>
+                <input asp-for="quantity" class="form-control" />
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CarStatus" class="control-label"></label>
                 <input asp-for="CarStatus" class="form-control" />
                 <span asp-validation-for="CarStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CarImg" class="control-label"></label>
-                <input asp-for="CarImg" class="form-control" />
+                <input type="file" name="file" class="form-control" /> 
                 <span asp-validation-for="CarImg" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -59,5 +63,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
