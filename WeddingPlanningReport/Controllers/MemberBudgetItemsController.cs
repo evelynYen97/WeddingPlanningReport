@@ -24,12 +24,6 @@ namespace WeddingPlanningReport.Controllers
             return View(await _context.MemberBudgetItems.ToListAsync());
         }
 
-        //GET: MemberBudgetItems/IndexJson
-        public JsonResult IndexJson()
-        {
-            return Json(_context.MemberBudgetItems);
-        }
-
         // GET: MemberBudgetItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -51,6 +45,13 @@ namespace WeddingPlanningReport.Controllers
         // GET: MemberBudgetItems/Create
         public IActionResult Create()
         {
+            var CreateMembers = _context.Members.Select(m => new {
+                m.MemberId,
+                DisplayName = m.MemberId + " - " + m.MemberName
+            }).ToList();
+
+            // 建立下拉選單
+            ViewBag.memberId = new SelectList(CreateMembers, "MemberId", "DisplayName");
             return View();
         }
 
@@ -83,6 +84,19 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var allMembers = _context.Members.Select(m => new {
+                m.MemberId,
+                DisplayName = m.MemberId + " - " + m.MemberName
+            }).ToList();
+
+            // 獲取與特定 BudgetItemId 相關聯的 MemberId
+            var defaultMemberId = _context.MemberBudgetItems
+                .Where(c => c.BudgetItemId == id)
+                .Select(c => c.MemberId)
+                .FirstOrDefault();
+
+            // 建立下拉選單
+            ViewBag.memberId = new SelectList(allMembers, "MemberId", "DisplayName", defaultMemberId);
             return View(memberBudgetItem);
         }
 
@@ -135,7 +149,19 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var defaultMemberId = _context.MemberBudgetItems
+                .Where(c => c.BudgetItemId == id)
+                .Select(c => c.MemberId)
+                .FirstOrDefault();
+            if (defaultMemberId != null)
+            {
+                var memberName = _context.Members
+                    .Where(m => m.MemberId == defaultMemberId) // 确保使用正确的字段名
+                    .Select(m => m.MemberName) // 假设姓名字段为 Name
+                    .FirstOrDefault();
 
+                ViewBag.MemberName = memberName;
+            }
             return View(memberBudgetItem);
         }
 

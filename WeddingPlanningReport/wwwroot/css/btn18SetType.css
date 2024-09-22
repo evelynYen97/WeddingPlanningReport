@@ -81,3 +81,8 @@ th, td {
 #AddBtn {
     margin-bottom: 10px;
 }
+
+/*表格搜尋欄位間距*/
+.dataTables_filter {
+    margin-bottom: 15px;
+}

@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.Event>
 
+@{
+    ViewData["Title"] = "Index";
+}
+
 @section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
@@ -10,6 +14,11 @@
         .detail-btn{
             background-color: #9271AC
         }
+        .table-responsive{
+            width:1000px;
+            margin:auto;
+        }
+
     </style>
 }
 
@@ -19,9 +28,7 @@
       data-theme="theme-default"
       data-assets-path="../assets/"
       data-template="vertical-menu-template-free">
-<head>
 
-</head>
 
 <body>
     <!-- Layout wrapper -->
@@ -42,11 +49,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item"><a asp-controller="WeddingPlans" asp-action="Index">婚禮計劃書管理</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">活動項目管理</li>
+                                <li class="breadcrumb-item active" aria-current="page">計劃書活動項目</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">活動項目管理</h5>
+                                <h5 class="currentPage">計劃書活動項目</h5>
                             </div>
                         </nav>
 
@@ -55,7 +61,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -64,7 +70,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -112,28 +118,23 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        <h4 class="card-header bg-light bg-gradient ">婚禮計劃書 @ViewBag.Caseid-活動項目</h4>
+                        <h4 class="card-header bg-light bg-gradient ">婚禮活動項目</h4>
                         <div id="dash" class="border-top border-bottom"></div>
-                        <div class="table-responsive text-nowrap">
+                        <div class="table-responsive text-nowrap position-relative">
 
-                            <!-- Modal start-->
-                            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Modal end -->
-
-                            <table class="table" id="myTable">
+                            <p>
+                                @* <a asp-action="Create">Create New</a> *@
+                                <a class="btn btn-primary" asp-action="Create" id="AddBtn">
+                                    <i class="bi bi-plus-lg"></i> 新增
+                                </a>
+                            </p>
+                            <table class="table" id="budgetItemsTable">
                                 <thead class="table-primary">
                                     <tr>
+                                        <th></th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CaseId)
+                                        </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.EventName)
                                         </th>
@@ -155,60 +156,52 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.EventVenueImg2)
                                         </th>
-                                        <th></th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.IsDelete)
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                        @foreach (var item in Model)
-                                        {
+                                    @foreach (var item in Model)
+                                    {
                                         <tr>
                                             <td>
-                                                    @Html.DisplayFor(modelItem => item.EventName)
+                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.EventId">✒️</a> |
+                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.EventId">🗑️</a>
                                             </td>
                                             <td>
-                                                    @Html.DisplayFor(modelItem => item.EventTime)
+                                                @Html.DisplayFor(modelItem => item.CaseId)
                                             </td>
                                             <td>
-                                                    @Html.DisplayFor(modelItem => item.EventLocation)
+                                                @Html.DisplayFor(modelItem => item.EventName)
                                             </td>
                                             <td>
-                                                    @Html.DisplayFor(modelItem => item.EventNotes)
+                                                @Html.DisplayFor(modelItem => item.EventTime)
                                             </td>
                                             <td>
-                                                    @Html.DisplayFor(modelItem => item.EventLocationImg)
+                                                @Html.DisplayFor(modelItem => item.EventLocation)
                                             </td>
                                             <td>
-                                                    @Html.DisplayFor(modelItem => item.EventVenueImg1)
+                                                @Html.DisplayFor(modelItem => item.EventNotes)
                                             </td>
                                             <td>
-                                                    @Html.DisplayFor(modelItem => item.EventVenueImg2)
+                                                @* @Html.DisplayFor(modelItem => item.EventLocationImg) *@
+                                                <span style="width:25px;height:50px"><partial name="_ShowImgPartial" model="item"></partial></span>
                                             </td>
                                             <td>
-                                                <btn class="btn btn-primary btn-schedules"  data-id="@item.EventId">查看活動排程</btn>
+                                                <span style="width:25px;height:50px"><partial name="_ShowVenue1Img" model="item"></partial></span>
                                             </td>
+                                            <td>
+                                                <span style="width:25px;height:50px"><partial name="_ShowVenue2Img" model="item"></partial></span>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IsDelete)
+                                            </td>
+                                            
                                         </tr>
-                                        }
+                                    }
                                 </tbody>
-                               
                             </table>
-
-                        </div>
-                    </div>
-                    <!-- Table end -->
-                </div>
-                <!-- Content wrapper -->
-                <!-- Content wrapper -->
-                <div class="container-xxl flex-grow-1 container-p-y">
-
-                    <!--  Table start -->
-                    <div class="card">
-                        <h4 class="card-header bg-light bg-gradient ">活動項目</h4>
-                        <div id="dash" class="border-top border-bottom"></div>
-                        <div class="table-responsive text-nowrap">
-
-
-                            <div id="InsertTable"></div>
-
                         </div>
                     </div>
                     <!-- Table end -->
@@ -220,7 +213,6 @@
         <!-- Overlay -->
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-
 </body>
 </html>
 
@@ -229,113 +221,17 @@
     <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
-            $(document).ready(function(){
-                $('#AddBtn').on('click', function () {
-                    $('.modal-body').load('/WeddingPlans/Create #formCreate', function () {
-                        $('#myModalLabel').text("新增婚禮計劃書");
-                        $('#myModal').modal('show');
-                        $(document).off('submit', '#formCreate').on('submit', '#formCreate', function (e) {
-                            e.preventDefault();
-                            $.ajax({
-                                url: $(this).attr('action'),
-                                type: 'POST',
-                                data: $(this).serialize(),
-                                success: function (response){
-                                    if (response.success) {
-                                        alert("婚禮計劃書創建成功");
-                                        $('#myModal').modal('hide');
-                                        location.reload();
-                                    }
-                                    else {
-                                        alert("請確實填寫必填欄位會員ID及計劃書名稱");
-                                    }
-                                }
-                            })
-                        })
-                    }); // 動態加載內容
-                });
-
-            $(document).on('click', '.btn-schedules', function () {
-                    var idevent = $(this).data('id');
-                alert(idevent);
-                    $.ajax({
-                    url: '@Url.Action("ToSchedules", "WeddingPlans")',
-                    type:'GET',
-                    data: { id: idevent },
-                        success: function (data) {
-                            $("#InsertTable").html(data);
-                        },
-                        error: function () {
-                            alert("内容加載失敗");
-                        }
-                    })
-
-                    // $('.modal-body').load(`/Events/Edit/${id} #EventEditForm`, function () {
-                    //     $('#myModalLabel').text("編輯活動項目");
-                    //     $('#myModal').modal('show');
-                    //     $(document).off('submit', '#EventEditForm').on('submit', '#EventEditForm', function (e) {
-                    //         e.preventDefault();
-                    //         $.ajax({
-                    //             url: $(this).attr('action'),
-                    //             type: 'POST',
-                    //             data: $(this).serialize(),
-                    //             success: function (response) {
-                    //                 if (response.success) {
-                    //                     alert("活動項目更新成功");
-                    //                     $('#myModal').modal('hide');
-                    //                     window.location.href = '@Url.Action("Index", "Events")?id=' + id;
-                    //                 }
-                    //                 else {
-                    //                     alert("請確實填寫必填欄位");
-                    //                 }
-                    //             }
-                    //         })
-                    //     })
-
-                    // });
-                });
-
-                //delete start
-                $('#myTable').on('click', '.delete-btn', function () {
-                    var id = $(this).data('id');
-                    $('.modal-body').load(`/WeddingPlans/Delete/${id} #Deleteview`, function () {
-                        $('#myModalLabel').text("刪除婚禮計劃書");
-                        $('#myModal').modal('show');
-                        $(document).off('submit', '#formDelete').on('submit', '#formDelete', function (e) {
-                            e.preventDefault();
-                            $.ajax({
-                                url: $(this).attr('action'),
-                                type: 'POST',
-                                data: $(this).serialize(),
-                                success: function (response) {
-                                    if (response.success) {
-                                        alert("婚禮計劃書刪除成功");
-                                        $('#myModal').modal('hide');
-                                        location.reload();
-                                    }
-                                }
-                            })
-                        })
-                    });
-                });
-                //delete end
-                //To event start
-                $('#myTable').on('click', '.detail-btn', function (){
-                    var id = $(this).data('id');
-                    window.location.href = '@Url.Action("Index", "Events")?id=' + id;
-                //To event end
+        $(document).ready(function () {
+            $("#budgetItemsTable").dataTable({
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                }
             });
         });
     </script>
 }
-
-
-
-
-
-
-
-
-
 
 

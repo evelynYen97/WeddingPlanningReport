@@ -12,10 +12,11 @@ namespace WeddingPlanningReport.Controllers
     public class SchedulesController : Controller
     {
         private readonly WeddingPlanningContext _context;
-
-        public SchedulesController(WeddingPlanningContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public SchedulesController(WeddingPlanningContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Schedules
@@ -45,6 +46,13 @@ namespace WeddingPlanningReport.Controllers
         // GET: Schedules/Create
         public IActionResult Create()
         {
+            var CreateEvent = _context.Events.Select(m => new {
+                m.EventId,
+                DisplayName = m.EventId + " - " + m.EventName
+            }).ToList();
+
+            // 建立下拉選單
+            ViewBag.eventID = new SelectList(CreateEvent, "EventId", "DisplayName");
             return View();
         }
 
@@ -53,10 +61,36 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,ScheduleStageImg2")] Schedule schedule)
+        public async Task<IActionResult> Create([Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,IsDelete")] Schedule schedule, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string fileName = schedule.ScheduleStageImg1; // 保留现有的图片名
+                if (file != null)
+                {
+                   
+                    string newFileName = file.FileName;
+                    string productPath = Path.Combine(wwwRootPath, @"scheduleImg");
+                    // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
+                    string filePath = Path.Combine(productPath, newFileName);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
+                        string fileExtension = Path.GetExtension(newFileName);
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
+                        newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                        filePath = Path.Combine(productPath, newFileName);
+                    }
+                    // 儲存圖片到指定路徑
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    fileName = newFileName;
+                }
+
+                schedule.ScheduleStageImg1 = fileName;
                 _context.Add(schedule);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -77,6 +111,18 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var CreateEvent = _context.Events.Select(m => new {
+                m.EventId,
+                DisplayName = m.EventId + " - " + m.EventName
+            }).ToList();
+
+            var defaultEventId = _context.Schedules
+                .Where(c => c.ScheduleId == id)
+                .Select(c => c.EventId)
+                .FirstOrDefault();
+
+            // 建立下拉選單
+            ViewBag.eventID = new SelectList(CreateEvent, "EventId", "DisplayName", defaultEventId);
             return View(schedule);
         }
 
@@ -85,7 +131,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,ScheduleStageImg2")] Schedule schedule)
+        public async Task<IActionResult> Edit(int id, [Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,IsDelete")] Schedule schedule, IFormFile? file)
         {
             if (id != schedule.ScheduleId)
             {
@@ -96,6 +142,31 @@ namespace WeddingPlanningReport.Controllers
             {
                 try
                 {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = schedule.ScheduleStageImg1; // 保留现有的图片名
+                    if (file != null)
+                    {
+                        string newFileName = file.FileName;
+                        string productPath = Path.Combine(wwwRootPath, @"scheduleImg");
+                        // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
+                        string filePath = Path.Combine(productPath, newFileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
+                            string fileExtension = Path.GetExtension(newFileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
+                            newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, newFileName);
+                        }
+                        // 儲存圖片到指定路徑
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+                        fileName = newFileName;
+                    }
+
+                    schedule.ScheduleStageImg1 = fileName;
                     _context.Update(schedule);
                     await _context.SaveChangesAsync();
                 }
@@ -129,7 +200,19 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var eventId = _context.Schedules
+                .Where(c => c.ScheduleId == id)
+                .Select(c => c.EventId)
+                .FirstOrDefault();
+            if (eventId != null)
+            {
+                var eventName = _context.Events
+                    .Where(m => m.EventId== eventId) 
+                    .Select(m => m.EventName)
+                    .FirstOrDefault();
 
+                ViewBag.eventName = eventName;
+            }
             return View(schedule);
         }
 

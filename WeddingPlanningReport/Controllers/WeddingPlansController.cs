@@ -33,20 +33,41 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var returnEvents = _context.Events.Where(eve => eve.CaseId == id).ToList();
+            return View(returnEvents);
+        }
 
-            var events = await _context.Events
-                .FirstOrDefaultAsync(m => m.CaseId == id);
-            if (events == null)
+        public async Task<IActionResult> SchedulesDetails(int? id)
+        {
+            if (id == null)
             {
                 return NotFound();
             }
-
-            return View(events);
+            var returnSchedules = _context.Schedules.Where(sche => sche.EventId == id).ToList();
+            return View(returnSchedules);
         }
+
+        public async Task<IActionResult> StaffsDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var returnSchedulesStaff = _context.ScheduledStaffs.Where(scheS => scheS.ScheduleId == id).ToList();
+            return View(returnSchedulesStaff);
+        }
+
 
         // GET: WeddingPlans/Create
         public IActionResult Create()
         {
+            var CreateMembers = _context.Members.Select(m => new {
+                m.MemberId,
+                DisplayName = m.MemberId + " - " + m.MemberName
+            }).ToList();
+
+            // 建立下拉選單
+            ViewBag.memberId = new SelectList(CreateMembers, "MemberId", "DisplayName");
             return View();
         }
 
@@ -55,7 +76,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation")] WeddingPlan weddingPlan)
+        public async Task<IActionResult> Create([Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation,IsDelete")] WeddingPlan weddingPlan)
         {
             if (ModelState.IsValid)
             {
@@ -79,6 +100,17 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound();
             }
+            var allMembers = _context.Members.Select(m => new {
+                m.MemberId,
+                DisplayName = m.MemberId + " - " + m.MemberName
+            }).ToList();
+
+            var defaultMemberId = _context.MemberBudgetItems
+                .Where(c => c.BudgetItemId == id)
+                .Select(c => c.MemberId)
+                .FirstOrDefault();
+
+            ViewBag.memberId = new SelectList(allMembers, "MemberId", "DisplayName", defaultMemberId);
             return View(weddingPlan);
         }
 
@@ -87,7 +119,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation")] WeddingPlan weddingPlan)
+        public async Task<IActionResult> Edit(int id, [Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation,IsDelete")] WeddingPlan weddingPlan)
         {
             if (id != weddingPlan.CaseId)
             {
@@ -132,6 +164,20 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
+            var defaultMemberId = _context.WeddingPlans
+                .Where(c => c.CaseId == id)
+                .Select(c => c.MemberId)
+                .FirstOrDefault();
+            if (defaultMemberId != null)
+            {
+                var memberName = _context.Members
+                    .Where(m => m.MemberId == defaultMemberId) // 确保使用正确的字段名
+                    .Select(m => m.MemberName) // 假设姓名字段为 Name
+                    .FirstOrDefault();
+
+                ViewBag.MemberName = memberName;
+            }
+
             return View(weddingPlan);
         }
 
@@ -147,7 +193,7 @@ namespace WeddingPlanningReport.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return Json(new { success = true});
+            return RedirectToAction(nameof(Index)); ;
         }
 
         private bool WeddingPlanExists(int id)

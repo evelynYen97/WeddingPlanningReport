@@ -5,15 +5,22 @@
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <style>
         .modal-body{
-            padding-top:0
+            padding-top:0;
         }
         .detail-btn{
-            background-color: #9271AC
+            background-color: #9271AC;
+        }
+        .button-18{
+            background-color: #ffffff;
+            color: #62536F;
+        }
+
+        .dataTables_filter {
+            margin-bottom:15px;
         }
     </style>
 }
 
-<!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
       dir="ltr"
@@ -158,6 +165,7 @@
                                         <th class="fs-6">
                                             @Html.DisplayNameFor(model => model.Introduction)
                                         </th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -165,8 +173,9 @@
                                     {
                                         <tr>
                                             <td>
-                                                <a asp-controller="WeddingPlans" asp-action="Edit" asp-route-id="@weddingplanitem.CaseId">Edit</a> |
-                                                <a asp-controller="WeddingPlans" asp-action="Delete" asp-route-id="@weddingplanitem.CaseId">Delete</a>
+                                                <a class="btn button-18 fs-6 detail-btn border" asp-controller="WeddingPlans" asp-action="Details" asp-route-id="@weddingplanitem.CaseId">查看活動</a> |
+                                                <a class="btn button-18 fs-5 detail-btn border edit-btn" asp-controller="WeddingPlans" asp-action="Edit" asp-route-id="@weddingplanitem.CaseId">✒️</a> |
+                                                <a class="btn button-18 fs-5 detail-btn border delete-btn" asp-controller="WeddingPlans" asp-action="Delete" asp-route-id="@weddingplanitem.CaseId">🗑️</a>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.MemberId)
@@ -175,13 +184,16 @@
                                                 @Html.DisplayFor(modelItem => weddingplanitem.WeddingName)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => weddingplanitem.Introduction)
-                                            </td>
-                                            <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.WeddingTime)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.WeddingLocation)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => weddingplanitem.Introduction)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => weddingplanitem.IsDelete)
                                             </td>
                                         </tr>
                                     }
@@ -242,63 +254,63 @@
                 }); // 動態加載內容
             });
 
-            $('#myTable').on('click', '.edit-btn', function () {
-                var id = $(this).data('id');
-                $('.modal-body').load(`/WeddingPlans/Edit/${id} #formEdit`, function () {
-                    $('#myModalLabel').text("編輯婚禮計劃書");
-                    $('#myModal').modal('show');
-                    $(document).off('submit', '#formEdit').on('submit', '#formEdit', function (e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: $(this).attr('action'),
-                            type: 'POST',
-                            data: $(this).serialize(),
-                            success: function (response) {
-                                if (response.success) {
-                                    alert("婚禮計劃書更新成功");
-                                    $('#myModal').modal('hide');
-                                    location.reload();
-                                }
-                                else {
-                                    alert("請確實填寫必填欄位會員ID及計劃書名稱");
-                                }
-                            }
-                        })
-                    })
+        //     $('#myTable').on('click', '.edit-btn', function () {
+        //         var id = $(this).data('id');
+        //         $('.modal-body').load(`/WeddingPlans/Edit/${id} #formEdit`, function () {
+        //             $('#myModalLabel').text("編輯婚禮計劃書");
+        //             $('#myModal').modal('show');
+        //             $(document).off('submit', '#formEdit').on('submit', '#formEdit', function (e) {
+        //                 e.preventDefault();
+        //                 $.ajax({
+        //                     url: $(this).attr('action'),
+        //                     type: 'POST',
+        //                     data: $(this).serialize(),
+        //                     success: function (response) {
+        //                         if (response.success) {
+        //                             alert("婚禮計劃書更新成功");
+        //                             $('#myModal').modal('hide');
+        //                             location.reload();
+        //                         }
+        //                         else {
+        //                             alert("請確實填寫必填欄位會員ID及計劃書名稱");
+        //                         }
+        //                     }
+        //                 })
+        //             })
 
-                }); 
-            });
+        //         }); 
+        //     });
 
-            //delete start
-            $('#myTable').on('click', '.delete-btn', function () {
-                var id = $(this).data('id');
-                $('.modal-body').load(`/WeddingPlans/Delete/${id} #Deleteview`, function () {
-                    $('#myModalLabel').text("刪除婚禮計劃書");
-                    $('#myModal').modal('show');
-                    $(document).off('submit', '#formDelete').on('submit', '#formDelete', function (e) {
-                        e.preventDefault();
-                        $.ajax({
-                            url: $(this).attr('action'),
-                            type: 'POST',
-                            data: $(this).serialize(),
-                            success: function (response) {
-                                if (response.success) {
-                                    alert("婚禮計劃書刪除成功");
-                                    $('#myModal').modal('hide');
-                                    location.reload();
-                                }
-                            }
-                        })
-                    })
-                });
-            });
-            //delete end
-            //To event start
-            $('#myTable').on('click', '.detail-btn', function (){
-                var id = $(this).data('id');
-                window.location.href = '@Url.Action("Index", "Events")?id=' + id;
-            //To event end
-        });
+        //     //delete start
+        //     $('#myTable').on('click', '.delete-btn', function () {
+        //         var id = $(this).data('id');
+        //         $('.modal-body').load(`/WeddingPlans/Delete/${id} #Deleteview`, function () {
+        //             $('#myModalLabel').text("刪除婚禮計劃書");
+        //             $('#myModal').modal('show');
+        //             $(document).off('submit', '#formDelete').on('submit', '#formDelete', function (e) {
+        //                 e.preventDefault();
+        //                 $.ajax({
+        //                     url: $(this).attr('action'),
+        //                     type: 'POST',
+        //                     data: $(this).serialize(),
+        //                     success: function (response) {
+        //                         if (response.success) {
+        //                             alert("婚禮計劃書刪除成功");
+        //                             $('#myModal').modal('hide');
+        //                             location.reload();
+        //                         }
+        //                     }
+        //                 })
+        //             })
+        //         });
+        //     });
+        //     //delete end
+        //     //To event start
+        //     $('#myTable').on('click', '.detail-btn', function (){
+        //         var id = $(this).data('id');
+        //         window.location.href = '@Url.Action("Index", "Events")?id=' + id;
+        //     //To event end
+        // });
     });
     </script>
 }

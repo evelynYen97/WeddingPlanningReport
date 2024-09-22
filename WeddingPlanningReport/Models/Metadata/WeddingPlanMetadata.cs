@@ -7,7 +7,7 @@ namespace WeddingPlanningReport.Models.Metadata
         
         public int CaseId { get; set; }
 
-        [Display(Name = "會員ID")]
+        [Display(Name = "會員")]
         [Required(ErrorMessage = "請確實填寫會員ID")]
         public int MemberId { get; set; }
 
@@ -23,5 +23,8 @@ namespace WeddingPlanningReport.Models.Metadata
 
         [Display(Name = "婚禮地點")]
         public string? WeddingLocation { get; set; }
+
+        [Display(Name = "刪除狀態")]
+        public bool? IsDelete { get; set; }
     }
 }

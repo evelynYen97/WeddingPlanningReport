@@ -1,0 +1,42 @@
+﻿@model WeddingPlanningReport.Models.ScheduledStaff
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ScheduledStaff</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ScheduleId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ScheduleId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonnelName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PersonnelName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AssistanceContent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AssistanceContent)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsDelete)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.PersonnelId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
