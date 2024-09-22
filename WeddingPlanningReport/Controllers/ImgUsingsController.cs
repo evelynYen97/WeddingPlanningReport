@@ -24,7 +24,7 @@ namespace WeddingPlanningReport.Controllers
         }
 
         // GET: ImgUsings
-        public async Task<IActionResult> IndexMore(int? id)
+        public async Task<IActionResult> IndexMore(int? id)//id是 EditingImgFileId
         {
             if (id == null)
             {
@@ -39,6 +39,7 @@ namespace WeddingPlanningReport.Controllers
             {
                 return NotFound(); // 如果没有找到相关的记录，返回 NotFound()
             }
+            //var e = _context.ImgUsings.Where(edit => edit.EditingImgFileId == id).Select(edit => edit.MaterialId).ToList();
             return View(imgUsings); // 返回过滤后的数据
         }
 
@@ -143,6 +144,7 @@ namespace WeddingPlanningReport.Controllers
 
             var imgUsing = await _context.ImgUsings
                 .FirstOrDefaultAsync(m => m.ImgUsingId == id);
+
             if (imgUsing == null)
             {
                 return NotFound();

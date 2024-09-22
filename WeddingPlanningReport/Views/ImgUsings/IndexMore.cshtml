@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.ImgUsing>
-
+@inject WeddingPlanningContext _content
 @{
     ViewData["Title"] = "IndexMore";
 }
@@ -160,16 +160,26 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
+                                        var imgName = _content.Materials
+                                        .Where(x => x.MaterialId== item.MaterialId) // 假設這是關聯字段
+                                        .Select(x => x.ImageName)
+                                        .FirstOrDefault();
+
+                                        var MemberimgName = _content.MemberMaterials
+                                        .Where(x => x.MemberMaterialId == item.MemberMaterialId) // 假設這是關聯字段
+                                        .Select(x => x.MemberImgName)
+                                        .FirstOrDefault();
                                         <tr>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EditingImgFileId)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.MemberMaterialId)
+                                                @* @Html.DisplayFor(modelItem => item.MemberMaterialId) *@
+                                                <img src="@Url.Content("~/圖片與圖層/圖片/會員提供圖/" + imgName)" alt="Image" width="80px" height="auto" />
                                             </td>
                                             <td>
-                                                @* 要去素材庫用id查素材名稱 *@
-                                                <img src="~/圖片與圖層/圖片/網站/@Html.DisplayFor(modelItem => item.MaterialId)" width="40px" height="auto" />
+                                                @* @Html.DisplayFor(modelItem => item.MaterialId) *@
+                                                <img src="@Url.Content("~/圖片與圖層/圖片/網站/" + imgName)" alt="Image" width="80px" height="auto"/>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ImgX)

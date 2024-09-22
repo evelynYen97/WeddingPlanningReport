@@ -9,22 +9,22 @@ using WeddingPlanningReport.Models;
 
 namespace WeddingPlanningReport.Controllers
 {
-    public class EditingImgFilesController : Controller
+    public class MemberMaterialsController : Controller
     {
         private readonly WeddingPlanningContext _context;
 
-        public EditingImgFilesController(WeddingPlanningContext context)
+        public MemberMaterialsController(WeddingPlanningContext context)
         {
             _context = context;
         }
 
-        // GET: EditingImgFiles
+        // GET: MemberMaterials
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EditingImgFiles.ToListAsync());
+            return View(await _context.MemberMaterials.ToListAsync());
         }
 
-        // GET: EditingImgFiles/Details/5
+        // GET: MemberMaterials/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,41 +32,39 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var editingImgFile = await _context.EditingImgFiles
-                .FirstOrDefaultAsync(m => m.EditingImgFileId == id);
-            if (editingImgFile == null)
+            var memberMaterial = await _context.MemberMaterials
+                .FirstOrDefaultAsync(m => m.MemberMaterialId == id);
+            if (memberMaterial == null)
             {
                 return NotFound();
             }
-            // 假设 `ImgUsingsController` 的 `Index` 方法接受一个 `id` 参数
-            
-            return RedirectToAction("IndexMore", "ImgUsings", new { id = editingImgFile.EditingImgFileId });
+
+            return View(memberMaterial);
         }
 
-
-        // GET: EditingImgFiles/Create
+        // GET: MemberMaterials/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: EditingImgFiles/Create
+        // POST: MemberMaterials/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EditingImgFileId,MemberId,EditTime,Screenshot,ImgEditingName")] EditingImgFile editingImgFile)
+        public async Task<IActionResult> Create([Bind("MemberMaterialId,MemberId,MemberImgName,EstimatedLength,EstimatedWidth,IsDelete")] MemberMaterial memberMaterial)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(editingImgFile);
+                _context.Add(memberMaterial);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(editingImgFile);
+            return View(memberMaterial);
         }
 
-        // GET: EditingImgFiles/Edit/5
+        // GET: MemberMaterials/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +72,22 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var editingImgFile = await _context.EditingImgFiles.FindAsync(id);
-            if (editingImgFile == null)
+            var memberMaterial = await _context.MemberMaterials.FindAsync(id);
+            if (memberMaterial == null)
             {
                 return NotFound();
             }
-            return View(editingImgFile);
+            return View(memberMaterial);
         }
 
-        // POST: EditingImgFiles/Edit/5
+        // POST: MemberMaterials/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EditingImgFileId,MemberId,EditTime,Screenshot,ImgEditingName")] EditingImgFile editingImgFile)
+        public async Task<IActionResult> Edit(int id, [Bind("MemberMaterialId,MemberId,MemberImgName,EstimatedLength,EstimatedWidth,IsDelete")] MemberMaterial memberMaterial)
         {
-            if (id != editingImgFile.EditingImgFileId)
+            if (id != memberMaterial.MemberMaterialId)
             {
                 return NotFound();
             }
@@ -98,12 +96,12 @@ namespace WeddingPlanningReport.Controllers
             {
                 try
                 {
-                    _context.Update(editingImgFile);
+                    _context.Update(memberMaterial);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EditingImgFileExists(editingImgFile.EditingImgFileId))
+                    if (!MemberMaterialExists(memberMaterial.MemberMaterialId))
                     {
                         return NotFound();
                     }
@@ -114,10 +112,10 @@ namespace WeddingPlanningReport.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(editingImgFile);
+            return View(memberMaterial);
         }
 
-        // GET: EditingImgFiles/Delete/5
+        // GET: MemberMaterials/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,34 +123,34 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var editingImgFile = await _context.EditingImgFiles
-                .FirstOrDefaultAsync(m => m.EditingImgFileId == id);
-            if (editingImgFile == null)
+            var memberMaterial = await _context.MemberMaterials
+                .FirstOrDefaultAsync(m => m.MemberMaterialId == id);
+            if (memberMaterial == null)
             {
                 return NotFound();
             }
 
-            return View(editingImgFile);
+            return View(memberMaterial);
         }
 
-        // POST: EditingImgFiles/Delete/5
+        // POST: MemberMaterials/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var editingImgFile = await _context.EditingImgFiles.FindAsync(id);
-            if (editingImgFile != null)
+            var memberMaterial = await _context.MemberMaterials.FindAsync(id);
+            if (memberMaterial != null)
             {
-                _context.EditingImgFiles.Remove(editingImgFile);
+                _context.MemberMaterials.Remove(memberMaterial);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EditingImgFileExists(int id)
+        private bool MemberMaterialExists(int id)
         {
-            return _context.EditingImgFiles.Any(e => e.EditingImgFileId == id);
+            return _context.MemberMaterials.Any(e => e.MemberMaterialId == id);
         }
     }
 }

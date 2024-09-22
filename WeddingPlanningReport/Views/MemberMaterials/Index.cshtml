@@ -1,11 +1,9 @@
-﻿@model WeddingPlanningReport.Models.ImgUsing
-@inject WeddingPlanningContext _content
-@{
-    ViewData["Title"] = "Delete";
-}
+﻿@model IEnumerable<WeddingPlanningReport.Models.MemberMaterial>
 
-@section Styles
-{
+@section Styles {
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/css/btn18settype.min.css" rel="stylesheet" />
+    <link href="~/css/cantablestyle.css" rel="stylesheet" />
     <style>
         .modal-body {
             padding-top: 0
@@ -19,10 +17,14 @@
             width: 1050px;
             margin: auto;
         }
+        /* 添加懸停效果 */
+        #MemberMaterialsTable tr:hover {
+            background-color: #A6FFFF !important; /* 懸停時高亮顏色 */
+            cursor: pointer; /* 鼠標移到行上時顯示指針 */
+        }
     </style>
 }
 
-<!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
       dir="ltr"
@@ -34,17 +36,6 @@
 </head>
 
 <body>
-    @{
-        var imgName = _content.Materials
-        .Where(x => x.MaterialId == Model.MaterialId) // 假設這是關聯字段
-        .Select(x => x.ImageName)
-        .FirstOrDefault();
-
-        var MemberimgName = _content.MemberMaterials
-        .Where(x => x.MemberMaterialId == Model.MemberMaterialId) // 假設這是關聯字段
-        .Select(x => x.MemberImgName)
-        .FirstOrDefault();
-    }
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -63,10 +54,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><a asp-area="" asp-controller="ImgUsings" asp-action="Index">圖片素材資訊</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">圖片素材管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">刪除</h5>
+                                <h5 class="currentPage">網站素材管理</h5>
                             </div>
                         </nav>
 
@@ -129,68 +120,62 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <div>
-                        <h4>ImgUsing</h4>
-                        <hr />
-                        <dl class="row">
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.EditingImgFileId)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.EditingImgFileId)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.MemberMaterialId)
-                            </dt>
-                            <dd class="col-sm-10">
-                                <img src="@Url.Content("~/圖片與圖層/圖片/會員提供圖/" + imgName)" alt="Image" width="200px" height="auto" />
-                                @* @Html.DisplayFor(model => model.MemberMaterialId) *@
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.MaterialId)
-                            </dt>
-                            <dd class="col-sm-10">
-                                <img src="@Url.Content("~/圖片與圖層/圖片/網站/" + imgName)" alt="Image" width="200px" height="auto" />
-                                @* @Html.DisplayFor(model => model.MaterialId) *@
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.ImgX)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.ImgX)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.ImgY)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.ImgY)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.ImgW)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.ImgW)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.ImgH)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.ImgH)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.IsDelete)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.IsDelete)
-                            </dd>
-                        </dl>
 
-                        <form asp-action="Delete">
-                            <input type="hidden" asp-for="ImgUsingId" />
-                            <input type="submit" value="Delete" class="btn btn-danger" />
-                            <a asp-controller="EditingImgFiles" asp-action="Index" class="btn btn-primary">Back to List</a>
-                        </form>
+                    <!--  Table start -->
+                    <div class="card">
+                        <div class="table-responsive text-nowrap position-relative">
+                            <table class="table" id="MemberMaterialsTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MemberId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MemberImgName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.EstimatedLength)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.EstimatedWidth)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.IsDelete)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MemberId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MemberImgName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EstimatedLength)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EstimatedWidth)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IsDelete)
+                                            </td>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@item.MemberMaterialId">Edit</a> |
+                                                <a asp-action="Details" asp-route-id="@item.MemberMaterialId">Details</a> |
+                                                <a asp-action="Delete" asp-route-id="@item.MemberMaterialId">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                    <!-- Table end -->
                 </div>
                 <!-- Content wrapper -->
             </div>
@@ -201,3 +186,35 @@
     </div>
 </body>
 </html>
+
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#MemberMaterialsTable").dataTable({
+                fixedHeader: {//確保表頭固定，但搜尋欄位能隨滾動條移動
+                    header: true
+                },
+                scrollCollapse: true, // 內容縮放時保持滾動條
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                },
+                stripeClasses: ['odd-row', 'even-row']
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
