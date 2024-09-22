@@ -1,8 +1,4 @@
-﻿@model WeddingPlanningReport.Models.Material
-
-@{
-    ViewData["Title"] = "Details";
-}
+﻿@model WeddingPlanningReport.Models.MemberMaterial
 
 @section Styles
 {
@@ -51,7 +47,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><a asp-controller="Materials" asp-action="Index">圖片素材管理</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a asp-action="Index">會員素材管理</a></li>
                             </ol>
                             <div class="row d-block">
                                 <h5 class="currentPage">詳細資料</h5>
@@ -117,32 +113,46 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            Image
-                        </dt>
-                        <dd class="col-sm-10">
-                            <img src="~/圖片與圖層/圖片/網站/@Html.DisplayFor(model => model.ImageName)" width="300px" height="auto"/>
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.EstimatedL)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.EstimatedL) cm
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.EstimatedW)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.EstimatedW) cm
-                        </dd>
-                    </dl>
                     <div>
-                        <a asp-action="Edit" asp-route-id="@Model?.MaterialId" class="btn btn-warning">Edit</a>
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.MemberId)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.MemberId)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.MemberImgName)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.MemberImgName)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.EstimatedLength)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.EstimatedLength)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.EstimatedWidth)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.EstimatedWidth)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.IsDelete)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.IsDelete)
+                            </dd>
+                        </dl>
+                    </div>
+                    <div>
+                        <a asp-action="Edit" asp-route-id="@Model?.MemberMaterialId" class="btn btn-warning">Edit</a>
                         <a asp-action="Index" class="btn btn-primary">Back to List</a>
                     </div>
                 </div>
-                
+
             </div>
             <!-- Content wrapper -->
         </div>

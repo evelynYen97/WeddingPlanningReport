@@ -1,11 +1,8 @@
-﻿@model WeddingPlanningReport.Models.Material
-
-@{
-    ViewData["Title"] = "Details";
-}
+﻿@model WeddingPlanningReport.Models.MemberMaterial
 
 @section Styles
 {
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <style>
         .modal-body {
             padding-top: 0
@@ -21,6 +18,7 @@
         }
     </style>
 }
+
 <!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
@@ -51,10 +49,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><a asp-controller="Materials" asp-action="Index">圖片素材管理</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a asp-action="Index">會員素材管理</a></li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">詳細資料</h5>
+                                <h5 class="currentPage">編輯</h5>
                             </div>
                         </nav>
 
@@ -117,39 +115,57 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            Image
-                        </dt>
-                        <dd class="col-sm-10">
-                            <img src="~/圖片與圖層/圖片/網站/@Html.DisplayFor(model => model.ImageName)" width="300px" height="auto"/>
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.EstimatedL)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.EstimatedL) cm
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.EstimatedW)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.EstimatedW) cm
-                        </dd>
-                    </dl>
-                    <div>
-                        <a asp-action="Edit" asp-route-id="@Model?.MaterialId" class="btn btn-warning">Edit</a>
-                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="MemberMaterialId" />
+                                <div class="form-group">
+                                    <label asp-for="MemberId" class="control-label"></label>
+                                    <input asp-for="MemberId" class="form-control" />
+                                    <span asp-validation-for="MemberId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="MemberImgName" class="control-label"></label>
+                                    <input asp-for="MemberImgName" class="form-control" />
+                                    <span asp-validation-for="MemberImgName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EstimatedLength" class="control-label"></label>
+                                    <input asp-for="EstimatedLength" class="form-control" />
+                                    <span asp-validation-for="EstimatedLength" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EstimatedWidth" class="control-label"></label>
+                                    <input asp-for="EstimatedWidth" class="form-control" />
+                                    <span asp-validation-for="EstimatedWidth" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="IsDelete" class="control-label"></label>
+                                    <input asp-for="IsDelete" class="form-control" />
+                                    <span asp-validation-for="IsDelete" class="text-danger"></span>
+                                </div>
+                                <div class="form-group" style="margin-top: 20px;">
+                                    <input type="submit" value="Save" class="btn btn-danger" />
+                                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
+                    @section Scripts {
+                        @{
+                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                        }
+                    }
                 </div>
-                
+                <!-- Content wrapper -->
             </div>
-            <!-- Content wrapper -->
+            <!-- / Layout page -->
         </div>
-        <!-- / Layout page -->
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
+
 </body>
 </html>
+

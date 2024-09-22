@@ -1,22 +1,28 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.Material>
+﻿@model IEnumerable<WeddingPlanningReport.Models.ImgUsing>
+@inject WeddingPlanningContext _content
+@{
+    ViewData["Title"] = "IndexMore";
+}
 
 @section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <link href="~/css/cantablestyle.css" rel="stylesheet" />
     <style>
-        .modal-body{
-            padding-top:0
+        .modal-body {
+            padding-top: 0
         }
-        .detail-btn{
+
+        .detail-btn {
             background-color: #9271AC
         }
-        .table-responsive{
-            width:1050px;
-            margin:auto;
+
+        .table-responsive {
+            width: 1050px;
+            margin: auto;
         }
         /* 添加懸停效果 */
-        #MaterialsTable tr:hover {
+        #ImageUseTable tr:hover {
             background-color: #A6FFFF !important; /* 懸停時高亮顏色 */
             cursor: pointer; /* 鼠標移到行上時顯示指針 */
         }
@@ -52,10 +58,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">圖片素材管理</li>
+                                <li class="breadcrumb-item active" aria-current="page"><a asp-area="" asp-controller="EditingImgFiles" asp-action="Index">圖層素材管理</a></li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">網站素材管理</h5>
+                                <h5 class="currentPage">素材詳細資訊</h5>
                             </div>
                         </nav>
 
@@ -118,27 +124,35 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-
                     <!--  Table start -->
                     <div class="card">
                         <div class="table-responsive text-nowrap position-relative">
-                            <p>
-                                @* <a asp-action="Create">Create New</a> *@
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="AddBtn">
-                                    <i class="bi bi-plus-lg"></i><a asp-action="Create" style="color: white;">新增</a>
-                                </button>
-                            </p>
-                            <table class="table" id="MaterialsTable">
+                            <table class="table" id="ImageUseTable">
                                 <thead class="table-primary">
                                     <tr>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ImageName)
+                                            @Html.DisplayNameFor(model => model.EditingImgFileId)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EstimatedL)
+                                            @Html.DisplayNameFor(model => model.MemberMaterialId)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EstimatedW)
+                                            @Html.DisplayNameFor(model => model.MaterialId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ImgX)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ImgY)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ImgW)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ImgH)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.IsDelete)
                                         </th>
                                         <th></th>
                                     </tr>
@@ -146,26 +160,59 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
+                                        var imgName = _content.Materials
+                                        .Where(x => x.MaterialId== item.MaterialId) // 假設這是關聯字段
+                                        .Select(x => x.ImageName)
+                                        .FirstOrDefault();
+                                        if (imgName == null)
+                                        {
+                                            imgName = "noimage.jpg";
+                                        }
+
+                                        var MemberimgName = _content.MemberMaterials
+                                        .Where(x => x.MemberMaterialId == item.MemberMaterialId) // 假設這是關聯字段
+                                        .Select(x => x.MemberImgName)
+                                        .FirstOrDefault();
+                                        if (MemberimgName==null)
+                                        {
+                                            MemberimgName = "noimage.jpg";
+                                        }
                                         <tr>
                                             <td>
-                                                <img src="~/圖片與圖層/圖片/網站/@Html.DisplayFor(modelItem => item.ImageName)" width="40px" height="auto"/>
+                                                @Html.DisplayFor(modelItem => item.EditingImgFileId)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EstimatedL) cm
+
+                                                @* @Html.DisplayFor(modelItem => item.MemberMaterialId) *@
+                                                <img src="@Url.Content("~/圖片與圖層/圖片/會員提供圖/" + MemberimgName)" alt="Image" width="80px" height="auto" />
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EstimatedW) cm
+                                                @* @Html.DisplayFor(modelItem => item.MaterialId) *@
+                                                <img src="@Url.Content("~/圖片與圖層/圖片/網站/" + imgName)" alt="Image" width="80px" height="auto"/>
                                             </td>
                                             <td>
-                                                <a asp-action="Edit" asp-route-id="@item.MaterialId">Edit</a> |
-                                                <a asp-action="Details" asp-route-id="@item.MaterialId">Details</a> |
-                                                <a asp-action="Delete" asp-route-id="@item.MaterialId">Delete</a>
+                                                @Html.DisplayFor(modelItem => item.ImgX)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ImgY)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ImgW)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ImgH)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IsDelete)
+                                            </td>
+                                            <td>
+                                                <a asp-action="Delete" asp-route-id="@item.ImgUsingId">Delete</a>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
-                        </table>
-
+                            </table>
+                            <a asp-area="" asp-controller="EditingImgFiles" asp-action="Index" class="btn btn-primary">Back to List</a>
                         </div>
                     </div>
                     <!-- Table end -->
@@ -186,7 +233,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("#MaterialsTable").dataTable({
+            $("#ImageUseTable").dataTable({
                 fixedHeader: {//確保表頭固定，但搜尋欄位能隨滾動條移動
                     header: true
                 },
@@ -199,8 +246,6 @@
         });
     </script>
 }
-
-
 
 
 

@@ -1,20 +1,18 @@
-﻿@model WeddingPlanningReport.Models.EditingImgFile
+﻿@model WeddingPlanningReport.Models.ImgUsing
 
 @section Styles
 {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <style>
-        .modal-body {
-            padding-top: 0
+        .modal-body{
+            padding-top:0
         }
-
-        .detail-btn {
+        .detail-btn{
             background-color: #9271AC
         }
-
-        .table-responsive {
-            width: 1050px;
-            margin: auto;
+        .table-responsive{
+            width:1000px;
+            margin:auto;
         }
     </style>
 }
@@ -61,7 +59,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -70,7 +68,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -117,28 +115,52 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <div class="row">
                         <div class="col-md-4">
-                            <form asp-action="Edit">
+                            <form asp-controller="ImgUsings" asp-action="Edit">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="EditingImgFileId" />
+                                <input type="hidden" asp-for="ImgUsingId" />
                                 <div class="form-group">
-                                    <label asp-for="MemberId" class="control-label"></label>
-                                    <input asp-for="MemberId" class="form-control" />
-                                    <span asp-validation-for="MemberId" class="text-danger"></span>
+                                    <label asp-for="EditingImgFileId" class="control-label"></label>
+                                    <input asp-for="EditingImgFileId" class="form-control" />
+                                    <span asp-validation-for="EditingImgFileId" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="EditTime" class="control-label"></label>
-                                    <input asp-for="EditTime" class="form-control" />
-                                    <span asp-validation-for="EditTime" class="text-danger"></span>
+                                    <label asp-for="MemberMaterialId" class="control-label"></label>
+                                    <input asp-for="MemberMaterialId" class="form-control" />
+                                    <span asp-validation-for="MemberMaterialId" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="Screenshot" class="control-label"></label>
-                                    <input asp-for="Screenshot" class="form-control" />
-                                    <span asp-validation-for="Screenshot" class="text-danger"></span>
+
+                                    <label asp-for="MaterialId" class="control-label"></label>
+                                    <input asp-for="MaterialId" class="form-control" />
+                                    <span asp-validation-for="MaterialId" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="ImgEditingName" class="control-label"></label>
-                                    <input asp-for="ImgEditingName" class="form-control" />
-                                    <span asp-validation-for="ImgEditingName" class="text-danger"></span>
+                                    <label asp-for="ImgX" class="control-label"></label>
+                                    <input asp-for="ImgX" class="form-control" />
+                                    <span asp-validation-for="ImgX" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ImgY" class="control-label"></label>
+                                    <input asp-for="ImgY" class="form-control" />
+                                    <span asp-validation-for="ImgY" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ImgW" class="control-label"></label>
+                                    <input asp-for="ImgW" class="form-control" />
+                                    <span asp-validation-for="ImgW" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ImgH" class="control-label"></label>
+                                    <input asp-for="ImgH" class="form-control" />
+                                    <span asp-validation-for="ImgH" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label asp-for="IsDelete" class="control-label"></label>
+                                    <select asp-for="IsDelete" class="form-control">
+                                        <option value="True">True</option>
+                                        <option value="False">False</option>
+                                    </select>
+                                    <span asp-validation-for="IsDelete" class="text-danger"></span>
                                 </div>
                                 <div class="form-group" style="margin-top: 20px;">
                                     <input type="submit" value="Save" class="btn btn-danger" />

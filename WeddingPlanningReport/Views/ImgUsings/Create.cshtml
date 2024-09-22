@@ -1,0 +1,68 @@
+﻿@model WeddingPlanningReport.Models.ImgUsing
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ImgUsing</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EditingImgFileId" class="control-label"></label>
+                <input asp-for="EditingImgFileId" class="form-control" />
+                <span asp-validation-for="EditingImgFileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MemberMaterialId" class="control-label"></label>
+                <input asp-for="MemberMaterialId" class="form-control" />
+                <span asp-validation-for="MemberMaterialId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaterialId" class="control-label"></label>
+                <input asp-for="MaterialId" class="form-control" />
+                <span asp-validation-for="MaterialId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgX" class="control-label"></label>
+                <input asp-for="ImgX" class="form-control" />
+                <span asp-validation-for="ImgX" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgY" class="control-label"></label>
+                <input asp-for="ImgY" class="form-control" />
+                <span asp-validation-for="ImgY" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgW" class="control-label"></label>
+                <input asp-for="ImgW" class="form-control" />
+                <span asp-validation-for="ImgW" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgH" class="control-label"></label>
+                <input asp-for="ImgH" class="form-control" />
+                <span asp-validation-for="ImgH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsDelete" class="control-label"></label>
+                <input asp-for="IsDelete" class="form-control" />
+                <span asp-validation-for="IsDelete" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

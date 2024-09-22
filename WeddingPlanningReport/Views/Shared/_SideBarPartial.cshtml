@@ -171,13 +171,25 @@
     </li>
 
     <!-- 圖片素材管理 -->
-    <li class="menu-item ">
-        <a class="menu-link" asp-area="" asp-controller="Materials" asp-action="Index">
+    <li class="menu-item">
+        <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon bi bi-image"></i>
-            <div data-i18n="Analytics">圖片素材管理</div>
+            <div data-i18n="Layouts">圖片素材管理</div>
         </a>
+        <ul class="menu-sub">
+            <li class="menu-item ">
+                <a class="menu-link" asp-area="" asp-controller="Materials" asp-action="Index">
+                    <div>網站素材管理</div>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="menu-link" asp-area="" asp-controller="MemberMaterials" asp-action="Index">
+                    <div>會員素材管理</div>
+                </a>
+            </li>
+        </ul>
     </li>
-
+    
     <!-- 圖層資料管理 -->
     <li class="menu-item ">
         <a class="menu-link" asp-area="" asp-controller="EditingImgFiles" asp-action="Index">

@@ -1,8 +1,9 @@
-﻿@model WeddingPlanningReport.Models.EditingImgFile
+﻿@model IEnumerable<WeddingPlanningReport.Models.MemberMaterial>
 
-@section Styles
-{
+@section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/css/btn18settype.min.css" rel="stylesheet" />
+    <link href="~/css/cantablestyle.css" rel="stylesheet" />
     <style>
         .modal-body {
             padding-top: 0
@@ -16,10 +17,14 @@
             width: 1050px;
             margin: auto;
         }
+        /* 添加懸停效果 */
+        #MemberMaterialsTable tr:hover {
+            background-color: #A6FFFF !important; /* 懸停時高亮顏色 */
+            cursor: pointer; /* 鼠標移到行上時顯示指針 */
+        }
     </style>
 }
 
-<!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
       dir="ltr"
@@ -49,10 +54,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><a asp-controller="Venues" asp-action="Index">婚禮場地管理</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">圖片素材管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">創建</h5>
+                                <h5 class="currentPage">會員素材管理</h5>
                             </div>
                         </nav>
 
@@ -61,7 +66,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -70,7 +75,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -115,43 +120,62 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <form asp-action="Edit">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <input type="hidden" asp-for="EditingImgFileId" />
-                                <div class="form-group">
-                                    <label asp-for="MemberId" class="control-label"></label>
-                                    <input asp-for="MemberId" class="form-control" />
-                                    <span asp-validation-for="MemberId" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="EditTime" class="control-label"></label>
-                                    <input asp-for="EditTime" class="form-control" />
-                                    <span asp-validation-for="EditTime" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Screenshot" class="control-label"></label>
-                                    <input asp-for="Screenshot" class="form-control" />
-                                    <span asp-validation-for="Screenshot" class="text-danger"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="ImgEditingName" class="control-label"></label>
-                                    <input asp-for="ImgEditingName" class="form-control" />
-                                    <span asp-validation-for="ImgEditingName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group" style="margin-top: 20px;">
-                                    <input type="submit" value="Save" class="btn btn-danger" />
-                                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
-                                </div>
-                            </form>
+
+                    <!--  Table start -->
+                    <div class="card">
+                        <div class="table-responsive text-nowrap position-relative">
+                            <table class="table" id="MemberMaterialsTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MemberId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MemberImgName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.EstimatedLength)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.EstimatedWidth)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.IsDelete)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MemberId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MemberImgName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EstimatedLength)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EstimatedWidth)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.IsDelete)
+                                            </td>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@item.MemberMaterialId">Edit</a> |
+                                                <a asp-action="Details" asp-route-id="@item.MemberMaterialId">Details</a> |
+                                                <a asp-action="Delete" asp-route-id="@item.MemberMaterialId">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    @section Scripts {
-                        @{
-                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
-                        }
-                    }
+                    <!-- Table end -->
                 </div>
                 <!-- Content wrapper -->
             </div>
@@ -160,7 +184,37 @@
         <!-- Overlay -->
         <div class="layout-overlay layout-menu-toggle"></div>
     </div>
-
 </body>
 </html>
+
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#MemberMaterialsTable").dataTable({
+                fixedHeader: {//確保表頭固定，但搜尋欄位能隨滾動條移動
+                    header: true
+                },
+                scrollCollapse: true, // 內容縮放時保持滾動條
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                },
+                stripeClasses: ['odd-row', 'even-row']
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
 

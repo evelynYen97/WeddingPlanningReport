@@ -1,7 +1,7 @@
-﻿@model WeddingPlanningReport.Models.Material
-
+﻿@model WeddingPlanningReport.Models.ImgUsing
+@inject WeddingPlanningContext _content
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
 
 @section Styles
@@ -21,6 +21,7 @@
         }
     </style>
 }
+
 <!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
@@ -33,6 +34,17 @@
 </head>
 
 <body>
+    @{
+        var imgName = _content.Materials
+        .Where(x => x.MaterialId == Model.MaterialId) // 假設這是關聯字段
+        .Select(x => x.ImageName)
+        .FirstOrDefault();
+
+        var MemberimgName = _content.MemberMaterials
+        .Where(x => x.MemberMaterialId == Model.MemberMaterialId) // 假設這是關聯字段
+        .Select(x => x.MemberImgName)
+        .FirstOrDefault();
+    }
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -51,10 +63,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><a asp-controller="Materials" asp-action="Index">圖片素材管理</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a asp-area="" asp-controller="ImgUsings" asp-action="Index">圖片素材資訊</a></li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">詳細資料</h5>
+                                <h5 class="currentPage">刪除</h5>
                             </div>
                         </nav>
 
@@ -63,7 +75,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -72,7 +84,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -117,39 +129,75 @@
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <dl class="row">
-                        <dt class="col-sm-2">
-                            Image
-                        </dt>
-                        <dd class="col-sm-10">
-                            <img src="~/圖片與圖層/圖片/網站/@Html.DisplayFor(model => model.ImageName)" width="300px" height="auto"/>
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.EstimatedL)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.EstimatedL) cm
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.EstimatedW)
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.EstimatedW) cm
-                        </dd>
-                    </dl>
                     <div>
-                        <a asp-action="Edit" asp-route-id="@Model?.MaterialId" class="btn btn-warning">Edit</a>
-                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                        <h4>ImgUsing</h4>
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.EditingImgFileId)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.EditingImgFileId)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.MemberMaterialId)
+                            </dt>
+                            <dd class="col-sm-10">
+                                <img src="@Url.Content("~/圖片與圖層/圖片/會員提供圖/" + imgName)" alt="Image" width="200px" height="auto" />
+                                @* @Html.DisplayFor(model => model.MemberMaterialId) *@
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.MaterialId)
+                            </dt>
+                            <dd class="col-sm-10">
+                                <img src="@Url.Content("~/圖片與圖層/圖片/網站/" + imgName)" alt="Image" width="200px" height="auto" />
+                                @* @Html.DisplayFor(model => model.MaterialId) *@
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ImgX)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ImgX)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ImgY)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ImgY)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ImgW)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ImgW)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ImgH)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ImgH)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.IsDelete)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.IsDelete)
+                            </dd>
+                        </dl>
+
+                        <form asp-action="Delete">
+                            <input type="hidden" asp-for="ImgUsingId" />
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                            <a asp-controller="EditingImgFiles" asp-action="Index" class="btn btn-primary">Back to List</a>
+                        </form>
                     </div>
                 </div>
-                
+                <!-- Content wrapper -->
             </div>
-            <!-- Content wrapper -->
+            <!-- / Layout page -->
         </div>
-        <!-- / Layout page -->
-    </div>
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
 </body>
 </html>

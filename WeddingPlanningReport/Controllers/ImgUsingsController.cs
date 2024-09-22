@@ -9,22 +9,41 @@ using WeddingPlanningReport.Models;
 
 namespace WeddingPlanningReport.Controllers
 {
-    public class EditingImgFilesController : Controller
+    public class ImgUsingsController : Controller
     {
         private readonly WeddingPlanningContext _context;
 
-        public EditingImgFilesController(WeddingPlanningContext context)
+        public ImgUsingsController(WeddingPlanningContext context)
         {
             _context = context;
         }
 
-        // GET: EditingImgFiles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.EditingImgFiles.ToListAsync());
+            return View(await _context.ImgUsings.ToListAsync());
         }
 
-        // GET: EditingImgFiles/Details/5
+        // GET: ImgUsings
+        public async Task<IActionResult> IndexMore(int? id)//id是 EditingImgFileId
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            // 根据传入的 id 过滤 ImgUsings 数据
+            var imgUsings = await _context.ImgUsings
+                .Where(iu => iu.EditingImgFileId == id) // 假设 ImgUsings 表中有一个外键字段来关联到 EditingImgFiles
+                .ToListAsync();
+
+            if (!imgUsings.Any())
+            {
+                return NotFound(); // 如果没有找到相关的记录，返回 NotFound()
+            }
+            //var e = _context.ImgUsings.Where(edit => edit.EditingImgFileId == id).Select(edit => edit.MaterialId).ToList();
+            return View(imgUsings); // 返回过滤后的数据
+        }
+
+        // GET: ImgUsings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,41 +51,39 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var editingImgFile = await _context.EditingImgFiles
-                .FirstOrDefaultAsync(m => m.EditingImgFileId == id);
-            if (editingImgFile == null)
+            var imgUsing = await _context.ImgUsings
+                .FirstOrDefaultAsync(m => m.ImgUsingId == id);
+            if (imgUsing == null)
             {
                 return NotFound();
             }
-            // 假设 `ImgUsingsController` 的 `Index` 方法接受一个 `id` 参数
-            
-            return RedirectToAction("IndexMore", "ImgUsings", new { id = editingImgFile.EditingImgFileId });
+
+            return View(imgUsing);
         }
 
-
-        // GET: EditingImgFiles/Create
+        // GET: ImgUsings/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: EditingImgFiles/Create
+        // POST: ImgUsings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EditingImgFileId,MemberId,EditTime,Screenshot,ImgEditingName")] EditingImgFile editingImgFile)
+        public async Task<IActionResult> Create([Bind("ImgUsingId,EditingImgFileId,MemberMaterialId,MaterialId,ImgX,ImgY,ImgW,ImgH,IsDelete")] ImgUsing imgUsing)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(editingImgFile);
+                _context.Add(imgUsing);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(editingImgFile);
+            return View(imgUsing);
         }
 
-        // GET: EditingImgFiles/Edit/5
+        // GET: ImgUsings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +91,22 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var editingImgFile = await _context.EditingImgFiles.FindAsync(id);
-            if (editingImgFile == null)
+            var imgUsing = await _context.ImgUsings.FindAsync(id);
+            if (imgUsing == null)
             {
                 return NotFound();
             }
-            return View(editingImgFile);
+            return View(imgUsing);
         }
 
-        // POST: EditingImgFiles/Edit/5
+        // POST: ImgUsings/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EditingImgFileId,MemberId,EditTime,Screenshot,ImgEditingName")] EditingImgFile editingImgFile)
+        public async Task<IActionResult> Edit(int id, [Bind("ImgUsingId,EditingImgFileId,MemberMaterialId,MaterialId,ImgX,ImgY,ImgW,ImgH,IsDelete")] ImgUsing imgUsing)
         {
-            if (id != editingImgFile.EditingImgFileId)
+            if (id != imgUsing.ImgUsingId)
             {
                 return NotFound();
             }
@@ -98,12 +115,12 @@ namespace WeddingPlanningReport.Controllers
             {
                 try
                 {
-                    _context.Update(editingImgFile);
+                    _context.Update(imgUsing);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EditingImgFileExists(editingImgFile.EditingImgFileId))
+                    if (!ImgUsingExists(imgUsing.ImgUsingId))
                     {
                         return NotFound();
                     }
@@ -114,10 +131,10 @@ namespace WeddingPlanningReport.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(editingImgFile);
+            return View(imgUsing);
         }
 
-        // GET: EditingImgFiles/Delete/5
+        // GET: ImgUsings/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,34 +142,35 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var editingImgFile = await _context.EditingImgFiles
-                .FirstOrDefaultAsync(m => m.EditingImgFileId == id);
-            if (editingImgFile == null)
+            var imgUsing = await _context.ImgUsings
+                .FirstOrDefaultAsync(m => m.ImgUsingId == id);
+
+            if (imgUsing == null)
             {
                 return NotFound();
             }
 
-            return View(editingImgFile);
+            return View(imgUsing);
         }
 
-        // POST: EditingImgFiles/Delete/5
+        // POST: ImgUsings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var editingImgFile = await _context.EditingImgFiles.FindAsync(id);
-            if (editingImgFile != null)
+            var imgUsing = await _context.ImgUsings.FindAsync(id);
+            if (imgUsing != null)
             {
-                _context.EditingImgFiles.Remove(editingImgFile);
+                _context.ImgUsings.Remove(imgUsing);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EditingImgFileExists(int id)
+        private bool ImgUsingExists(int id)
         {
-            return _context.EditingImgFiles.Any(e => e.EditingImgFileId == id);
+            return _context.ImgUsings.Any(e => e.ImgUsingId == id);
         }
     }
 }

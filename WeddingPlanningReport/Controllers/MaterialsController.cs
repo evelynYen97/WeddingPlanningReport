@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Humanizer.Localisation;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +14,12 @@ namespace WeddingPlanningReport.Controllers
     public class MaterialsController : Controller
     {
         private readonly WeddingPlanningContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;//0919新增
 
-        public MaterialsController(WeddingPlanningContext context)
+        public MaterialsController(WeddingPlanningContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Materials
@@ -53,7 +57,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaterialId,ImageName,EstimatedL,EstimatedW")] Material material)
+        public async Task<IActionResult> Create([Bind("MaterialId,ImageName,EstimatedL,EstimatedW")] Material material, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +89,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaterialId,ImageName,EstimatedL,EstimatedW")] Material material)
+        public async Task<IActionResult> Edit(int id, [Bind("MaterialId,ImageName,EstimatedL,EstimatedW")] Material material,IFormFile? file)
         {
             if (id != material.MaterialId)
             {
@@ -96,6 +100,30 @@ namespace WeddingPlanningReport.Controllers
             {
                 try
                 {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = material.ImageName; // 保留现有的图片名
+                    if (file != null)
+                    {
+                        string newFileName = file.FileName;
+                        string productPath = Path.Combine(wwwRootPath, @"圖片與圖層\圖片\網站");
+
+                        string filePath = Path.Combine(productPath, newFileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
+                            string fileExtension = Path.GetExtension(newFileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
+                            newFileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, newFileName);
+                        }
+                        // 儲存圖片到指定路徑
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+                        fileName = newFileName;
+                    }
+                    material.ImageName = fileName;
                     _context.Update(material);
                     await _context.SaveChangesAsync();
                 }
