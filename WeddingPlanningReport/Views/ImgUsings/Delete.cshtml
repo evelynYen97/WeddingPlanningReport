@@ -39,11 +39,19 @@
         .Where(x => x.MaterialId == Model.MaterialId) // 假設這是關聯字段
         .Select(x => x.ImageName)
         .FirstOrDefault();
+        if (imgName == null)
+        {
+            imgName = "noimage.jpg";
+        }
 
         var MemberimgName = _content.MemberMaterials
         .Where(x => x.MemberMaterialId == Model.MemberMaterialId) // 假設這是關聯字段
         .Select(x => x.MemberImgName)
         .FirstOrDefault();
+        if (MemberimgName == null)
+        {
+            MemberimgName = "noimage.jpg";
+        }
     }
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -143,7 +151,7 @@
                                 @Html.DisplayNameFor(model => model.MemberMaterialId)
                             </dt>
                             <dd class="col-sm-10">
-                                <img src="@Url.Content("~/圖片與圖層/圖片/會員提供圖/" + imgName)" alt="Image" width="200px" height="auto" />
+                                <img src="@Url.Content("~/圖片與圖層/圖片/會員提供圖/" + MemberimgName)" alt="Image" width="200px" height="auto" />
                                 @* @Html.DisplayFor(model => model.MemberMaterialId) *@
                             </dd>
                             <dt class="col-sm-2">

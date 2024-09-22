@@ -14,12 +14,4 @@ public partial class BudgetChart
     public string? ChartName { get; set; }
 
     public string? ChartUnit { get; set; }
-
-    public int? RentalDetailId { get; set; }
-
-    public int? DishesOrderDetailId { get; set; }
-
-    public int? CakeDetailId { get; set; }
-
-    public int? VenueId { get; set; }
 }

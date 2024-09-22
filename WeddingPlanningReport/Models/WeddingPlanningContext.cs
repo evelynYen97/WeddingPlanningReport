@@ -19,7 +19,7 @@ public partial class WeddingPlanningContext : DbContext
 
     public virtual DbSet<CakeOrderDetail> CakeOrderDetails { get; set; }
 
-    public virtual DbSet<Cars> Cars { get; set; }
+    public virtual DbSet<Car> Cars { get; set; }
 
     public virtual DbSet<CarRental> CarRentals { get; set; }
 
@@ -68,7 +68,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.ToTable("budgetChart");
 
             entity.Property(e => e.BudgetChartId).HasColumnName("budgetChartID");
-            entity.Property(e => e.CakeDetailId).HasColumnName("cakeDetailID");
             entity.Property(e => e.ChartName)
                 .HasMaxLength(100)
                 .HasColumnName("chartName");
@@ -78,10 +77,7 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.ChartUnit)
                 .HasMaxLength(50)
                 .HasColumnName("chartUnit");
-            entity.Property(e => e.DishesOrderDetailId).HasColumnName("dishesOrderDetailID");
             entity.Property(e => e.MemberId).HasColumnName("memberID");
-            entity.Property(e => e.RentalDetailId).HasColumnName("rentalDetailID");
-            entity.Property(e => e.VenueId).HasColumnName("venueID");
         });
 
         modelBuilder.Entity<Cake>(entity =>
@@ -149,7 +145,7 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.CakeSubtotal).HasColumnName("cakeSubtotal");
         });
 
-        modelBuilder.Entity<Cars>(entity =>
+        modelBuilder.Entity<Car>(entity =>
         {
             entity.HasKey(e => e.CarId).HasName("PK_weddingCar");
 
@@ -169,9 +165,9 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("carStatus");
             entity.Property(e => e.PassengerCapacity).HasColumnName("passengerCapacity");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.RentalPerDay).HasColumnName("rentalPerDay");
             entity.Property(e => e.ShopId).HasColumnName("shopID");
-            entity.Property(e => e.quantity).HasColumnName("quantity");
         });
 
         modelBuilder.Entity<CarRental>(entity =>
@@ -210,6 +206,7 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.CarId).HasColumnName("carID");
             entity.Property(e => e.LeaseDays).HasColumnName("leaseDays");
             entity.Property(e => e.LeaseSubtotal).HasColumnName("leaseSubtotal");
+            entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.RentalId).HasColumnName("rentalID");
         });
 
