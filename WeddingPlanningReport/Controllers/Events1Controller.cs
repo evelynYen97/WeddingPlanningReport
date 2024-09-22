@@ -109,7 +109,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventId,CaseId,EventName,EventTime,EventLocation,EventNotes,EventLocationImg,EventVenueImg1,EventVenueImg2,IsDelete")] Event @event, IFormFile? file)
+        public async Task<IActionResult> Edit(int id, [Bind("EventId,CaseId,EventName,EventTime,EventLocation,EventNotes,EventLocationImg,EventVenueImg1,EventVenueImg2,IsDelete")] Event @event, IFormFile? file, IFormFile? file1, IFormFile? file2)
         {
             if (id != @event.EventId)
             {
@@ -120,6 +120,7 @@ namespace WeddingPlanningReport.Controllers
             {
                 try
                 {
+                    //圖片變更start
                     string wwwRootPath = _webHostEnvironment.WebRootPath;
                     string fileName = @event.EventLocationImg; // 保留现有的图片名
                     if (file != null)
@@ -146,8 +147,60 @@ namespace WeddingPlanningReport.Controllers
                     }
 
                     @event.EventLocationImg = fileName;
+                    //圖片變更end
+                    //圖片變更start
+                    string fileName1 = @event.EventVenueImg1; 
+                    if (file1 != null)
+                    {
+                        string newFileName = file1.FileName;
+                        string productPath = Path.Combine(wwwRootPath, @"eventImg");
+                        // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
+                        string filePath = Path.Combine(productPath, newFileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            string fileExtension = Path.GetExtension(newFileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
+                            newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, newFileName);
+                        }
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file1.CopyToAsync(fileStream);
+                        }
+                        fileName1 = newFileName;
+                    }
+
+                    @event.EventVenueImg1 = fileName1;
+                    //圖片變更end
+                    //圖片變更start
+                    string fileName2 = @event.EventVenueImg2; // 保留现有的图片名
+                    if (file2 != null)
+                    {
+                        string newFileName = file2.FileName;
+                        string productPath = Path.Combine(wwwRootPath, @"eventImg");
+                        // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
+                        string filePath = Path.Combine(productPath, newFileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
+                            string fileExtension = Path.GetExtension(newFileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
+                            newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, newFileName);
+                        }
+                        // 儲存圖片到指定路徑
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file2.CopyToAsync(fileStream);
+                        }
+                        fileName2 = newFileName;
+                    }
+
+                    @event.EventVenueImg2 = fileName2;
                     _context.Update(@event);
                     await _context.SaveChangesAsync();
+                    //圖片變更end
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {//在資料庫更新過程中，可能會遇到並發更新的問題這段代碼捕獲異常，如果 Venue 不存在，則返回 NotFound()，否則重新拋出異常
