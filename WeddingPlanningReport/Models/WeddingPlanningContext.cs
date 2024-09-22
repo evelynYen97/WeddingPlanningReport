@@ -19,7 +19,7 @@ public partial class WeddingPlanningContext : DbContext
 
     public virtual DbSet<CakeOrderDetail> CakeOrderDetails { get; set; }
 
-    public virtual DbSet<Car> Cars { get; set; }
+    public virtual DbSet<Cars> Cars { get; set; }
 
     public virtual DbSet<CarRental> CarRentals { get; set; }
 
@@ -149,7 +149,7 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.CakeSubtotal).HasColumnName("cakeSubtotal");
         });
 
-        modelBuilder.Entity<Car>(entity =>
+        modelBuilder.Entity<Cars>(entity =>
         {
             entity.HasKey(e => e.CarId).HasName("PK_weddingCar");
 
@@ -171,6 +171,7 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.PassengerCapacity).HasColumnName("passengerCapacity");
             entity.Property(e => e.RentalPerDay).HasColumnName("rentalPerDay");
             entity.Property(e => e.ShopId).HasColumnName("shopID");
+            entity.Property(e => e.quantity).HasColumnName("quantity");
         });
 
         modelBuilder.Entity<CarRental>(entity =>

@@ -1,71 +1,75 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.CarRental>
-
-@{
-    ViewData["Title"] = "Index";
+﻿@section Styles
+{
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <style>
+        .btn-margin {
+            margin-right: 5px; /* 調整按鈕之間的間距 */
+        }
+    </style>
 }
 
-<h1>Index</h1>
-
+<h1>租車明細管理介面</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success"><i class="fa-solid fa-user-plus mb-3"></i>新增明細</a>
 </p>
-<table class="table">
+
+<table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MemberId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClientName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClientPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LeaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReturnDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentalTotal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentalStatus)
-            </th>
-            <th></th>
+            <th>rentalId</th>
+            <th>memberId</th>
+            <th>clientName</th>
+            <th>clientPhone</th>
+            <th>leaseDate</th>
+            <th>returnDate</th>
+            <th>rentalTotal</th>
+            <th>rentalStatus</th>
+            <th>Actions</th> <!-- 新增一個表頭用於動作按鈕 -->
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MemberId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClientName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClientPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalStatus)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.RentalId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RentalId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RentalId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
 </table>
+
+@section Scripts
+{
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("table").dataTable({
+                ajax: {
+                    type: "GET",
+                    url: "/CarRentals/IndexJson",
+                    dataSrc: function (json) {
+                        return json;
+                    },
+                },
+                columns: [
+                    { "data": "rentalId", "width": "10%" },
+                    { "data": "memberId", "width": "10%" },
+                    { "data": "clientName", "width": "10%" },
+                    { "data": "clientPhone", "width": "10%" },
+                    { "data": "leaseDate", "width": "10%" },
+                    { "data": "returnDate", "width": "10%" },
+                    { "data": "rentalTotal", "width": "10%" },
+                    { "data": "rentalStatus", "width": "10%" },
+                    {
+                        // 動作按鈕列
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return `
+                         <a href="/CarRentals/Edit/${row.rentalId}" class="btn btn-info btn-margin">Edit</a>
+                         <a href="/CarRentals/Details/${row.rentalId}" class="btn btn-secondary btn-margin">Details</a>
+                         <a href="/CarRentals/Delete/${row.rentalId}" class="btn btn-danger btn-margin">Delete</a>
+                                    `;
+                        },
+                        "width": "20%"
+                    }
+                ],
+                fixedHeader: {},
+                language: {},
+                        "initComplete": function (settings, json) {
+
+                }
+            });
+        });
+    </script>
+}

@@ -1,4 +1,4 @@
-﻿@model WeddingPlanningReport.Models.Car
+﻿@model WeddingPlanningReport.Models.Cars
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,11 +6,15 @@
 
 <h1>Edit</h1>
 
-<h4>Car</h4>
-<hr />
+<!-- 顯示婚車的圖片 -->
+<div style="text-align: left;">
+    <img src="~/Car1/@Model.CarImg" alt="Car Image" class="img-fluid" style="max-width: 300px; height: auto;" />
+</div>
+
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <!-- 添加 enctype -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CarId" />
             <div class="form-group">
@@ -34,13 +38,18 @@
                 <span asp-validation-for="RentalPerDay" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="quantity" class="control-label"></label>
+                <input asp-for="quantity" class="form-control" />
+                <span asp-validation-for="quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CarStatus" class="control-label"></label>
                 <input asp-for="CarStatus" class="form-control" />
                 <span asp-validation-for="CarStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CarImg" class="control-label"></label>
-                <input asp-for="CarImg" class="form-control" />
+                <input type="file" name="file" class="form-control" /> 
                 <span asp-validation-for="CarImg" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -60,5 +69,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -18,11 +18,23 @@ namespace WeddingPlanningReport.Controllers
             _context = context;
         }
 
-        // GET: DishesOrders
-        public async Task<IActionResult> Index()
+        // GET: DishesOrdersController/Index
+        public IActionResult Index()
         {
-            return View(await _context.DishesOrders.ToListAsync());
+            return View();
         }
+
+        // GET: DishesOrdersController/IndexJson
+        public JsonResult IndexJson()
+        {
+            return Json(_context.DishesOrders);
+        }
+
+        //// GET: DishesOrders
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.DishesOrders.ToListAsync());
+        //}
 
         // GET: DishesOrders/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -45,7 +57,8 @@ namespace WeddingPlanningReport.Controllers
         // GET: DishesOrders/Create
         public IActionResult Create()
         {
-            return View();
+            var dishesOrder = new DishesOrder(); // 確保創建一個新的模型實例
+            return View(dishesOrder);
         }
 
         // POST: DishesOrders/Create

@@ -1,71 +1,102 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.Car>
-
-@{
-    ViewData["Title"] = "Index";
+﻿@section Styles
+{
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <style>
+        .btn-margin {
+            margin-right: 5px; /* 調整按鈕之間的間距 */
+        }
+    </style>
 }
 
-<h1>Index</h1>
-
+<h1>租車管理介面</h1>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success"><i class="fa-solid fa-user-plus mb-3"></i>新增車輛</a>
 </p>
-<table class="table">
+
+<table class="table table-striped table-hover">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ShopId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PassengerCapacity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RentalPerDay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarImg)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarDetail)
-            </th>
-            <th></th>
+            <th>carId</th>
+            <th>shopID</th>
+            <th>carName</th>
+            <th>passengerCapacity</th>
+            <th>rentalPerDay</th>
+            <th>quantity</th>
+            <th>carStatus</th>
+            <th>carImg</th>
+            <th>carDetail</th>
+            <th>Actions</th> <!-- 新增一個表頭用於動作按鈕 -->
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShopId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PassengerCapacity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RentalPerDay)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarImg)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarDetail)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CarId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CarId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CarId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
 </table>
+
+@section Scripts
+{
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("table").dataTable({
+                ajax: {
+                    type: "GET",
+                    url: "/Cars/IndexJson",
+                    dataSrc: function (json) {
+                        return json;
+                    },
+                },
+                columns: [
+                    { "data": "carId", "width": "10%" },
+                    { "data": "shopId", "width": "10%" },
+                    { "data": "carName", "width": "10%" },
+                    { "data": "passengerCapacity", "width": "10%" },
+                    { "data": "rentalPerDay", "width": "10%" },
+                    { "data": "quantity", "width": "10%" },
+                    { "data": "carStatus", "width": "10%" },
+                    {
+                        "data": "carImg",
+                        "render": function (data, type, row) {
+                            return `<img src="/Car1/${data}" alt="Car Image" style="width:100px;height:auto;cursor:pointer;"
+                                                        data-bs-toggle="modal" data-bs-target="#imageModal-${row.carId}" />`;
+                        },
+                        "width": "10%"
+                    },
+                    { "data": "carDetail", "width": "10%" },
+                    {
+                        // 動作按鈕列
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return `
+                         <a href="/Cars/Edit/${row.carId}" class="btn btn-info btn-margin">Edit</a>
+                         <a href="/Cars/Details/${row.carId}" class="btn btn-secondary btn-margin">Details</a>
+                         <a href="/Cars/Delete/${row.carId}" class="btn btn-danger btn-margin">Delete</a>
+                                    `;
+                        },
+                        "width": "20%"
+                    }
+                ],
+                fixedHeader: {},
+                language: {},
+                        "initComplete": function (settings, json) {
+            // 生成模態框結構
+            json.forEach(function (item) {
+                $("body").append(`
+                    <div class="modal fade" id="imageModal-${item.carId}" tabindex="-1" aria-labelledby="exampleModalLabel-${item.carId}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel-${item.carId}">車輛圖片</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                            <img src="/Car1/${item.carImg}" alt="Car Image" class="modal-img" style="width:100%;height:auto;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            });
+                }
+            });
+        });
+    </script>
+}
+
