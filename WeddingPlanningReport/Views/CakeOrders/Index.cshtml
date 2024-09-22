@@ -1,65 +1,230 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.CakeOrder>
-
 @{
     ViewData["Title"] = "Index";
 }
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="../assets/"
+      data-template="vertical-menu-template-free">
+<head>
 
-<h1>Index</h1>
+</head>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MemberId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CakeOrderTotal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CakeOrderAnnotation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Delivery)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Payment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CakeOrderStatus)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MemberId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CakeOrderTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CakeOrderAnnotation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Delivery)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Payment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CakeOrderStatus)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CakeOrderId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CakeOrderId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CakeOrderId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+                    <!-- header start  -->
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb py-1 mb-0 mt-2">
+                                <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="">會員訂單管理)</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">喜餅管理</li>
+                            </ol>
+                            <div class="row d-block">
+                                <h5 class="currentPage">首頁</h5>
+                            </div>
+                        </nav>
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">登入者姓名</span>
+                                                    <small class="text-muted">Admin</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-cog me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="login.html">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">Log Out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+                    <!-- header end  -->
+                </nav>
+
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+
+                    <!--  Table start -->
+                    <div class="card">
+                        <h5 class="card-header bg-light bg-gradient ">喜餅訂單管理</h5>
+                        <div class="table-responsive text-nowrap">
+                            <h1>管理頁面</h1>
+
+                            <p>
+                                <a asp-action="Create" class="btn btn-success">新增訂單</a>
+                            </p>
+                            <table class="table table-hover">
+                                <thead class="table-primary" >
+                                    <tr>
+                                        <th>
+                                            編輯
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MemberId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeOrderTotal)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeOrderAnnotation)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Delivery)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Payment)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeOrderStatus)
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@item.CakeOrderId" class="btn btn-primary btn-sm">初步編輯</a>
+
+                                                <a asp-controller="CakeOrderDetails" asp-action="Index" class="btn btn-info btn-sm" onclick="saveCakeOrderId('@item.CakeOrderId')">詳細內容</a>
+                                               
+                                                <a asp-action="Delete" asp-route-id="@item.CakeOrderId" class="btn btn-danger btn-sm" style="display:none">刪除</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MemberId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakeOrderTotal)
+                                                
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakeOrderAnnotation)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Delivery)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Payment)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakeOrderStatus)
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                    <!-- Table end -->
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <script>
+        // JavaScript 來處理按鈕事件
+        document.getElementById('submitButton').addEventListener('click', function () {
+            // 將伺服器端的模型轉換為 JavaScript 數組
+            var modelData = @Html.Raw(Json.Serialize(Model));
+
+            // 在 JavaScript 中操作模型數據
+            modelData.push({
+                "cakeOrderAnnotation": "測試",
+                "cakeOrderId": 3,
+                "cakeOrderStatus": "測試",
+                "cakeOrderTotal": 3333,
+                "delivery": "測試",
+                "isDelete": null,
+                "memberId": 3,
+                "payment": "測試"
+            });
+
+            console.log(modelData);
+        });
+
+    function saveCakeOrderId(cakeOrderId) {
+    // 將 CakeOrderId 保存到 localStorage
+    localStorage.setItem("cakeOrderId", cakeOrderId);
+
+    // 可選：導向到 CakeOrderDetails 的頁面
+    window.location.href = "/CakeOrderDetails/Index/" + cakeOrderId;
+    </script>
+
+    <script>
+        function saveCakeOrderId(cakeOrderId) {
+            // 儲存 CakeOrderId 到 localStorage
+            localStorage.setItem('CakeOrderId', cakeOrderId);
+            // 重新導向至 CakeOrderDetails 的 Index 頁面
+            window.location.href = '/CakeOrderDetails/Index';
+        }
+    </script>
+</body>
+
+
+
+</html>
+

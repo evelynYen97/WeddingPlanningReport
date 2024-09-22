@@ -1,0 +1,304 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.CakeOrderDetail>
+@{
+    ViewData["Title"] = "Home";
+
+ }
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="../assets/"
+      data-template="vertical-menu-template-free">
+<head>
+
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+                    <!-- header start  -->
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb py-1 mb-0 mt-2">
+                                <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="">會員訂單管理</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">喜餅訂單管理</li>
+                            </ol>
+                            <div class="row d-block">
+                                <h5 class="currentPage">首頁</h5>
+                            </div>
+                        </nav>
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">登入者姓名</span>
+                                                    <small class="text-muted">Admin</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-cog me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="login.html">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">Log Out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+                    <!-- header end  -->
+                </nav>
+
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+
+                    <!--  Table start -->
+                    <div class="card">
+                        <h5 class="card-header bg-light bg-gradient ">訂單明細(可在搜尋欄中尋找其他編號)</h5>
+                        <div class="table-responsive text-nowrap">
+                            <h1>訂單明細</h1>
+
+                            <input type="text" id="userInput" value="1" class="" placeholder="請輸入訂單編號(ID)">
+                            <button id="submitButton" class="btn btn-success">提交</button>
+
+                            <p>
+                                <a asp-action="Create" class="btn btn-success">產生新明細</a>
+                            </p>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            編輯
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeOrderDetailId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeOrderId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakePrice)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeAmount)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeSubtotal)
+                                        </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody id="detail">
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <tr>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@item.CakeOrderDetailId" class="btn btn-primary btn-sm">編輯</a>
+                                                <a asp-action="Details" asp-route-id="@item.CakeOrderDetailId" class="btn btn-info btn-sm">詳細內容</a>
+                                                <a asp-action="Delete" asp-route-id="@item.CakeOrderDetailId" class="btn btn-danger btn-sm">刪除</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakeOrderDetailId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakeId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakeOrderId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakePrice)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakeAmount)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakeSubtotal)
+                                            </td>
+                                            
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <!-- Table end -->
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+
+    <script>
+
+
+        //JavaScript 來處理按鈕事件
+        document.getElementById('submitButton').addEventListener('click', function () {
+            //將伺服器端的模型轉換為 JavaScript 數組
+            var modelData = @Html.Raw(Json.Serialize(Model));
+            let userInput = document.getElementById("userInput").value;
+            console.log(userInput);
+           
+
+            function updateTable() {
+                const tableBody = document.getElementById('detail');
+                tableBody.innerHTML = ''; //清空現有的表格內容
+                modelData.forEach(function (item) {
+                    if (item.cakeOrderDetailId == userInput || userInput.length == 0)
+                    { 
+
+                    //創建一個新的 <tr>
+                    const tr = document.createElement('tr');
+
+                    //創建並填充每個 <td>
+                    const tda0 = document.createElement('a');
+                    tda0.setAttribute('asp-action', "Edit");
+                    //tda0.setAttribute('class' , "btn btn-primary");
+                    tda0.setAttribute('asp-route-id', item.cakeOrderId);
+                    tda0.setAttribute('href', "/CakeOrderDetails/Edit/" + item.cakeOrderDetailId);
+                    tda0.innerHTML = "編輯";
+                    tr.appendChild(tda0);
+
+                    const tda1 = document.createElement('a');
+                    tda1.setAttribute('asp-action', "Details");
+                    //tda1.setAttribute('class', "btn btn-info");
+                    tda1.setAttribute('href', "/CakeOrderDetails/Details/"+ item.cakeOrderDetailId);
+                    tda1.innerHTML = "詳細內容";
+                    tr.appendChild(tda1);
+
+                    const tda2 = document.createElement('a');
+                    tda2.setAttribute('asp-action', "Delete");
+                    //tda2.setAttribute('class', "btn btn-danger");
+                    tda2.setAttribute('href', "/CakeOrderDetails/Delete/" + item.cakeOrderDetailId);
+                    tda2.innerHTML = "刪除";
+                    tr.appendChild(tda2);
+
+                    const td1 = document.createElement('td');
+                    td1.textContent = item.cakeOrderDetailId;
+                    tr.appendChild(td1);
+
+                    const td2 = document.createElement('td');
+                    td2.textContent = item.cakeId;
+                    tr.appendChild(td2);
+
+                    const td3 = document.createElement('td');
+                    td3.textContent = item.cakeOrderId;
+                    tr.appendChild(td3);
+
+                    const td4 = document.createElement('td');
+                    td4.textContent = item.cakePrice;
+                    tr.appendChild(td4);
+
+                    const td5 = document.createElement('td');
+                    td5.textContent = item.cakeAmount;
+                    tr.appendChild(td5);
+
+                    const td6 = document.createElement('td');
+                    td6.textContent = item.cakeSubtotal;
+                    tr.appendChild(td6);
+
+                   
+
+                    //將新行追加到表格中
+                    tableBody.appendChild(tr);
+                    }
+                });
+
+            } 
+            updateTable();
+
+        });
+
+        // 取得ID
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     var cakeOrderId = localStorage.getItem("cakeOrderId");
+        //     console.log("儲存的 CakeOrderId:", cakeOrderId);
+        //     如果有儲存的 CakeOrderId，將其填入搜尋欄
+        //     if (cakeOrderId) {
+        //         var searchBox = document.getElementById("searchBox");
+        //         searchBox.value = cakeOrderId;
+
+        //         模擬點擊提交按鈕
+        //         var submitButton = document.getElementById("submitButton");
+        //         submitButton.click();
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 取得儲存的 CakeOrderId
+            var cakeOrderId = localStorage.getItem('CakeOrderId');
+            console.log("儲存的 CakeOrderId:", cakeOrderId);
+
+            // 如果有儲存的 CakeOrderId，將其填入搜尋欄
+            if (cakeOrderId) {
+                document.getElementById('userInput').value = cakeOrderId;
+                // 可選：自動提交搜尋
+                document.getElementById('submitButton').click();
+                // 清除 localStorage 中的 CakeOrderId
+                localStorage.removeItem('CakeOrderId');
+            }
+        });
+    </script>
+</body>
+
+
+</html>
+

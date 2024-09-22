@@ -34,8 +34,8 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="">上層頁面名稱(若無可刪)</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">首頁</li>
+                                <li class="breadcrumb-item"><a href="">商品管理</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">喜餅管理</li>
                             </ol>
                             <div class="row d-block">
                                 <h5 class="currentPage">首頁</h5>
@@ -104,7 +104,7 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        <h5 class="card-header bg-light bg-gradient ">表格標題</h5>
+                        <h5 class="card-header bg-light bg-gradient "></h5>
                         <div class="table-responsive text-nowrap">
                             <h1>Create</h1>
 
@@ -129,14 +129,14 @@
                                             <input asp-for="CakeName" class="form-control" />
                                             <span asp-validation-for="CakeName" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
-                                            <label>上傳圖片</label>
-                                            <input type="file" name="ImageFile" class="form-control" id="imageUpload" />
+                                       
+                                          <div class="form-group">
+                                            <label for="fileInput">上傳圖片 (選擇性，僅支援 JPG 或 PNG):</label>
+                                            <input type="file" id="fileInput" class="form-control" />
+                                            <input type="hidden" name="CakeImgBase64" id="CakeImgBase64" />
+                                            <img id="imagePreview" src="#" alt="Image Preview" style="max-width: 200px; margin-top: 10px; display: none;" />
                                         </div>
-                                        <!-- 預覽圖片區域 -->
-                                        <div class="form-group">
-                                            <img id="imagePreview" src="#" alt="ImgPreview" style="max-width: 300px; max-height: 300px; display:none;" />
-                                        </div>
+
                                         <div class="form-group">
                                             <label asp-for="CakeDescription" class="control-label"></label>
                                             <input asp-for="CakeDescription" class="form-control" />
@@ -197,25 +197,25 @@
 </html>
 
 
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <!-- 引入外部的 preview.js 文件 -->
     
     <script>
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-
-                // 當文件讀取完成後，顯示圖片預覽
-                reader.onload = function(e) {
-                    const imagePreview = document.getElementById('imagePreview');
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                };
-
-                // 開始讀取圖片文件
-                reader.readAsDataURL(file);
+         document.getElementById('fileInput').addEventListener('change', function (event) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                // 將圖片顯示在預覽區域
+                var img = document.getElementById('imagePreview');
+                img.src = e.target.result;
+                img.style.display = 'block'; // 顯示圖片預覽
+                // 將 Base64 字串設置到隱藏欄位
+                document.getElementById('CakeImgBase64').value = e.target.result;
+            }
+            // 讀取選擇的檔案
+            if (event.target.files.length > 0) {
+                reader.readAsDataURL(event.target.files[0]);
             }
         });
     </script>

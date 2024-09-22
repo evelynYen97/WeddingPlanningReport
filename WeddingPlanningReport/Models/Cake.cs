@@ -29,5 +29,6 @@ public partial class Cake
 
     public string? CakeContent { get; set; }
 
-    public bool? IsDelete { get; set; }
+    
+ 
 }
