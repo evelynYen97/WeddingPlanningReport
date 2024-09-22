@@ -185,13 +185,14 @@
                                                 @Html.DisplayFor(modelItem => item.EventNotes)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventLocationImg)
+                                                @* @Html.DisplayFor(modelItem => item.EventLocationImg) *@
+                                                <span style="width:25px;height:50px"><partial name="_ShowImgPartial" model="item"></partial></span>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventVenueImg1)
+                                                <span style="width:25px;height:50px"><partial name="_ShowVenue1Img" model="item"></partial></span>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventVenueImg2)
+                                                <span style="width:25px;height:50px"><partial name="_ShowVenue2Img" model="item"></partial></span>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.IsDelete)

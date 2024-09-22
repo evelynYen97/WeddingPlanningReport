@@ -193,7 +193,7 @@ namespace WeddingPlanningReport.Controllers
                 orderId = orderID;
             }
 
-            return Json(new { id = orderId });
+            return View(new { id = orderId });
         }
 
         // 新的Action方法，显示订单明细

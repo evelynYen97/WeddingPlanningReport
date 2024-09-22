@@ -119,7 +119,7 @@
                         @* 替換start *@
                         <div class="row">
                             <div class="col-md-4" id="Insidechange">
-                                <form asp-action="Create">
+                                <form asp-action="Create" enctype="multipart/form-data">
                                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                     <div class="form-group">
                                         <label asp-for="CaseId" class="control-label"></label>
@@ -149,17 +149,14 @@
                                     <div class="form-group">
                                         <label asp-for="EventLocationImg" class="control-label"></label>
                                         <input asp-for="EventLocationImg" class="form-control" name="file" type="file" accept="image/*" />
-                                        @* <span asp-validation-for="EventLocationImg" class="text-danger"></span> *@
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="EventVenueImg1" class="control-label"></label>
-                                        <input asp-for="EventVenueImg1" class="form-control" name="file" type="file" accept="image/*" />
-                                        @* <span asp-validation-for="EventVenueImg1" class="text-danger"></span> *@
+                                        <input asp-for="EventVenueImg1" class="form-control" name="file1" type="file" accept="image/*" />
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="EventVenueImg2" class="control-label"></label>
-                                        <input asp-for="EventVenueImg2" class="form-control" name="file" type="file" accept="image/*" />
-                                        @* <span asp-validation-for="EventVenueImg2" class="text-danger"></span> *@
+                                        <input asp-for="EventVenueImg2" class="form-control" name="file2" type="file" accept="image/*" />
                                     </div>
                                     <div class="form-group">
                                         <label asp-for="IsDelete" class="control-label"></label>

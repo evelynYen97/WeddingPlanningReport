@@ -195,13 +195,24 @@
 
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <div class="card">
-                        <div>
-                            <div>
+                        <div class="d-grid">
+                            <div style="width: auto; height: auto;">
                             <h4>活動場地當前圖片</h4>
-                            </div>
+                            </div >
                             <partial name="_ShowImgPartial"/>
+                            <hr />
+                            <div class="d-flex">
+                                <div class="d-block">
+                                    <h4>婚宴場地當前圖片一</h4>
+                                    <partial name="_ShowVenue1Img" />
+                                </div>
+                                <div class="d-block w-25"></div>
+                                <div class="d-block">
+                                     <h4>婚宴場地當前圖片二</h4>
+                                <partial name="_ShowVenue1Img" />
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
                 <!-- Content wrapper -->
