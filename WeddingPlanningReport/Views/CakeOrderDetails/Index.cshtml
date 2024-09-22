@@ -108,16 +108,19 @@
                             <h1>Index</h1>
 
                             <input type="text" id="userInput" value="1" class="" placeholder="請輸入關鍵字">
-                            <button id="submitButton">提交</button>
+                            <button id="submitButton" class="btn btn-success">提交</button>
 
                             <p>
-                                <a asp-action="Create">Create New</a>
+                                <a asp-action="Create" class="btn btn-success">產生新明細</a>
                             </p>
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>
                                             編輯
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeOrderDetailId)
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.CakeId)
@@ -143,9 +146,12 @@
 
                                         <tr>
                                             <td>
-                                                <a asp-action="Edit" asp-route-id="@item.CakeOrderDetailId">Edit</a> |
-                                                <a asp-action="Details" asp-route-id="@item.CakeOrderDetailId">Details</a> |
-                                                <a asp-action="Delete" asp-route-id="@item.CakeOrderDetailId">Delete</a>
+                                                <a asp-action="Edit" asp-route-id="@item.CakeOrderDetailId" class="btn btn-primary btn-sm">編輯</a>
+                                                <a asp-action="Details" asp-route-id="@item.CakeOrderDetailId" class="btn btn-info btn-sm">詳細內容</a>
+                                                <a asp-action="Delete" asp-route-id="@item.CakeOrderDetailId" class="btn btn-danger btn-sm">刪除</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CakeOrderDetailId)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.CakeId)
@@ -204,21 +210,24 @@
                     //創建並填充每個 <td>
                     const tda0 = document.createElement('a');
                     tda0.setAttribute('asp-action', "Edit");
+                    //tda0.setAttribute('class' , "btn btn-primary");
                     tda0.setAttribute('asp-route-id', item.cakeOrderId);
                     tda0.setAttribute('href', "/CakeOrderDetails/Edit/" + item.cakeOrderDetailId);
-                    tda0.innerHTML = "Edit";
+                    tda0.innerHTML = "編輯";
                     tr.appendChild(tda0);
 
                     const tda1 = document.createElement('a');
                     tda1.setAttribute('asp-action', "Details");
+                    //tda1.setAttribute('class', "btn btn-info");
                     tda1.setAttribute('href', "/CakeOrderDetails/Details/"+ item.cakeOrderDetailId);
-                    tda1.innerHTML = "Details";
+                    tda1.innerHTML = "詳細內容";
                     tr.appendChild(tda1);
 
                     const tda2 = document.createElement('a');
                     tda2.setAttribute('asp-action', "Delete");
+                    //tda2.setAttribute('class', "btn btn-danger");
                     tda2.setAttribute('href', "/CakeOrderDetails/Delete/" + item.cakeOrderDetailId);
-                    tda2.innerHTML = "Delete";
+                    tda2.innerHTML = "刪除";
                     tr.appendChild(tda2);
 
                     const td1 = document.createElement('td');
@@ -270,6 +279,23 @@
         //         var submitButton = document.getElementById("submitButton");
         //         submitButton.click();
 
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 取得儲存的 CakeOrderId
+            var cakeOrderId = localStorage.getItem('CakeOrderId');
+            console.log("儲存的 CakeOrderId:", cakeOrderId);
+
+            // 如果有儲存的 CakeOrderId，將其填入搜尋欄
+            if (cakeOrderId) {
+                document.getElementById('userInput').value = cakeOrderId;
+                // 可選：自動提交搜尋
+                document.getElementById('submitButton').click();
+                // 清除 localStorage 中的 CakeOrderId
+                localStorage.removeItem('CakeOrderId');
+            }
+        });
     </script>
 </body>
 

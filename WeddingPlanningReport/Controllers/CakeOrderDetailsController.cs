@@ -15,25 +15,13 @@ namespace WeddingPlanningReport.Controllers
 
         public CakeOrderDetailsController(WeddingPlanningContext context)
         {
-         
+            _context = context;
         }
 
         // GET: CakeOrderDetails
-        public async Task<IActionResult> Index(string searchOrderId)
+        public async Task<IActionResult> Index()
         {
-            if (!string.IsNullOrEmpty(searchOrderId))
-            {
-                // 確保將 CakeOrderId 轉換為正確的類型
-                if (int.TryParse(searchOrderId, out int orderId))
-                {
-                    var orders = await _context.CakeOrderDetails
-                                               .Where(o => o.CakeOrderId == orderId)
-                                               .ToListAsync();
-                    return View(orders);
-                }
-            }
-
-            return View();
+            return View(await _context.CakeOrderDetails.ToListAsync());
         }
 
         // GET: CakeOrderDetails/Details/5
