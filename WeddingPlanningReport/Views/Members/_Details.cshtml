@@ -1,0 +1,107 @@
+﻿@model WeddingPlanningReport.Models.Member
+
+<h4>會員資料管理</h4>
+<hr />
+<dl>
+    <dt>
+        @Html.DisplayNameFor(model => model.MemberName)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.MemberName)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Sex)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Sex)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Birthday)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Birthday)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.PartnerName)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.PartnerName)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Email)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Password)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Password)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.PhoneNumber)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.PhoneNumber)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Address)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Address)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Preference)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Preference)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.WeddingStatus)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.WeddingStatus)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.MemberGrade)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.MemberGrade)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.MemberStatus)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.MemberStatus)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.LastLoginTime)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.LastLoginTime)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.RegistrationTime)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.RegistrationTime)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.BudgetPieChart)
+    </dt>
+    <dd>
+        <img src="~/PieChartImage/@Model.BudgetPieChart" alt="Budget Pie Chart" class="img-fluid" />
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.BudgetTableImg)
+    </dt>
+    <dd>
+        <img src="~/TableImage/@Model.BudgetTableImg" alt="Budget Table Image" class="img-fluid" />
+    </dd>
+
+</dl>
+
+
+
+

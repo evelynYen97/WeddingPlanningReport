@@ -1,0 +1,43 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.ToDo>
+
+<h4>待辦事項列表</h4>
+<hr />
+@foreach (var toDo in Model)
+{
+    <div>
+        <h5>@toDo.ToDoName</h5>
+        <dl>         
+            <dt>
+                @Html.DisplayNameFor(m => toDo.ToDoDetail)
+            </dt>
+            <dd>
+                @Html.DisplayFor(m => toDo.ToDoDetail)
+            </dd>                     
+            <dt>
+                @Html.DisplayNameFor(m => toDo.TaskSort)
+            </dt>
+            <dd>
+                @Html.DisplayFor(m => toDo.TaskSort)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(m => toDo.PersonInCharge)
+            </dt>
+            <dd>
+                @Html.DisplayFor(m => toDo.PersonInCharge)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(m => toDo.TaskStatus)
+            </dt>
+            <dd>
+                @Html.DisplayFor(m => toDo.TaskStatus)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(m => toDo.ExpiringDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(m => toDo.ExpiringDate)
+            </dd>         
+        </dl>
+        <hr />
+    </div>
+}

@@ -1,0 +1,47 @@
+﻿@model WeddingPlanningReport.Models.SharingWeddingPlan
+
+<h4>計劃書共享發佈管理 </h4>
+<hr />
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="SharedRecordId" />
+    <!-- 隱藏 CaseId -->
+    <input type="hidden" asp-for="CaseId" />
+    <!-- 隱藏 SharedTime -->
+    <input type="hidden" asp-for="SharedTime" />
+    @* <div class="form-group">
+    <label asp-for="CaseId" class="control-label"></label>
+    <input asp-for="CaseId" class="form-control" />
+    <span asp-validation-for="CaseId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <label asp-for="SharedTime" class="control-label"></label>
+    <input asp-for="SharedTime" class="form-control" />
+    <span asp-validation-for="SharedTime" class="text-danger"></span>
+    </div> *@
+    <div class="form-group">
+        <label asp-for="SharedName" class="control-label"></label>
+        <input asp-for="SharedName" class="form-control" />
+        <span asp-validation-for="SharedName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SharedStatus" class="control-label"></label>
+        <select asp-for="SharedStatus" class="form-control">
+            <option value="已發布">已發布</option>
+            <option value="未發布">未發布</option>
+        </select>
+        <span asp-validation-for="SharedStatus" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
