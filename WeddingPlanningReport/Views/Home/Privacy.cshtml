@@ -1,6 +1,296 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
+﻿@section Styles
+{
+    <link href="fullcalendar.min.css" rel="stylesheet">
+    <meta charset='utf-8' />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' rel='stylesheet'
+          media='print' />
 
-<p>Use this page to detail your site's privacy policy.</p>
+    <style>
+        #calendar {
+            max-width: 900px;
+            max-height: 00px;
+            margin: 20px auto;
+        }
+        /* 修改事件標題的字體顏色 */
+        .fc-event .fc-title {
+            color: white; /* 將字體顏色設為紅色 */
+        }
+
+        /* 修改事件時間的字體顏色 */
+        .fc-event .fc-time {
+            color: blue; /* 將時間顏色設為藍色 */
+        }
+
+        #calendarOut {
+            margin-top:30px;
+            width:1050px;
+            height:700px;
+        }
+    </style>
+}
+
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="../assets/"
+      data-template="vertical-menu-template-free">
+<head>
+
+
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+                    <!-- header start  -->
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb py-1 mb-0 mt-2">
+                                <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="">上層頁面名稱(若無可刪)</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">首頁</li>
+                            </ol>
+                            <div class="row d-block">
+                                <h5 class="currentPage">首頁</h5>
+                            </div>
+                        </nav>
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">登入者姓名</span>
+                                                    <small class="text-muted">Admin</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-cog me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="login.html">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">Log Out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+                    <!-- header end  -->
+                </nav>
+                <!-- / Navbar -->
+                <div class="container-xxl flex-grow-1 container-p-y bg-light" id="calendarOut">
+                 <!-- 行事曆start -->
+                        <div id="calendar"></div>
+                        <div class="modal fade" id="eventFormModal" tabindex="-1" role="dialog" aria-labelledby="eventFormModal" data-backdrop="static">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="eventFormModalTitle"></h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <form id="eventForm">
+                                    <div class="form-group">
+                                        <label for="dateInput" class="control-label">事件日期</label>
+                                        <input type="text" class="form-control" id="dateInput" name="dateInput" readonly>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="eventInput" class="control-label">事件名稱</label>
+                                        <input type="text" class="form-control" id="eventInput" name="eventInput">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="eventItemInput" class="control-label">事件類型</label>
+                                        <select class="form-control" id="eventItemInput" name="eventItemInput">
+                                            <option>請選擇</option>
+                                            <option value="工作">工作</option>
+                                            <option value="家庭">家庭</option>
+                                            <option value="朋友">朋友</option>
+                                            <option value="家人">家人</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="contentInput" class="control-label">事件內容</label>
+                                        <textarea class="form-control" id="contentInput" name="contentInput" rows="4" cols="25"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" id="cancelButton">取消</button>
+                                <button type="button" class="btn btn-primary" id="eventFormOkButton">確定</button>
+                                <button type="button" class="btn btn-danger" id="eventFormDelButton">刪除</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                 <!-- 行事曆end -->
+                   
+                </div>
+            </div>
+            <!-- / Layout page -->
+        </div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+</body>
+</html>
+
+@section Scripts
+{
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+
+    <script>
+        $(document).ready(function () {
+            // 從 Local Storage 加載事件
+            let eventsList = JSON.parse(localStorage.getItem('calendarEvents')) || [];
+
+            // 初始化日曆
+            $('#calendar').fullCalendar({
+                // 載入 Local Storage 中的事件
+                events: eventsList,
+
+                // 允許點擊日期添加事件
+                dayClick: function (date, jsEvent, view) {
+                    $('#dateInput').val(date.format('YYYY-MM-DD')); // 設定日期
+                    $('#eventInput').val(''); // 清空事件名稱
+                    $('#eventItemInput').val('請選擇').trigger('change'); // 重置事件類型
+                    $('#contentInput').val(''); // 清空事件內容
+
+                    // 修改 modal 標題名稱
+                    $('#eventFormModalTitle').text('新增事件');
+
+                    // 隱藏刪除按鈕，因為是新增事件
+                    $('#eventFormDelButton').hide();
+
+                    // 顯示 modal
+                    $('#eventFormModal').modal('show');
+                },
+
+                // 允許點擊事件編輯
+                eventClick: function (calEvent, jsEvent, view) {
+                    $('#dateInput').val(calEvent.start.format('YYYY-MM-DD')); // 填入事件日期
+                    $('#eventInput').val(calEvent.title); // 填入事件名稱
+                    $('#eventItemInput').val(calEvent.eventItem).trigger('change'); // 填入事件類型
+                    $('#contentInput').val(calEvent.description); // 填入事件內容
+
+                    // 修改 modal 標題名稱
+                    $('#eventFormModalTitle').text('編輯事件');
+
+                    // 顯示刪除按鈕，因為是編輯事件
+                    $('#eventFormDelButton').show();
+
+                    // 顯示 modal
+                    $('#eventFormModal').modal('show');
+
+                    // 刪除按鈕事件
+                    $('#eventFormDelButton').off('click').on('click', function () {
+                        // 刪除日曆中的事件
+                        $('#calendar').fullCalendar('removeEvents', calEvent._id);
+
+                        // 更新 Local Storage
+                        eventsList = eventsList.filter(event => event._id !== calEvent._id);
+                        localStorage.setItem('calendarEvents', JSON.stringify(eventsList));
+
+                        // 隱藏 modal
+                        $('#eventFormModal').modal('hide');
+                    });
+                }
+            });
+
+            // 點擊「確定」按鈕時保存事件
+            $('#eventFormOkButton').click(function () {
+                var eventTitle = $('#eventInput').val(); // 事件名稱
+                var eventDate = $('#dateInput').val();   // 事件日期
+                var eventItem = $('#eventItemInput').val(); // 事件類型
+                var eventContent = $('#contentInput').val(); // 事件內容
+
+                // 檢查是否輸入了有效的事件名稱
+                if (eventTitle) {
+                    // 新增事件
+                    var newEvent = {
+                        _id: new Date().getTime(), // 使用時間戳作為唯一 ID
+                        title: eventTitle,
+                        start: eventDate,
+                        description: eventContent,
+                        eventItem: eventItem
+                    };
+
+                    // 保存事件到 Local Storage
+                    eventsList.push(newEvent);
+                    localStorage.setItem('calendarEvents', JSON.stringify(eventsList));
+
+                    // 更新日曆事件
+                    $('#calendar').fullCalendar('renderEvent', newEvent, true); // 即時渲染事件
+
+                    // 隱藏 modal
+                    $('#eventFormModal').modal('hide');
+                } else {
+                    alert("請輸入事件名稱");
+                }
+            });
+
+            // 點擊「取消」按鈕或關閉按鈕時關閉模態框
+            $('#cancelButton, .close').click(function () {
+                $('#eventFormModal').modal('hide');
+            });
+        });
+
+
+    </script>
+}
