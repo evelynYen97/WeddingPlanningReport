@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WeddingPlanningReport.Models;
+using WeddingPlanningReport.Models.ViewModel;
 
 namespace WeddingPlanningReport.Controllers
 {
@@ -161,7 +162,22 @@ namespace WeddingPlanningReport.Controllers
 
             if (imageName == "總預算分配")
             {
-               
+                int? totalvenue=_context.Venues.Where(v=>v.MemberId==memberID).Select(v=>v.VenueRentalPrice).Sum();
+                int? totalcake=_context.CakeOrders.Where(c => c.MemberId == memberID).Select(c=>c.CakeOrderTotal).Sum();
+                int? totalcar= _context.CarRentals.Where(c => c.MemberId == memberID).Select(c => c.RentalTotal).Sum();
+                int? totaldishes= _context.DishesOrders.Where(c => c.MemberId == memberID).Select(c => c.DishesTotalPrice).Sum();
+                int? totalothers=_context.MemberBudgetItems.Where(c => c.MemberId == memberID).Select(c => c.BudgetItemSubtotal).Sum();
+                int? general = totalvenue + totalcake + totalcar + totaldishes + totalothers;
+                var viewModel = new OrdersDetailsViewModel
+                {
+                    VenueOrdersTotal = totalvenue,
+                    CakeOrdersTotal = totalcake,
+                    DishesOrdersTotal=totaldishes,
+                    CarOrdersTotal=totalcar,
+                    OtherOrdersTotal=totalothers,
+                    OrdersTotal=general,
+                };
+                return View(viewModel);
             }
             else if (imageName == "婚禮場地細項")
             {
@@ -193,7 +209,7 @@ namespace WeddingPlanningReport.Controllers
                 orderId = orderID;
             }
 
-            return View(new { id = orderId });
+            return View();
         }
 
         // 新的Action方法，显示订单明细
