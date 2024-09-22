@@ -133,16 +133,11 @@
                                             </div>
                                             
                                             <div class="form-group">
-                                                <label>當前圖片</label>
-                                                <br />
-                                                @*讀取原本圖片*@
-                                                <img id="currentImage" src="~/cakesImg/@Model.CakeImg" alt="Cake Image" style="max-width:300px;max-height:300px;" />
-                                                @*讀取上傳圖片*@
-                                                <img id="previewImage" src="#" alt="Image Preview" style="display:none; max-width:300px;max-height:300px;" />
-
-                                                <input type="file" id="newImageFile" name="ImageFile" class="form-control" />
-                                                <br />
-                                            </div>                                       
+                                                <label for="CakeImg">更新圖片</label>
+                                                <input type="file" id="CakeImgUpload" />
+                                                <img id="CakeImgPreview" src="@Url.Content($"~/cakesImg/{Model.CakeImg}")" alt="Cake Image" style="max-width: 200px; margin-top: 10px;" />
+                                                <input type="hidden" name="CakeImgBase64" id="CakeImgBase64" />
+                                            </div>                                                     
 
                                             <div class="form-group">
                                                 <label asp-for="CakeDescription" class="control-label"></label>
@@ -205,30 +200,19 @@
 </html>
 
 <script>
-    document.getElementById('newImageFile').addEventListener('change', function (event) {
-        var input = event.target;
-        var file = input.files[0];
-
-        if (file) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                var previewImage = document.getElementById('previewImage');
-                var currentImage = document.getElementById('currentImage');
-
-                // 顯示新圖片的預覽並隱藏原來的圖片
-                previewImage.src = e.target.result;
-                previewImage.style.display = 'block'; // 顯示預覽圖片
-                currentImage.style.display = 'none'; // 隱藏原圖片
-            };
-
-            reader.readAsDataURL(file);
-        } else {
-            // 如果沒有選擇檔案，隱藏預覽圖片並顯示原來的圖片
-            document.getElementById('previewImage').style.display = 'none';
-            document.getElementById('currentImage').style.display = 'block';
+   
+     document.getElementById('CakeImgUpload').addEventListener('change', function (event) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var base64 = e.target.result;
+            document.getElementById('CakeImgBase64').value = base64;
+            document.getElementById('CakeImgPreview').src = base64;
         }
+        reader.readAsDataURL(event.target.files[0]);
     });
+    
+
+   
 </script>
 
 @section Scripts {

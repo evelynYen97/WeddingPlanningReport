@@ -21,7 +21,12 @@ namespace WeddingPlanningReport.Controllers
         // GET: Shops
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Shops.ToListAsync());
+            return View();
+        }
+
+        public async Task<JsonResult> IndexJson()       
+        {
+            return Json(_context.Shops);
         }
 
         // GET: Shops/Details/5
@@ -53,14 +58,78 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ShopId,ShopName,ShopSort,ContactPerson,ContactPhone,ShopRating,ShopLogo,ShopImg,Payment,ServiceArea,ShopStatus")] Shop shop)
+        public async Task<IActionResult> Create(Shop shop, string? ShopImgBase64, string? ShopLogoBase64)
         {
             if (ModelState.IsValid)
             {
+                // 處理 ShopImg 上傳
+                if (!string.IsNullOrEmpty(ShopImgBase64))
+                {
+                    try
+                    {
+                        var base64Data = ShopImgBase64.Split(',')[1];
+                        var imageBytes = Convert.FromBase64String(base64Data);
+
+                        // 判斷圖片格式 (jpg 或 png)
+                        var fileExtension = ShopImgBase64.Contains("image/png") ? ".png" : ".jpg";
+                        var shopImgFileName = $"{Guid.NewGuid()}{fileExtension}";
+
+                        // 儲存至 ShopImg 資料夾
+                        var shopImgFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ShopImg", shopImgFileName);
+                        await System.IO.File.WriteAllBytesAsync(shopImgFilePath, imageBytes);
+
+                        // 保存 ShopImg 的檔案名稱到資料庫
+                        shop.ShopImg = shopImgFileName;
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError(string.Empty, "ShopImg 圖片上傳失敗，請稍後再試。");
+                        return View(shop);
+                    }
+                }
+                else
+                {
+                    // 使用預設圖片
+                    shop.ShopImg = "default.jpg";
+                }
+
+                // 處理 ShopLogo 上傳
+                if (!string.IsNullOrEmpty(ShopLogoBase64))
+                {
+                    try
+                    {
+                        var base64Data = ShopLogoBase64.Split(',')[1];
+                        var imageBytes = Convert.FromBase64String(base64Data);
+
+                        // 判斷圖片格式 (jpg 或 png)
+                        var fileExtension = ShopLogoBase64.Contains("image/png") ? ".png" : ".jpg";
+                        var shopLogoFileName = $"{Guid.NewGuid()}{fileExtension}";
+
+                        // 儲存至 ShopLogo 資料夾
+                        var shopLogoFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ShopLogo", shopLogoFileName);
+                        await System.IO.File.WriteAllBytesAsync(shopLogoFilePath, imageBytes);
+
+                        // 保存 ShopLogo 的檔案名稱到資料庫
+                        shop.ShopLogo = shopLogoFileName;
+                    }
+                    catch (Exception ex)
+                    {
+                        ModelState.AddModelError(string.Empty, "ShopLogo 圖片上傳失敗，請稍後再試。");
+                        return View(shop);
+                    }
+                }
+                else
+                {
+                    // 使用預設圖片
+                    shop.ShopLogo = "default.jpg";
+                }
+
+                // 儲存其他資料
                 _context.Add(shop);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(shop);
         }
 
@@ -85,7 +154,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ShopId,ShopName,ShopSort,ContactPerson,ContactPhone,ShopRating,ShopLogo,ShopImg,Payment,ServiceArea,ShopStatus")] Shop shop)
+        public async Task<IActionResult> Edit(int id, Shop shop, string? ShopImgBase64, string? ShopLogoBase64)
         {
             if (id != shop.ShopId)
             {
@@ -94,26 +163,71 @@ namespace WeddingPlanningReport.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                // 取得現有的 Shop 資料
+                var existingShop = await _context.Shops.AsNoTracking().FirstOrDefaultAsync(s => s.ShopId == id);
+                if (existingShop == null)
                 {
-                    _context.Update(shop);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+
+                // 處理 ShopImg 上傳
+                if (!string.IsNullOrEmpty(ShopImgBase64))
                 {
-                    if (!ShopExists(shop.ShopId))
+                    try
                     {
-                        return NotFound();
+                        var base64Data = ShopImgBase64.Split(',')[1];
+                        var imageBytes = Convert.FromBase64String(base64Data);
+                        var shopImgFileName = $"{Guid.NewGuid()}.jpg";
+                        var shopImgFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ShopImg", shopImgFileName);
+                        await System.IO.File.WriteAllBytesAsync(shopImgFilePath, imageBytes);
+                        shop.ShopImg = shopImgFileName; // 更新資料庫中的圖片檔名
                     }
-                    else
+                    catch (Exception)
                     {
-                        throw;
+                        ModelState.AddModelError(string.Empty, "ShopImg 圖片上傳失敗，請稍後再試。");
+                        return View(shop);
                     }
                 }
+                else
+                {
+                    // 如果沒有上傳新圖片，保留原有的圖片名稱
+                    shop.ShopImg = existingShop.ShopImg;
+                }
+
+                // 處理 ShopLogo 上傳
+                if (!string.IsNullOrEmpty(ShopLogoBase64))
+                {
+                    try
+                    {
+                        var base64Data = ShopLogoBase64.Split(',')[1];
+                        var imageBytes = Convert.FromBase64String(base64Data);
+                        var shopLogoFileName = $"{Guid.NewGuid()}.jpg";
+                        var shopLogoFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/ShopLogo", shopLogoFileName);
+                        await System.IO.File.WriteAllBytesAsync(shopLogoFilePath, imageBytes);
+                        shop.ShopLogo = shopLogoFileName; // 更新資料庫中的圖片檔名
+                    }
+                    catch (Exception)
+                    {
+                        ModelState.AddModelError(string.Empty, "ShopLogo 圖片上傳失敗，請稍後再試。");
+                        return View(shop);
+                    }
+                }
+                else
+                {
+                    // 如果沒有上傳新圖片，保留原有的圖片名稱
+                    shop.ShopLogo = existingShop.ShopLogo;
+                }
+
+                // 更新其他欄位
+                _context.Update(shop);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(shop);
         }
+
+
 
         // GET: Shops/Delete/5
         public async Task<IActionResult> Delete(int? id)

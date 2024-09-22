@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@section Styles
+{
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+}
 <!DOCTYPE html>
 <html lang="en"
       class="light-style layout-menu-fixed"
@@ -117,7 +120,16 @@
                                 <thead class="table-primary ">
                                     <tr>
                                         <th>
+                                            詳細
+                                        </th>
+                                        <th>
                                             編輯
+                                        </th>
+                                        <th>
+                                            刪除
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CakeId)
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.ShopId)
@@ -152,55 +164,10 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.CakeContent)
                                         </th>
-                                        
+
+
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <a asp-action="Edit" asp-route-id="@item.CakeId" class="btn btn-primary btn-sm">編輯</a>
-                                                <a asp-action="Details" asp-route-id="@item.CakeId" class="btn btn-info btn-sm">詳細內容</a>
-                                                <a asp-action="Delete" asp-route-id="@item.CakeId" class="btn btn-danger btn-sm">刪除</a>
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ShopId)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CakeStyles)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CakeName)
-                                            </td>
-                                            <td>
-                                                <img src="~/cakesImg/@item.CakeImg" alt="Cake Image" width="100" height="100"/>
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CakeDescription)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CakePrice)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CakeStatus)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CakeStock)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CakeAnnotation)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.AllergenInfo)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CakeContent)
-                                            </td>
-                                            
-                                        </tr>
-                                    }
-                                </tbody>
                             </table>
 
 
@@ -218,3 +185,74 @@
     </div>
 </body>
 </html>
+@section Scripts
+{
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            //alert("ready");
+            $("table").dataTable({
+                ajax: {
+                    type: 'GET',
+                    url: "/Cakes/IndexJson",
+                    dataSrc: function (json) {
+                        return json;
+                    },
+                },
+                columns: [ //需使用json的欄位名稱
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return '<a href="/Cakes/Details/' + row.cakeId + '" class="btn btn-info btn-sm">詳情</a>';
+                        },
+
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) { 
+                            console.log(JSON.stringify(data,null,2));
+                            return '<a href="/Cakes/Edit/' + row.cakeId + '" class="btn btn-primary btn-sm">編輯</a>';
+                        },
+
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return '<a href="/Cakes/Delete/' + row.cakeId + '" class="btn btn-danger btn-sm">刪除</a>';
+                        },
+
+                    },
+                    { "data": "cakeId", "width": "10%" },
+                    { "data": "shopId", "width": "10%" },
+                    { "data": "cakeStyles", "width": "10%" },
+                    { "data": "cakeName", "width": "10%" },
+                    {
+                        "data": "cakeImg",
+                        "width": "10%",
+                        "render": function (data, type, row) {
+                            if (data) {
+                                // 將圖片檔名轉換為完整路徑
+                                return '<img src="/cakesImg/' + data + '" alt="Cake Image" style="width: 50px; height: 50px;" />';
+                            } else {
+                                return 'No Image'; // 如果沒有圖片，可以顯示預設文字或圖片
+                            }
+                        }
+                    },
+                    { "data": "cakeDescription", "width": "10%" },
+                    { "data": "cakePrice", "width": "10%" },
+                    { "data": "cakeStatus", "width": "10%" },
+                    { "data": "cakeStock", "width": "10%" },
+                    { "data": "cakeAnnotation", "width": "10%" },
+                    { "data": "allergenInfo", "width": "10%" },
+                    { "data": "cakeContent", "width": "10%" }
+                ],
+                fixedHeader: { header: true },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                },
+            })
+        });
+    </script>
+}
