@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using WeddingPlanningReport.Models.ValidationAttributes;
+//using WeddingPlanningReport.Models.ValidationAttributes;
 
 namespace WeddingPlanningReport.Models.Metadata
 {
