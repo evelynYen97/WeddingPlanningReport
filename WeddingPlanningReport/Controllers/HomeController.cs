@@ -22,6 +22,7 @@ namespace WeddingPlanningReport.Controllers
             ViewBag.NumberCar=_context.Cars.Count();
             ViewBag.NumberCake=_context.Cakes.Count();
             ViewBag.NumberDishes= _context.Dishes.Count();
+            ViewBag.MemberNum=_context.Members.Count();
             return View();
         }
 
