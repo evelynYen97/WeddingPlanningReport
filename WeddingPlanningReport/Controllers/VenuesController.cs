@@ -117,6 +117,7 @@ namespace WeddingPlanningReport.Controllers
                     fileName2 = newFileName2;
                 }
                 venue.VenueImg2 = fileName2;
+
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

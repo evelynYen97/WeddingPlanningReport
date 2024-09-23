@@ -58,7 +58,6 @@ namespace WeddingPlanningReport.Models.Metadata
         public string? VenueImg2 { get; set; }
 
         [Display(Name = "刪除狀態")]
-        [Required(ErrorMessage = "請選擇刪除狀態")]
         public bool? IsDelete { get; set; }
     }
 }
