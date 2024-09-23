@@ -26,6 +26,12 @@ namespace WeddingPlanningReport.Controllers
             return View(await _context.Venues.ToListAsync());
         }
 
+        public async Task<IActionResult> IndexDetail()//0923 new indexdetail
+        {
+            var e = _context.Venues.Where(edit => edit.MemberId != null);
+            return View(await e.ToListAsync());
+        }
+
 
         // GET: Venues/Details/5
         public async Task<IActionResult> Details(int? id)

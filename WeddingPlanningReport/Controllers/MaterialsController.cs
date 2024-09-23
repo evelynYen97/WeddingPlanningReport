@@ -61,6 +61,33 @@ namespace WeddingPlanningReport.Controllers
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string fileName = "noimage.jpg"; // 保留现有的图片名
+                if (file != null)
+                {
+                    //string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);為圖片生成一個唯一的檔名 (Guid.NewGuid())
+                    string newFileName = file.FileName;
+                    string productPath = Path.Combine(wwwRootPath, @"圖片與圖層\圖片\網站");
+
+                    // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
+                    string filePath = Path.Combine(productPath, newFileName);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
+                        string fileExtension = Path.GetExtension(newFileName);
+                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
+                        newFileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                        filePath = Path.Combine(productPath, newFileName);
+                    }
+                    // 儲存圖片到指定路徑
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    fileName = newFileName;
+                }
+                material.ImageName = fileName;
+
                 _context.Add(material);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

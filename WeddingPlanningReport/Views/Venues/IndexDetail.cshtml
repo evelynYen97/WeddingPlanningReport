@@ -1,0 +1,248 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.Venue>
+
+@section Styles {
+    <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/css/btn18settype.min.css" rel="stylesheet" />
+    <link href="~/css/cantablestyle.css" rel="stylesheet" />
+    <style>
+        .modal-body {
+            padding-top: 0
+        }
+
+        .detail-btn {
+            background-color: #9271AC
+        }
+
+        .table-responsive {
+            width: 1050px;
+            margin: auto;
+        }
+        /* 添加懸停效果 */
+        #ItemsTable tr:hover {
+            background-color: #A6FFFF !important; /* 懸停時高亮顏色 */
+            cursor: pointer; /* 鼠標移到行上時顯示指針 */
+        }
+    </style>
+}
+
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-assets-path="../assets/"
+      data-template="vertical-menu-template-free">
+<head>
+
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                            <i class="bx bx-menu bx-sm"></i>
+                        </a>
+                    </div>
+                    <!-- header start  -->
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb py-1 mb-0 mt-2">
+                                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li class="breadcrumb-item">商品管理</li>
+                                <li class="breadcrumb-item active" aria-current="page">婚禮場地管理</li>
+                            </ol>
+                            <div class="row d-block">
+                                <h5 class="currentPage">婚禮場地管理</h5>
+                            </div>
+                        </nav>
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">登入者姓名</span>
+                                                    <small class="text-muted">Admin</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="bx bx-cog me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="login.html">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">Log Out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                        </ul>
+                    </div>
+                    <!-- header end  -->
+                </nav>
+
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="container-xxl flex-grow-1 container-p-y">
+
+                    <!--  Table start -->
+                    <div class="card">
+                        <div class="table-responsive text-nowrap position-relative">
+                            <p>
+                                @* <a asp-action="Create">Create New</a> *@
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="AddBtn">
+                                    <i class="bi bi-plus-lg"></i><a asp-action="Create" style="color: white;">新增</a>
+                                </button>
+                            </p>
+                            <table class="table" id="ItemsTable">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th></th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ShopId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.VenueName)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.MemberId)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.VenueFunction)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.VenueStyle)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.InOurDoor)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.TableCapacity)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.GuestCapacity)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.VenueRentalPrice)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.AvailableTime)
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@item.VenueId">Edit</a> |
+                                                <a asp-action="Details" asp-route-id="@item.VenueId">Details</a> |
+                                                <a asp-action="Delete" asp-route-id="@item.VenueId">Delete</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ShopId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VenueName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MemberId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VenueFunction)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VenueStyle)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.InOurDoor)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TableCapacity)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.GuestCapacity)
+                                            </td>
+                                            <td>
+                                                NT$ @Html.DisplayFor(modelItem => item.VenueRentalPrice)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AvailableTime)
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <!-- Table end -->
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#ItemsTable").dataTable({
+                fixedHeader: {//確保表頭固定，但搜尋欄位能隨滾動條移動
+                    header: true
+                },
+                scrollX: true, // 啟用水平滾動
+                scrollCollapse: true, // 內容縮放時保持滾動條
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                },
+                stripeClasses: ['odd-row', 'even-row']
+            });
+        });
+    </script>
+}

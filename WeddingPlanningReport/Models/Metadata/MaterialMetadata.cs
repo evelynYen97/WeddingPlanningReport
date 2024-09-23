@@ -9,7 +9,6 @@ namespace WeddingPlanningReport.Models.Metadata
         public int MaterialId { get; set; }
 
         [Display(Name = "素材名稱")]
-        [Required(ErrorMessage = "請確實填寫素材名稱")]
         public string? ImageName { get; set; }
 
         [Display(Name = "長度(cm)")]

@@ -776,14 +776,28 @@
                     // 刪除按鈕事件
                     $('#eventFormDelButton').off('click').on('click', function () {
                         // 刪除日曆中的事件
-                        $('#calendar').fullCalendar('removeEvents', calEvent._id);
+                        console.log("Deleting Event ID:", calEvent._id);
 
-                        // 更新 Local Storage
-                        eventsList = eventsList.filter(event => event._id !== calEvent._id);
-                        localStorage.setItem('calendarEvents', JSON.stringify(eventsList));
+if (confirm('確定要刪除這個事件嗎？')) {
+    // 找到事件的索引
+    const eventIndex = eventsList.findIndex(event => event._id === Number(calEvent._id));
 
-                        // 隱藏 modal
-                        $('#eventFormModal').modal('hide');
+    if (eventIndex !== -1) {
+        // 刪除事件
+        eventsList.splice(eventIndex, 1);
+
+        // 更新 Local Storage
+        localStorage.setItem('calendarEvents', JSON.stringify(eventsList));
+
+        // 刪除日曆中的事件
+        $('#calendar').fullCalendar('removeEvents', calEvent._id);
+
+        // 隱藏 modal
+        $('#eventFormModal').modal('hide');
+    } else {
+        alert("未找到事件，無法刪除。");
+    }
+}
                     });
                 }
             });
