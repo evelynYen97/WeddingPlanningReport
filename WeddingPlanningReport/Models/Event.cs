@@ -22,6 +22,4 @@ public partial class Event
     public string? EventVenueImg1 { get; set; }
 
     public string? EventVenueImg2 { get; set; }
-
-    public bool? IsDelete { get; set; }
 }

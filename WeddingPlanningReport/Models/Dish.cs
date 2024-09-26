@@ -19,5 +19,5 @@ public partial class Dish
 
     public string? DishesSort { get; set; }
 
-    public bool? IsDelete { get; set; }
+    public bool IsDelete { get; set; }
 }

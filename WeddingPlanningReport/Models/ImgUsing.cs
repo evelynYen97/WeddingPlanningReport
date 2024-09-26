@@ -20,6 +20,4 @@ public partial class ImgUsing
     public string? ImgW { get; set; }
 
     public string? ImgH { get; set; }
-
-    public bool? IsDelete { get; set; }
 }

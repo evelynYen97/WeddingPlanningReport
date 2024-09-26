@@ -27,5 +27,5 @@ public partial class Shop
 
     public int? ShopStatus { get; set; }
 
-    public bool? IsDelete { get; set; }
+    public bool IsDelete { get; set; }
 }

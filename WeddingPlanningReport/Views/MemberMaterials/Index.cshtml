@@ -139,9 +139,6 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.EstimatedWidth)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.IsDelete)
-                                        </th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -160,9 +157,6 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EstimatedWidth)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.IsDelete)
                                             </td>
                                             <td>
                                                 <a asp-action="Edit" asp-route-id="@item.MemberMaterialId">Edit</a> |

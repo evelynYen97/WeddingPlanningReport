@@ -151,9 +151,6 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.ImgH)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.IsDelete)
-                                        </th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -202,9 +199,6 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ImgH)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.IsDelete)
                                             </td>
                                             <td>
                                                 <a asp-action="Delete" asp-route-id="@item.ImgUsingId">Delete</a>

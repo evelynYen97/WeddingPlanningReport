@@ -21,7 +21,7 @@ public partial class Car
 
     public string? CarDetail { get; set; }
 
-    public bool? IsDelete { get; set; }
-
     public int? Quantity { get; set; }
+
+    public bool IsDelete { get; set; }
 }

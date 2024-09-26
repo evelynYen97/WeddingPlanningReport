@@ -16,4 +16,8 @@ public partial class CakeOrderDetail
     public int? CakeAmount { get; set; }
 
     public int? CakeSubtotal { get; set; }
+
+    public int? MemberId { get; set; }
+
+    public string? CakeName { get; set; }
 }

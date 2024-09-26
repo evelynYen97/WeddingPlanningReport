@@ -14,6 +14,4 @@ public partial class MemberMaterial
     public int? EstimatedLength { get; set; }
 
     public int? EstimatedWidth { get; set; }
-
-    public bool? IsDelete { get; set; }
 }

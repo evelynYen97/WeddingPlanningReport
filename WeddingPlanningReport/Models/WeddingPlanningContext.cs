@@ -39,6 +39,8 @@ public partial class WeddingPlanningContext : DbContext
 
     public virtual DbSet<ImgUsing> ImgUsings { get; set; }
 
+    public virtual DbSet<Mail> Mail { get; set; }
+
     public virtual DbSet<Material> Materials { get; set; }
 
     public virtual DbSet<Member> Members { get; set; }
@@ -140,9 +142,13 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.CakeOrderDetailId).HasColumnName("cakeOrderDetailID");
             entity.Property(e => e.CakeAmount).HasColumnName("cakeAmount");
             entity.Property(e => e.CakeId).HasColumnName("cakeID");
+            entity.Property(e => e.CakeName)
+                .HasMaxLength(100)
+                .HasColumnName("cakeName");
             entity.Property(e => e.CakeOrderId).HasColumnName("cakeOrderID");
             entity.Property(e => e.CakePrice).HasColumnName("cakePrice");
             entity.Property(e => e.CakeSubtotal).HasColumnName("cakeSubtotal");
+            entity.Property(e => e.MemberId).HasColumnName("memberID");
         });
 
         modelBuilder.Entity<Car>(entity =>
@@ -204,8 +210,12 @@ public partial class WeddingPlanningContext : DbContext
 
             entity.Property(e => e.RentalDetailId).HasColumnName("rentalDetailID");
             entity.Property(e => e.CarId).HasColumnName("carID");
+            entity.Property(e => e.CarName)
+                .HasMaxLength(100)
+                .HasColumnName("carName");
             entity.Property(e => e.LeaseDays).HasColumnName("leaseDays");
             entity.Property(e => e.LeaseSubtotal).HasColumnName("leaseSubtotal");
+            entity.Property(e => e.MemberId).HasColumnName("memberID");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.RentalId).HasColumnName("rentalID");
         });
@@ -289,8 +299,12 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.DishesOrderDetailId).HasColumnName("dishesOrderDetailID");
             entity.Property(e => e.DishesAmount).HasColumnName("dishesAmount");
             entity.Property(e => e.DishesId).HasColumnName("dishesID");
+            entity.Property(e => e.DishesName)
+                .HasMaxLength(100)
+                .HasColumnName("dishesName");
             entity.Property(e => e.DishesOrderId).HasColumnName("dishesOrderID");
             entity.Property(e => e.DishesSubtotal).HasColumnName("dishesSubtotal");
+            entity.Property(e => e.MemberId).HasColumnName("memberID");
         });
 
         modelBuilder.Entity<EditingImgFile>(entity =>
@@ -365,6 +379,39 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.MemberMaterialId).HasColumnName("memberMaterialID");
         });
 
+        modelBuilder.Entity<Mail>(entity =>
+        {
+            entity.HasKey(e => e.MailId).HasName("PK__mail__F5CD7888FA099B11");
+
+            entity.ToTable("mail");
+
+            entity.Property(e => e.MailId).HasColumnName("mailID");
+            entity.Property(e => e.IsReplied)
+                .HasMaxLength(10)
+                .HasDefaultValue("未回覆")
+                .HasColumnName("isReplied");
+            entity.Property(e => e.MailContent)
+                .HasMaxLength(500)
+                .HasColumnName("mailContent");
+            entity.Property(e => e.MailDate)
+                .HasDefaultValueSql("(sysdatetime())")
+                .HasColumnName("mailDate");
+            entity.Property(e => e.MailTitle)
+                .HasMaxLength(200)
+                .HasColumnName("mailTitle");
+            entity.Property(e => e.MemberEmail)
+                .HasMaxLength(100)
+                .HasColumnName("memberEmail");
+            entity.Property(e => e.MemberId).HasColumnName("memberID");
+            entity.Property(e => e.MemberName)
+                .HasMaxLength(50)
+                .HasColumnName("memberName");
+            entity.Property(e => e.ReplyContent)
+                .HasMaxLength(500)
+                .HasColumnName("replyContent");
+            entity.Property(e => e.ReplyDate).HasColumnName("replyDate");
+        });
+
         modelBuilder.Entity<Material>(entity =>
         {
             entity.HasKey(e => e.MaterialId).HasName("PK_提供圖檔素材");
@@ -381,7 +428,7 @@ public partial class WeddingPlanningContext : DbContext
 
         modelBuilder.Entity<Member>(entity =>
         {
-            entity.HasKey(e => e.MemberId).HasName("PK_會員註冊");
+            entity.HasKey(e => e.MemberId).HasName("PK__member__7FD7CFF67197028E");
 
             entity.ToTable("member");
 
@@ -390,16 +437,33 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("address");
             entity.Property(e => e.Birthday).HasColumnName("birthday");
+            entity.Property(e => e.BudgetCakeChart)
+                .HasMaxLength(100)
+                .HasColumnName("budgetCakeChart");
+            entity.Property(e => e.BudgetCarChart)
+                .HasMaxLength(100)
+                .HasColumnName("budgetCarChart");
+            entity.Property(e => e.BudgetDishesChart)
+                .HasMaxLength(100)
+                .HasColumnName("budgetDishesChart");
+            entity.Property(e => e.BudgetOtherChart)
+                .HasMaxLength(100)
+                .HasColumnName("budgetOtherChart");
             entity.Property(e => e.BudgetPieChart)
                 .HasMaxLength(100)
                 .HasColumnName("budgetPieChart");
             entity.Property(e => e.BudgetTableImg)
                 .HasMaxLength(100)
                 .HasColumnName("budgetTableImg");
+            entity.Property(e => e.BudgetVenueChart)
+                .HasMaxLength(100)
+                .HasColumnName("budgetVenueChart");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .HasColumnName("email");
-            entity.Property(e => e.LastLoginTime).HasPrecision(0);
+            entity.Property(e => e.LastLoginTime)
+                .HasDefaultValueSql("(sysdatetime())")
+                .HasColumnName("lastLoginTime");
             entity.Property(e => e.MemberGrade)
                 .HasMaxLength(50)
                 .HasColumnName("memberGrade");
@@ -409,12 +473,14 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.MemberStatus)
                 .HasMaxLength(20)
                 .HasColumnName("memberStatus");
-            entity.Property(e => e.Notes).HasMaxLength(200);
+            entity.Property(e => e.Notes)
+                .HasMaxLength(200)
+                .HasColumnName("notes");
             entity.Property(e => e.PartnerName)
                 .HasMaxLength(50)
                 .HasColumnName("partnerName");
             entity.Property(e => e.Password)
-                .HasMaxLength(50)
+                .HasMaxLength(64)
                 .HasColumnName("password");
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(50)
@@ -423,12 +489,15 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(200)
                 .HasColumnName("preference");
             entity.Property(e => e.RegistrationTime)
-                .HasPrecision(0)
+                .HasDefaultValueSql("(sysdatetime())")
                 .HasColumnName("registrationTime");
             entity.Property(e => e.Sex)
                 .HasMaxLength(10)
                 .HasColumnName("sex");
-            entity.Property(e => e.VerifyByPhone).HasColumnName("verifyByPhone");
+            entity.Property(e => e.VerifyByEmail)
+                .HasMaxLength(10)
+                .HasDefaultValue("未驗證")
+                .HasColumnName("verifyByEmail");
             entity.Property(e => e.WeddingStatus)
                 .HasMaxLength(20)
                 .HasColumnName("weddingStatus");
@@ -483,7 +552,9 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.ScheduleStageNotes)
                 .HasMaxLength(500)
                 .HasColumnName("scheduleStageNotes");
-            entity.Property(e => e.ScheduleTime).HasColumnName("scheduleTime");
+            entity.Property(e => e.ScheduleTime)
+                .HasPrecision(0)
+                .HasColumnName("scheduleTime");
         });
 
         modelBuilder.Entity<ScheduledStaff>(entity =>

@@ -15,5 +15,7 @@ public partial class DishesOrderDetail
 
     public int? DishesSubtotal { get; set; }
 
-    public bool? IsDelete { get; set; }
+    public int? MemberId { get; set; }
+
+    public string? DishesName { get; set; }
 }

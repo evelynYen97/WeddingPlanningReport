@@ -14,6 +14,4 @@ public partial class EditingImgFile
     public string? Screenshot { get; set; }
 
     public string? ImgEditingName { get; set; }
-
-    public bool? IsDelete { get; set; }
 }

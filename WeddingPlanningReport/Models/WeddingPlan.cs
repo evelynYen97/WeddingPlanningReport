@@ -16,6 +16,4 @@ public partial class WeddingPlan
     public DateTime? WeddingTime { get; set; }
 
     public string? WeddingLocation { get; set; }
-
-    public bool? IsDelete { get; set; }
 }

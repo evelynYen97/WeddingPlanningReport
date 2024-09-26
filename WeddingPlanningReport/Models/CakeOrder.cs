@@ -18,6 +18,4 @@ public partial class CakeOrder
     public string? Payment { get; set; }
 
     public string? CakeOrderStatus { get; set; }
-
-    public bool? IsDelete { get; set; }
 }

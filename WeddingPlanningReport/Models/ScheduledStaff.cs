@@ -12,6 +12,4 @@ public partial class ScheduledStaff
     public string? PersonnelName { get; set; }
 
     public string? AssistanceContent { get; set; }
-
-    public bool? IsDelete { get; set; }
 }

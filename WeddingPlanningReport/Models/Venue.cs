@@ -33,5 +33,5 @@ public partial class Venue
 
     public string? VenueImg2 { get; set; }
 
-    public bool? IsDelete { get; set; }
+    public bool IsDelete { get; set; }
 }
