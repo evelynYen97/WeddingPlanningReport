@@ -18,6 +18,7 @@ namespace WeddingPlanningReport.Controllers
             _context = context;
         }
 
+
         // GET: Shops
         public async Task<IActionResult> Index()
         {
@@ -221,6 +222,45 @@ namespace WeddingPlanningReport.Controllers
                 // 更新其他欄位
                 _context.Update(shop);
                 await _context.SaveChangesAsync();
+
+                // 更新相關資料表的 isDelete 欄位
+                var isDeleteValue = shop.IsDelete;
+
+                // 更新 cake 
+                var cakes = await _context.Cakes.Where(c => c.ShopId == shop.ShopId).ToListAsync();
+                foreach (var cake in cakes)
+                {
+                    cake.IsDelete = isDeleteValue;
+                }
+                _context.Cakes.UpdateRange(cakes);
+
+                // 更新 car 
+                var cars = await _context.Cars.Where(c => c.ShopId == shop.ShopId).ToListAsync();
+                foreach (var car in cars)
+                {
+                    car.IsDelete = isDeleteValue;
+                }
+                _context.Cars.UpdateRange(cars);
+
+                // 更新 venue 
+                var venues = await _context.Venues.Where(v => v.ShopId == shop.ShopId).ToListAsync();
+                foreach (var venue in venues)
+                {
+                    venue.IsDelete = isDeleteValue;
+                }
+                _context.Venues.UpdateRange(venues);
+
+                // 更新 dishes 
+                var dishes = await _context.Dishes.Where(d => d.ShopId == shop.ShopId).ToListAsync();
+                foreach (var dish in dishes)
+                {
+                    dish.IsDelete = isDeleteValue;
+                }
+                _context.Dishes.UpdateRange(dishes);
+
+                // 儲存所有變更
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -266,5 +306,8 @@ namespace WeddingPlanningReport.Controllers
         {
             return _context.Shops.Any(e => e.ShopId == id);
         }
+
+        
+
     }
 }

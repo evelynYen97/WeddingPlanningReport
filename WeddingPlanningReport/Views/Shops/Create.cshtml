@@ -118,6 +118,11 @@
                                             <input asp-for="ShopName" class="form-control" />
                                             <span asp-validation-for="ShopName" class="text-danger"></span>
                                         </div>
+                                        <div class="form-group" style="display:none" >@*新增IsDelete 先放起來並且預設為false*@
+                                            <label asp-for="IsDelete" class="control-label"></label>
+                                            <input asp-for="IsDelete" class="form-control" type="text" value="false" />
+                                            <span asp-validation-for="IsDelete" class="text-danger"></span>
+                                        </div>
                                         <div class="form-group">
                                             <label asp-for="ShopSort" class="control-label"></label>
                                             <input asp-for="ShopSort" class="form-control" />

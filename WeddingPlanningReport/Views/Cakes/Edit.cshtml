@@ -131,7 +131,13 @@
                                                 <input asp-for="CakeName" class="form-control" />
                                                 <span asp-validation-for="CakeName" class="text-danger"></span>
                                             </div>
-                                            
+
+                                            <div class="form-group"> @*新增IsDelete欄位*@
+                                                <label asp-for="IsDelete" class="control-label"></label>
+                                                <input asp-for="IsDelete" class="form-control" type="text"/>
+                                                <span asp-validation-for="IsDelete" class="text-danger"></span>
+                                            </div>
+
                                             <div class="form-group">
                                                 <label for="CakeImg">更新圖片</label>
                                                 <input type="file" id="CakeImgUpload" />
