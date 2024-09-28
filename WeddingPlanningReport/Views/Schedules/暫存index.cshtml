@@ -1,5 +1,5 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.Event>
-@inject WeddingPlanningContext _content
+﻿@model IEnumerable<WeddingPlanningReport.Models.Schedule>
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -49,10 +49,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">計劃書活動項目</li>
+                                <li class="breadcrumb-item active" aria-current="page">活動排程管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">計劃書活動項目</h5>
+                                <h5 class="currentPage">活動排程管理</h5>
                             </div>
                         </nav>
 
@@ -61,7 +61,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -70,7 +70,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -118,7 +118,7 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        <h4 class="card-header bg-light bg-gradient ">婚禮活動項目</h4>
+                        <h4 class="card-header bg-light bg-gradient ">活動排程</h4>
                         <div id="dash" class="border-top border-bottom"></div>
                         <div class="table-responsive text-nowrap position-relative">
 
@@ -133,71 +133,46 @@
                                     <tr>
                                         <th></th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.CaseId)
-                                        </th>
-                                        <th>婚禮計劃書名稱</th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventName)
+                                            @Html.DisplayNameFor(model => model.EventId)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventTime)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageName)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventLocation)
+                                            @Html.DisplayNameFor(model => model.ScheduleTime)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventNotes)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageNotes)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventLocationImg)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageImg1)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventVenueImg1)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventVenueImg2)
-                                        </th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        var weddingName = _content.WeddingPlans
-                                        .Where(x => x.CaseId == item.CaseId) // 假設這是關聯字段
-                                        .Select(x => x.WeddingName)
-                                        .FirstOrDefault();
                                         <tr>
                                             <td>
-                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.EventId">✒️</a> |
-                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.EventId">🗑️</a>
+                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.ScheduleId">✒️</a> |
+                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.ScheduleId">🗑️</a>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.CaseId)
-                                            </td>
-                                            <td>@weddingName</td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EventName)
+                                                @Html.DisplayFor(modelItem => item.EventId)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventTime)
+                                                @Html.DisplayFor(modelItem => item.ScheduleStageName)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventLocation)
+                                                @Html.DisplayFor(modelItem => item.ScheduleTime)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventNotes)
+                                                @Html.DisplayFor(modelItem => item.ScheduleStageNotes)
                                             </td>
                                             <td>
-                                                @* @Html.DisplayFor(modelItem => item.EventLocationImg) *@
-                                                <span style="width:25px;height:50px"><partial name="_ShowImgPartial" model="item"></partial></span>
+                                                <partial name="_ShowScheduleImgPartial" model="item" />
                                             </td>
-                                            <td>
-                                                <span style="width:25px;height:50px"><partial name="_ShowVenue1Img" model="item"></partial></span>
-                                            </td>
-                                            <td>
-                                                <span style="width:25px;height:50px"><partial name="_ShowVenue2Img" model="item"></partial></span>
-                                            </td>
-                                            
                                         </tr>
                                     }
                                 </tbody>
@@ -233,5 +208,4 @@
         });
     </script>
 }
-
 

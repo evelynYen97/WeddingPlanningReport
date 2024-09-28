@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.MemberBudgetItem>
-
+@inject WeddingPlanningContext _content
 @section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
@@ -133,6 +133,9 @@
                                             @Html.DisplayNameFor(model => model.MemberId)
                                         </th>
                                         <th>
+                                            會員姓名
+                                        </th>
+                                        <th>
                                             @Html.DisplayNameFor(model => model.BudgetItemDetail)
                                         </th>
                                         <th>
@@ -153,9 +156,17 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
+                                        var memberName = _content.Members
+                                        .Where(x => x.MemberId == item.MemberId) // 假設這是關聯字段
+                                        .Select(x => x.MemberName)
+                                        .FirstOrDefault();
+
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.MemberId)
+                                                @Html.DisplayFor(modelItem => item.MemberId) 
+                                            </td>
+                                            <td>
+                                                @memberName
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.BudgetItemDetail)

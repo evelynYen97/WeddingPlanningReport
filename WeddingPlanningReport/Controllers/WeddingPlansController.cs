@@ -25,6 +25,10 @@ namespace WeddingPlanningReport.Controllers
             return View( _context.WeddingPlans);
         }
 
+        public async Task<IActionResult> IndexNew()
+        {
+            return View(_context.WeddingPlans);
+        }
 
         // GET: WeddingPlans/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -82,7 +86,7 @@ namespace WeddingPlanningReport.Controllers
             {
                 _context.Add(weddingPlan);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexNew));
             }
             return View(weddingPlan);
         }
@@ -144,7 +148,7 @@ namespace WeddingPlanningReport.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexNew));
             }
             return View(weddingPlan);
         }
@@ -193,7 +197,7 @@ namespace WeddingPlanningReport.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index)); ;
+            return RedirectToAction(nameof(IndexNew)); 
         }
 
         private bool WeddingPlanExists(int id)

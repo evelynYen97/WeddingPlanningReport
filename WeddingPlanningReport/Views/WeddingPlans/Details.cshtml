@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.Event>
-
+@inject WeddingPlanningContext _content
 @{
     ViewData["Title"] = "Index";
 }
@@ -137,6 +137,7 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.CaseId)
                                         </th>
+                                        <th>婚禮計劃書名稱</th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.EventName)
                                         </th>
@@ -154,6 +155,10 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
+                                        var planName = _content.WeddingPlans
+                                    .Where(x => x.CaseId == item.CaseId)
+                                    .Select(x => x.WeddingName)
+                                    .FirstOrDefault();
                                         <tr>
                                             <td>
                                                 <a class="btn button-18 border" asp-controller="WeddingPlans" asp-action="SchedulesDetails" asp-route-id="@item.EventId">查看排程</a> |
@@ -162,6 +167,7 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.CaseId)
                                             </td>
+                                            <td>@planName</td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EventName)
                                             </td>

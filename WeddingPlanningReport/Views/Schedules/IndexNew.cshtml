@@ -1,22 +1,23 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.Event>
+﻿@model IEnumerable<WeddingPlanningReport.Models.Schedule>
 @inject WeddingPlanningContext _content
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "IndexNew";
 }
-
 @section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <style>
-        .modal-body{
-            padding-top:0
+        .modal-body {
+            padding-top: 0
         }
-        .detail-btn{
+
+        .detail-btn {
             background-color: #9271AC
         }
-        .table-responsive{
-            width:1000px;
-            margin:auto;
+
+        .table-responsive {
+            width: 1000px;
+            margin: auto;
         }
 
     </style>
@@ -133,71 +134,51 @@
                                     <tr>
                                         <th></th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.CaseId)
+                                            @Html.DisplayNameFor(model => model.EventId)
                                         </th>
-                                        <th>婚禮計劃書名稱</th>
+                                        <th>活動項目名稱</th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventName)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventTime)
+                                            @Html.DisplayNameFor(model => model.ScheduleTime)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventLocation)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageName)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventNotes)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageNotes)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventLocationImg)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventVenueImg1)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventVenueImg2)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageImg1)
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        var weddingName = _content.WeddingPlans
-                                        .Where(x => x.CaseId == item.CaseId) // 假設這是關聯字段
-                                        .Select(x => x.WeddingName)
+                                        var eventName = _content.Events
+                                        .Where(x => x.EventId == item.EventId) // 假設這是關聯字段
+                                        .Select(x => x.EventName)
                                         .FirstOrDefault();
                                         <tr>
                                             <td>
-                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.EventId">✒️</a> |
-                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.EventId">🗑️</a>
+                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.ScheduleId">✒️</a>
+                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.ScheduleId">🗑️</a>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.CaseId)
+                                                @Html.DisplayFor(modelItem => item.EventId)
                                             </td>
-                                            <td>@weddingName</td>
+                                            <td>@eventName</td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EventTime)
+                                                @Html.DisplayFor(modelItem => item.ScheduleTime)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventLocation)
+                                                @Html.DisplayFor(modelItem => item.ScheduleStageName)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventNotes)
+                                                @Html.DisplayFor(modelItem => item.ScheduleStageNotes)
                                             </td>
                                             <td>
-                                                @* @Html.DisplayFor(modelItem => item.EventLocationImg) *@
-                                                <span style="width:25px;height:50px"><partial name="_ShowImgPartial" model="item"></partial></span>
+                                                <partial name="_ShowScheduleImgPartial" model="item"></partial>
                                             </td>
-                                            <td>
-                                                <span style="width:25px;height:50px"><partial name="_ShowVenue1Img" model="item"></partial></span>
-                                            </td>
-                                            <td>
-                                                <span style="width:25px;height:50px"><partial name="_ShowVenue2Img" model="item"></partial></span>
-                                            </td>
-                                            
                                         </tr>
                                     }
                                 </tbody>

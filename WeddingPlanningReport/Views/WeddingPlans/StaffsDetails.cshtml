@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.ScheduledStaff>
-
+@inject WeddingPlanningContext _content
 @{
     ViewData["Title"] = "Index";
 }
@@ -133,6 +133,7 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.ScheduleId)
                                         </th>
+                                        <th>排程名稱</th>
                                         <th >
                                             @Html.DisplayNameFor(model => model.PersonnelName)
                                         </th>
@@ -147,6 +148,10 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
+                                        var scheduleName = _content.Schedules
+                                        .Where(x => x.ScheduleId == item.ScheduleId)
+                                        .Select(x => x.ScheduleStageName)
+                                        .FirstOrDefault();
                                         <tr>
                                             <td>
                                                 <a class="btn button-18 border" asp-controller="ScheduledStaffs" asp-action="Edit" asp-route-id="@item.PersonnelId">✒️</a>
@@ -154,6 +159,7 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ScheduleId)
                                             </td>
+                                            <td>@scheduleName</td>
                                             <td >
                                                 @Html.DisplayFor(modelItem => item.PersonnelName)
                                             </td>
