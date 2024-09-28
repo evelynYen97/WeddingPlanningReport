@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WeddingPlanningReport.Models;
 
 namespace WeddingPlanningReport.Controllers
@@ -158,6 +159,13 @@ namespace WeddingPlanningReport.Controllers
                             newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
                             filePath = Path.Combine(productPath, newFileName);
                         }
+
+                        string oldFilePath = Path.Combine(productPath, schedule.ScheduleStageImg1);
+                        if (!string.IsNullOrEmpty(schedule.ScheduleStageImg1) && System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath); // 删除旧文件
+                        }
+
                         // 儲存圖片到指定路徑
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
@@ -224,10 +232,19 @@ namespace WeddingPlanningReport.Controllers
             var schedule = await _context.Schedules.FindAsync(id);
             if (schedule != null)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string productPath = Path.Combine(wwwRootPath, @"scheduleImg");
+                if (!string.IsNullOrEmpty(schedule.ScheduleStageImg1))
+                {
+                    string filePath = Path.Combine(productPath, schedule.ScheduleStageImg1);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
                 _context.Schedules.Remove(schedule);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

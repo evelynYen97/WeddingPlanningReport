@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WeddingPlanningReport.Models;
 
 namespace WeddingPlanningReport.Controllers
@@ -143,6 +144,13 @@ namespace WeddingPlanningReport.Controllers
                             newFileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
                             filePath = Path.Combine(productPath, newFileName);
                         }
+
+                        string oldFilePath = Path.Combine(productPath, material.ImageName);
+                        if (!string.IsNullOrEmpty(material.ImageName) && System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath); // 删除旧文件
+                        }
+
                         // 儲存圖片到指定路徑
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
@@ -196,10 +204,19 @@ namespace WeddingPlanningReport.Controllers
             var material = await _context.Materials.FindAsync(id);
             if (material != null)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string productPath = Path.Combine(wwwRootPath, @"圖片與圖層\圖片\網站");
+                if (!string.IsNullOrEmpty(material.ImageName) && material.ImageName != "noimage.jpg")
+                {
+                    string filePath = Path.Combine(productPath, material.ImageName);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
                 _context.Materials.Remove(material);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
