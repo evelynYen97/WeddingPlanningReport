@@ -21,8 +21,8 @@ namespace WeddingPlanningReport.Controllers
             ViewBag.CurrentYear = DateTime.Now.Year;
             var odvm = new OrdersDetailsViewModel {
                 VenueOrdersTotal = _context.Venues.Count(),
-                CakeOrdersTotal = _context.CakeOrders.Count(),
-                CarOrdersTotal = _context.CarRentals.Count(),
+                CakeOrdersTotal = _context.Cakes.Count(),
+                CarOrdersTotal = _context.Cars.Count(),
                 DishesOrdersTotal = _context.Dishes.Count(),
                 MemberNumber = _context.Members.Count(),
              };
