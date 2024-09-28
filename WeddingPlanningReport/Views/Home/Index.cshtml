@@ -174,7 +174,7 @@
                                                     </div>
                                                 </div>
                                                 <span class="fw-semibold d-block mb-1">婚禮場地</span>
-                                                <h3 class="card-title mb-2">@Model.VenueOrdersTotal </h3>
+                                                <h3 class="card-title mb-2">@Model.VenuesTotal </h3>
                                                 @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
                                             </div>
                                         </div>
@@ -201,7 +201,7 @@
                                                     </div>
                                                 </div>
                                                 <span>禮車</span>
-                                                <h3 class="card-title text-nowrap mb-1">@Model.CarOrdersTotal</h3>
+                                                <h3 class="card-title text-nowrap mb-1">@Model.CarsTotal</h3>
                                                 @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> *@
                                             </div>
                                         </div>
@@ -228,7 +228,7 @@
                                                     </div>
                                                 </div>
                                                 <span>喜餅</span>
-                                                <h3 class="card-title text-nowrap mb-1">@Model.CakeOrdersTotal</h3>
+                                                <h3 class="card-title text-nowrap mb-1">@Model.CakesTotal</h3>
                                                 @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> *@
                                             </div>
                                         </div>
@@ -255,7 +255,7 @@
                                                     </div>
                                                 </div>
                                                 <span>菜品</span>
-                                                <h3 class="card-title text-nowrap mb-1">@Model.DishesOrdersTotal</h3>
+                                                <h3 class="card-title text-nowrap mb-1">@Model.DishesTotal</h3>
                                                 @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> *@
                                             </div>
                                         </div>
@@ -295,14 +295,32 @@
                                                     <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                                                         <div class="card-title">
                                                             <h5 class="text-nowrap mb-2">註冊會員人數</h5>
-                                                            <span class="badge bg-label-warning rounded-pill">@ViewBag.CurrentYear</span>
+                                                            <span class="badge bg-label-warning rounded-pill">近三個月</span>
                                                         </div>
                                                         <div class="mt-sm-auto">
                                                             @* <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small> *@
                                                             <h4 class="mb-0">共計 @Model.MemberNumber 人</h4>
                                                         </div>
                                                     </div>
-                                                    <div id="profileReportChart"></div>
+                                                    <div id="profileReportCharts"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
+                                                    <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
+                                                        <div class="card-title">
+                                                            <h5 class="text-nowrap mb-2">活躍會員人數</h5>
+                                                            <span class="badge bg-label-warning rounded-pill">近三個月内登入會員</span>
+                                                        </div>
+                                                        <div class="mt-sm-auto">
+                                                            @* <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i> 68.2%</small> *@
+                                                        </div>
+                                                    </div>
+                                                     <h4 class="mb-0">共計 @ViewBag.ActiveMembersCount 人</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -436,30 +454,15 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                         <div class="card-title mb-0">
-                                            <h5 class="m-0 me-2">Order Statistics</h5>
-                                            <small class="text-muted">42.82k Total Sales</small>
-                                        </div>
-                                        <div class="dropdown">
-                                            <button class="btn p-0"
-                                                    type="button"
-                                                    id="orederStatistics"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-                                                <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                                            </div>
+                                            <h5 class="m-0 me-2">訂單統計(月)</h5>
+                                            <small class="text-muted">共計：筆訂單</small>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <div class="d-flex flex-column align-items-center gap-1">
                                                 <h2 class="mb-2">8,258</h2>
-                                                <span>Total Orders</span>
+                                                <span>共計訂單筆數</span>
                                             </div>
                                             <div id="orderStatisticsChart"></div>
                                         </div>
@@ -472,8 +475,8 @@
                                                 </div>
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
-                                                        <h6 class="mb-0">Electronic</h6>
-                                                        <small class="text-muted">Mobile, Earbuds, TV</small>
+                                                        <h6 class="mb-0">婚禮場地</h6>
+                                                        @* <small class="text-muted">Mobile, Earbuds, TV</small> *@
                                                     </div>
                                                     <div class="user-progress">
                                                         <small class="fw-semibold">82.5k</small>
@@ -486,8 +489,8 @@
                                                 </div>
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
-                                                        <h6 class="mb-0">Fashion</h6>
-                                                        <small class="text-muted">T-shirt, Jeans, Shoes</small>
+                                                        <h6 class="mb-0">禮車</h6>
+                                                        @* <small class="text-muted">T-shirt, Jeans, Shoes</small> *@
                                                     </div>
                                                     <div class="user-progress">
                                                         <small class="fw-semibold">23.8k</small>
@@ -500,8 +503,8 @@
                                                 </div>
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
-                                                        <h6 class="mb-0">Decor</h6>
-                                                        <small class="text-muted">Fine Art, Dining</small>
+                                                        <h6 class="mb-0">喜餅</h6>
+                                                        @* <small class="text-muted">Fine Art, Dining</small> *@
                                                     </div>
                                                     <div class="user-progress">
                                                         <small class="fw-semibold">849k</small>
@@ -516,8 +519,8 @@
                                                 </div>
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
-                                                        <h6 class="mb-0">Sports</h6>
-                                                        <small class="text-muted">Football, Cricket Kit</small>
+                                                        <h6 class="mb-0">菜品</h6>
+                                                        @* <small class="text-muted">Football, Cricket Kit</small> *@
                                                     </div>
                                                     <div class="user-progress">
                                                         <small class="fw-semibold">99</small>
@@ -533,178 +536,20 @@
                             <div class="col-md-6 col-lg-4 order-1 mb-4">
                                 <div class="card h-100">
                                     <div class="card-header">
-                                        <ul class="nav nav-pills" role="tablist">
-                                            <li class="nav-item">
-                                                <button type="button"
-                                                        class="nav-link active"
-                                                        role="tab"
-                                                        data-bs-toggle="tab"
-                                                        data-bs-target="#navs-tabs-line-card-income"
-                                                        aria-controls="navs-tabs-line-card-income"
-                                                        aria-selected="true">
-                                                    Income
-                                                </button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button type="button" class="nav-link" role="tab">Expenses</button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button type="button" class="nav-link" role="tab">Profit</button>
-                                            </li>
-                                        </ul>
+                                        <div class="card-title mb-0">
+                                            <h5 class="m-0 me-2">會員偏好</h5>
+                                        </div>
                                     </div>
                                     <div class="card-body px-0">
                                         <div class="tab-content p-0">
                                             <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
-                                                <div class="d-flex p-4 pt-3">
-                                                    <div class="avatar flex-shrink-0 me-3">
-                                                        <img src="../assets/img/icons/unicons/wallet.png" alt="User" />
-                                                    </div>
-                                                    <div>
-                                                        <small class="text-muted d-block">Total Balance</small>
-                                                        <div class="d-flex align-items-center">
-                                                            <h6 class="mb-0 me-1">$459.10</h6>
-                                                            <small class="text-success fw-semibold">
-                                                                <i class="bx bx-chevron-up"></i>
-                                                                42.9%
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="incomeChart"></div>
-                                                <div class="d-flex justify-content-center pt-4 gap-2">
-                                                    <div class="flex-shrink-0">
-                                                        <div id="expensesOfWeek"></div>
-                                                    </div>
-                                                    <div>
-                                                        <p class="mb-n1 mt-1">Expenses This Week</p>
-                                                        <small class="text-muted">$39 less than last week</small>
-                                                    </div>
-                                                </div>
+                                                <div id="preferChart"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!--/ Expense Overview -->
-                            <!-- Transactions -->
-                            <div class="col-md-6 col-lg-4 order-2 mb-4">
-                                <div class="card h-100">
-                                    <div class="card-header d-flex align-items-center justify-content-between">
-                                        <h5 class="card-title m-0 me-2">Transactions</h5>
-                                        <div class="dropdown">
-                                            <button class="btn p-0"
-                                                    type="button"
-                                                    id="transactionID"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-                                                <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <ul class="p-0 m-0">
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div class="avatar flex-shrink-0 me-3">
-                                                    <img src="../assets/img/icons/unicons/paypal.png" alt="User" class="rounded" />
-                                                </div>
-                                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="me-2">
-                                                        <small class="text-muted d-block mb-1">Paypal</small>
-                                                        <h6 class="mb-0">Send money</h6>
-                                                    </div>
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <h6 class="mb-0">+82.6</h6>
-                                                        <span class="text-muted">USD</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div class="avatar flex-shrink-0 me-3">
-                                                    <img src="../assets/img/icons/unicons/wallet.png" alt="User" class="rounded" />
-                                                </div>
-                                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="me-2">
-                                                        <small class="text-muted d-block mb-1">Wallet</small>
-                                                        <h6 class="mb-0">Mac'D</h6>
-                                                    </div>
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <h6 class="mb-0">+270.69</h6>
-                                                        <span class="text-muted">USD</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div class="avatar flex-shrink-0 me-3">
-                                                    <img src="../assets/img/icons/unicons/chart.png" alt="User" class="rounded" />
-                                                </div>
-                                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="me-2">
-                                                        <small class="text-muted d-block mb-1">Transfer</small>
-                                                        <h6 class="mb-0">Refund</h6>
-                                                    </div>
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <h6 class="mb-0">+637.91</h6>
-                                                        <span class="text-muted">USD</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div class="avatar flex-shrink-0 me-3">
-                                                    <img src="../assets/img/icons/unicons/cc-success.png" alt="User" class="rounded" />
-                                                </div>
-                                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="me-2">
-                                                        <small class="text-muted d-block mb-1">Credit Card</small>
-                                                        <h6 class="mb-0">Ordered Food</h6>
-                                                    </div>
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <h6 class="mb-0">-838.71</h6>
-                                                        <span class="text-muted">USD</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div class="avatar flex-shrink-0 me-3">
-                                                    <img src="../assets/img/icons/unicons/wallet.png" alt="User" class="rounded" />
-                                                </div>
-                                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="me-2">
-                                                        <small class="text-muted d-block mb-1">Wallet</small>
-                                                        <h6 class="mb-0">Starbucks</h6>
-                                                    </div>
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <h6 class="mb-0">+203.33</h6>
-                                                        <span class="text-muted">USD</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex">
-                                                <div class="avatar flex-shrink-0 me-3">
-                                                    <img src="../assets/img/icons/unicons/cc-warning.png" alt="User" class="rounded" />
-                                                </div>
-                                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="me-2">
-                                                        <small class="text-muted d-block mb-1">Mastercard</small>
-                                                        <h6 class="mb-0">Ordered Food</h6>
-                                                    </div>
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <h6 class="mb-0">-92.45</h6>
-                                                        <span class="text-muted">USD</span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/ Transactions -->
                         </div>
                     </div>
                     <!-- / Content -->
@@ -727,5 +572,93 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
     <script src="~/js/calendarjavascript.min.js"></script>
     <script>
+        // Profit Report Line Chart
+        // --------------------------------------------------------------------
+        const profileReportChartEl = document.querySelector('#profileReportCharts'),
+            profileReportChartConfig = {
+                chart: {
+                    height: 80,
+                    // width: 175,
+                    type: 'line',
+                    toolbar: {
+                        show: false
+                    },
+                    dropShadow: {
+                        enabled: true,
+                        top: 10,
+                        left: 5,
+                        blur: 3,
+                        color: config.colors.warning,
+                        opacity: 0.15
+                    },
+                    sparkline: {
+                        enabled: true
+                    }
+                },
+                grid: {
+                    show: false,
+                    padding: {
+                        right: 8
+                    }
+                },
+                colors: [config.colors.warning],
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: 5,
+                    curve: 'smooth'
+                },
+                series: [
+                    {
+                        data: [@Model.lastTwoMonthMember, @Model.lastMonthMember, @Model.thisMonthMember]
+                    }
+                ],
+                xaxis: {
+                    show: true,
+                    categories: [`${@ViewBag.TwoMonthsAgo}月`, `${@ViewBag.PreviousMonth}月`, `${@ViewBag.CurrentMonth}月`],
+                    lines: {
+                        show: false
+                    },
+                    labels: {
+                        show: true
+                    },
+                    axisBorder: {
+                        show: false
+                    }
+                },
+                yaxis: {
+                    show: false
+                }
+            };
+        if (typeof profileReportChartEl !== undefined && profileReportChartEl !== null) {
+            const profileReportChart = new ApexCharts(profileReportChartEl, profileReportChartConfig);
+            profileReportChart.render();
+        }
+
+
+        var preferChart = {
+            series: [@Model.preferC, @Model.preferW],
+            chart: {
+                width: 380,
+                type: 'pie',
+            },
+            labels: ['中式', '西式'],
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#preferChart"), preferChart);
+        chart.render();
+
     </script>
 }
