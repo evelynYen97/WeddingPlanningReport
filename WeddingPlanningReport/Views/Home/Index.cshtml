@@ -43,6 +43,7 @@
             width: 500px;
             height: 450px;
         }
+
     </style>
 }
 <html lang="en"
@@ -454,17 +455,16 @@
                                 <div class="card h-100">
                                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                         <div class="card-title mb-0">
-                                            <h5 class="m-0 me-2">訂單統計(月)</h5>
-                                            <small class="text-muted">共計：筆訂單</small>
+                                            <h5 class="m-0 me-2">訂單統計(@ViewBag.CurrentMonth 月)</h5>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <div class="d-flex flex-column align-items-center gap-1">
-                                                <h2 class="mb-2">8,258</h2>
+                                                <h2 class="mb-2">@Model.OrdersTotal</h2>
                                                 <span>共計訂單筆數</span>
                                             </div>
-                                            <div id="orderStatisticsChart"></div>
+                                            <div id="OrderStatisticsChart"></div>
                                         </div>
                                         <ul class="p-0 m-0">
                                             <li class="d-flex mb-4 pb-1">
@@ -476,10 +476,10 @@
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
                                                         <h6 class="mb-0">婚禮場地</h6>
-                                                        @* <small class="text-muted">Mobile, Earbuds, TV</small> *@
+                                                        <small class="text-muted">Venue</small>
                                                     </div>
                                                     <div class="user-progress">
-                                                        <small class="fw-semibold">82.5k</small>
+                                                        <small class="fw-semibold">@Model.VenueMonthOrdersTotal 筆</small>
                                                     </div>
                                                 </div>
                                             </li>
@@ -490,10 +490,10 @@
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
                                                         <h6 class="mb-0">禮車</h6>
-                                                        @* <small class="text-muted">T-shirt, Jeans, Shoes</small> *@
+                                                        <small class="text-muted">Cars</small>
                                                     </div>
                                                     <div class="user-progress">
-                                                        <small class="fw-semibold">23.8k</small>
+                                                        <small class="fw-semibold">@Model.CarMonthOrdersTotal 筆</small>
                                                     </div>
                                                 </div>
                                             </li>
@@ -504,10 +504,10 @@
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
                                                         <h6 class="mb-0">喜餅</h6>
-                                                        @* <small class="text-muted">Fine Art, Dining</small> *@
+                                                        <small class="text-muted">Cakes</small>
                                                     </div>
                                                     <div class="user-progress">
-                                                        <small class="fw-semibold">849k</small>
+                                                        <small class="fw-semibold">@Model.CakeMonthOrdersTotal 筆</small>
                                                     </div>
                                                 </div>
                                             </li>
@@ -520,10 +520,10 @@
                                                 <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                                                     <div class="me-2">
                                                         <h6 class="mb-0">菜品</h6>
-                                                        @* <small class="text-muted">Football, Cricket Kit</small> *@
+                                                        <small class="text-muted">Dishes</small>
                                                     </div>
                                                     <div class="user-progress">
-                                                        <small class="fw-semibold">99</small>
+                                                        <small class="fw-semibold">@Model.DishesMonthOrdersTotal 筆</small>
                                                     </div>
                                                 </div>
                                             </li>
@@ -636,7 +636,7 @@
             profileReportChart.render();
         }
 
-
+        //Prefer Chart--------------------------------------
         var preferChart = {
             series: [@Model.preferC, @Model.preferW],
             chart: {
@@ -660,5 +660,70 @@
         var chart = new ApexCharts(document.querySelector("#preferChart"), preferChart);
         chart.render();
 
+            // Order Statistics Chart
+            // --------------------------------------------------------------------
+            const chartOrderStatistics = document.querySelector('#OrderStatisticsChart'),
+                orderChartConfig = {
+                    chart: {
+                        height: 165,
+                        width: 130,
+                        type: 'donut'
+                    },
+                    labels: ['venue', 'cars', 'cakes', 'dishes'],
+                    series: [@Model.VenueMonthOrdersTotal, @Model.CarMonthOrdersTotal, @Model.CakeMonthOrdersTotal, @Model.DishesMonthOrdersTotal],
+                colors: ['#696cff', '#8592a3', '#03c3ec', '#71dd37'],
+                    stroke: {
+                        width: 5,
+                        colors:['#fff'],
+                    },
+                    dataLabels: {
+                        enabled: false,
+                        formatter: function (val, opt) {
+                            return parseInt(val) + '%';
+                        }
+                    },
+                    legend: {
+                        show: false
+                    },
+                    grid: {
+                        padding: {
+                            top: 0,
+                            bottom: 0,
+                            right: 15
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '75%',
+                                labels: {
+                                    show: true,
+                                    value: {
+                                        fontSize: '1.5rem',
+                                        fontFamily: 'Public Sans',
+                                         color: '#566a7f',
+                                        offsetY: -15,
+                                        formatter: function (val) {
+                                        return ((parseInt(val) / @Model.OrdersTotal)*100).toFixed(2) + '%';
+                                        }
+                                    },
+                                    name: {
+                                        offsetY: 20,
+                                        fontFamily: 'Public Sans'
+                                    },
+                                    total: {
+                                        show: true,
+                                        fontSize: '0.8125rem',
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+            if (typeof chartOrderStatistics !== undefined && chartOrderStatistics !== null) {
+                const statisticsChart = new ApexCharts(chartOrderStatistics, orderChartConfig);
+                statisticsChart.render();
+            }
+        
     </script>
 }

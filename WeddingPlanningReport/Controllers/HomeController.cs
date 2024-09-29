@@ -37,9 +37,15 @@ namespace WeddingPlanningReport.Controllers
             var firstDayOfLastMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, 1);
             var firstDayOfCurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             var firstDayOfNextMonth = firstDayOfCurrentMonth.AddMonths(1);
-            var lastTwoMonthRegistered= _context.Members.Count(m => m.RegistrationTime >= firstDayOfTwoMonthAgo && m.RegistrationTime <firstDayOfLastMonth  );
+            var lastTwoMonthRegistered= _context.Members.Count(m => m.RegistrationTime >= firstDayOfTwoMonthAgo && m.RegistrationTime <firstDayOfLastMonth);
             var lastmonthRegistered = _context.Members.Count(m => m.RegistrationTime >= firstDayOfLastMonth && m.RegistrationTime < firstDayOfCurrentMonth);
             var thismonthRegistered= _context.Members.Count(m => m.RegistrationTime >= firstDayOfCurrentMonth && m.RegistrationTime < firstDayOfNextMonth);
+
+            //月訂單統計
+            int venueMonthOrdersTotal = _context.Venues.Count(m => m.OrderTime >= firstDayOfCurrentMonth && m.OrderTime < firstDayOfNextMonth);
+            int cakeMonthOrdersTotal = _context.CakeOrders.Count(m => m.OrderTime >= firstDayOfCurrentMonth && m.OrderTime < firstDayOfNextMonth);
+            int dishesMonthOrdersTotal = _context.DishesOrders.Count(m => m.OrderTime >= firstDayOfCurrentMonth && m.OrderTime < firstDayOfNextMonth);
+            int carMonthOrdersTotal = _context.CarRentals.Count(m => m.OrderTime >= firstDayOfCurrentMonth && m.OrderTime < firstDayOfNextMonth);
 
             var odvm = new OrdersDetailsViewModel {
                 VenuesTotal = _context.Venues.Count(),
@@ -52,6 +58,11 @@ namespace WeddingPlanningReport.Controllers
                 lastTwoMonthMember= lastTwoMonthRegistered,
                 lastMonthMember= lastmonthRegistered,
                 thisMonthMember= thismonthRegistered,
+                VenueMonthOrdersTotal = venueMonthOrdersTotal,
+                CakeMonthOrdersTotal = cakeMonthOrdersTotal,
+                DishesMonthOrdersTotal= dishesMonthOrdersTotal,
+                CarMonthOrdersTotal= carMonthOrdersTotal,
+                OrdersTotal= venueMonthOrdersTotal+ cakeMonthOrdersTotal+ dishesMonthOrdersTotal+ carMonthOrdersTotal,
             };
 
 
