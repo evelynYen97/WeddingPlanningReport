@@ -8,15 +8,17 @@
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <style>
-        .modal-body{
-            padding-top:0
+        .modal-body {
+            padding-top: 0
         }
-        .detail-btn{
+
+        .detail-btn {
             background-color: #9271AC
         }
-        .table-responsive{
-            width:1000px;
-            margin:auto;
+
+        .table-responsive {
+            width: 1000px;
+            margin: auto;
         }
 
     </style>
@@ -171,7 +173,9 @@
                                                 @Html.DisplayFor(modelItem => item.ScheduleStageNotes)
                                             </td>
                                             <td>
-                                                <partial name="_ShowScheduleImgPartial" model="item" />
+                                                <span style="width:25px;height:50px">
+                                                    <partial name="_ShowScheduleImgPartial" model="item" ></partial>
+                                                </span>
                                             </td>
                                         </tr>
                                     }

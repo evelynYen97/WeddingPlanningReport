@@ -168,16 +168,16 @@ namespace WeddingPlanningReport.Controllers
                 int? totaldishes= _context.DishesOrders.Where(c => c.MemberId == memberID).Select(c => c.DishesTotalPrice).Sum();
                 int? totalothers=_context.MemberBudgetItems.Where(c => c.MemberId == memberID).Select(c => c.BudgetItemSubtotal).Sum();
                 int? general = totalvenue + totalcake + totalcar + totaldishes + totalothers;
-                var viewModel = new OrdersDetailsViewModel
-                {
-                    VenueOrdersTotal = totalvenue,
-                    CakeOrdersTotal = totalcake,
-                    DishesOrdersTotal=totaldishes,
-                    CarOrdersTotal=totalcar,
-                    OtherOrdersTotal=totalothers,
-                    OrdersTotal=general,
-                };
-                return View(viewModel);
+                //var viewModel = new OrdersDetailsViewModel
+                //{
+                //    VenueOrdersTotal = totalvenue,
+                //    CakeOrdersTotal = totalcake,
+                //    DishesOrdersTotal=totaldishes,
+                //    CarOrdersTotal=totalcar,
+                //    OtherOrdersTotal=totalothers,
+                //    OrdersTotal=general,
+                //};
+                return View();
             }
             else if (imageName == "婚禮場地細項")
             {

@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.WeddingPlan>
-
+@inject WeddingPlanningContext _content
 @section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
@@ -126,9 +126,9 @@
                             <p>
                                 @* <a asp-controller="WeddingPlans" asp-action="Create">Create New</a> *@
                                
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="AddBtn">
+                                <a type="button" class="btn btn-primary" id="AddBtn" asp-controller="WeddingPlans" asp-action="Create">
                                     <i class="bi bi-plus-lg" ></i> 新增
-                                </button>
+                                </a>
                             </p>
 
                             <!-- Modal start-->
@@ -146,13 +146,14 @@
                             </div>
                             <!-- Modal end -->
 
-                            <table class="table" id="myTable">
+                            <table class="table" id="WedTable">
                                 <thead class="table-primary">
                                     <tr>
                                         <th></th>
                                         <th class="fs-6">
                                             @Html.DisplayNameFor(model => model.MemberId)
                                         </th>
+                                        <th class ="fs-6">會員姓名</th>
                                         <th class ="fs-6">
                                             @Html.DisplayNameFor(model => model.WeddingName)
                                         </th>
@@ -170,7 +171,10 @@
                                 </thead>
                                 <tbody>
                                     @foreach (var weddingplanitem in Model)
-                                    {
+                                    {   var memberName = _content.Members
+                                        .Where(x => x.MemberId == weddingplanitem.MemberId) 
+                                        .Select(x => x.MemberName)
+                                        .FirstOrDefault();
                                         <tr>
                                             <td>
                                                 <a class="btn button-18 fs-6 detail-btn border" asp-controller="WeddingPlans" asp-action="Details" asp-route-id="@weddingplanitem.CaseId">查看活動</a> |
@@ -179,6 +183,9 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.MemberId)
+                                            </td>
+                                            <td>
+                                                @memberName
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => weddingplanitem.WeddingName)
@@ -210,14 +217,13 @@
     </div>
 </body>
 </html>
-
 @section Scripts {
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $("#myTable").dataTable({
+        $(document).ready(function  ( ) {
+            $("#WedTable").dataTable({
                 fixedHeader: {
                     header: true
                 },
@@ -225,31 +231,47 @@
                     url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
                 }
             });
-
-            $('#AddBtn').on('click', function () {
-                $('.modal-body').load('/WeddingPlans/Create #formCreate', function () {
-                    $('#myModalLabel').text("新增婚禮計劃書");
-                    $('#myModal').modal('show');
-                    // $(document).off('submit', '#formCreate').on('submit', '#formCreate', function (e) {
-                    //     e.preventDefault();
-                    //     $.ajax({
-                    //         url: $(this).attr('action'),
-                    //         type: 'POST',
-                    //         data: $(this).serialize(),
-                    //         success: function (response){
-                    //             if (response.success) {
-                    //                 alert("婚禮計劃書創建成功");
-                    //                 $('#myModal').modal('hide');
-                    //                 location.reload();
-                    //             }
-                    //             else {
-                    //                 alert("請確實填寫必填欄位會員ID及計劃書名稱");
-                    //             }
-                    //         }
-                    //     })
-                    // })
-                }); // 動態加載內容
+                });
+    </script>
+}
+@* @section Scripts {
+    <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+    <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
+    <script>
+       $(document).ready(function () {
+            $("#WedTable").dataTable({
+                fixedHeader: {
+                    header: true
+                },
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
+                }
             });
+        });
+            // $('#AddBtn').on('click', function () {
+            //     $('.modal-body').load('/WeddingPlans/Create #formCreate', function () {
+            //         $('#myModalLabel').text("新增婚禮計劃書");
+            //         $('#myModal').modal('show');
+            //         $(document).off('submit', '#formCreate').on('submit', '#formCreate', function (e) {
+            //             e.preventDefault();
+            //             $.ajax({
+            //                 url: $(this).attr('action'),
+            //                 type: 'POST',
+            //                 data: $(this).serialize(),
+            //                 success: function (response){
+            //                     if (response.success) {
+            //                         alert("婚禮計劃書創建成功");
+            //                         $('#myModal').modal('hide');
+            //                         location.reload();
+            //                     }
+            //                     else {
+            //                         alert("請確實填寫必填欄位會員ID及計劃書名稱");
+            //                     }
+            //                 }
+            //             })
+            //         })
+            //     }); // 動態加載內容
+            // });
 
         //     $('#myTable').on('click', '.edit-btn', function () {
         //         var id = $(this).data('id');
@@ -308,9 +330,9 @@
         //         window.location.href = '@Url.Action("Index", "Events")?id=' + id;
         //     //To event end
         // });
-    });
+    // });
     </script>
-}
+} *@
 
 
 

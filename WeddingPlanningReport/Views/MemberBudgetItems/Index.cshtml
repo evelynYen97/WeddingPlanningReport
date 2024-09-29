@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WeddingPlanningReport.Models.MemberBudgetItem>
-
+@inject WeddingPlanningContext _content
 @section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
@@ -133,6 +133,9 @@
                                             @Html.DisplayNameFor(model => model.MemberId)
                                         </th>
                                         <th>
+                                            會員姓名
+                                        </th>
+                                        <th>
                                             @Html.DisplayNameFor(model => model.BudgetItemDetail)
                                         </th>
                                         <th>
@@ -153,9 +156,17 @@
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
+                                        var memberName = _content.Members
+                                        .Where(x => x.MemberId == item.MemberId) // 假設這是關聯字段
+                                        .Select(x => x.MemberName)
+                                        .FirstOrDefault();
+
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.MemberId)
+                                                @Html.DisplayFor(modelItem => item.MemberId) 
+                                            </td>
+                                            <td>
+                                                @memberName
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.BudgetItemDetail)
@@ -198,6 +209,8 @@
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
+    @* <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script> *@
     <script>
         $(document).ready(function () {
             $("#budgetItemsTable").dataTable({
@@ -206,7 +219,9 @@
                 },
                 language: {
                     url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
-                }
+                },
+                colReorder: true,
+                //responsive: true,
             });
         });
     </script>

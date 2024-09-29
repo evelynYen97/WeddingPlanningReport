@@ -7,7 +7,7 @@ namespace WeddingPlanningReport.Models.Metadata
         
         public int CaseId { get; set; }
 
-        [Display(Name = "會員")]
+        [Display(Name = "會員ID")]
         [Required(ErrorMessage = "請確實填寫會員ID")]
         public int MemberId { get; set; }
 

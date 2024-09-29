@@ -24,5 +24,11 @@
     "inputFiles": [
       "wwwroot/css/btn18SetType.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/js/CalendarJavaScript.min.js",
+    "inputFiles": [
+      "wwwroot/js/CalendarJavaScript.js"
+    ]
   }
 ]
