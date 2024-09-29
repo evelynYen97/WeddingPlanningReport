@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WeddingPlanningReport.Models;
 
 namespace WeddingPlanningReport.Controllers
@@ -215,6 +216,13 @@ namespace WeddingPlanningReport.Controllers
                             newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
                             filePath = Path.Combine(productPath, newFileName);
                         }
+
+                        string oldFilePath = Path.Combine(productPath, @event.EventLocationImg);
+                        if (!string.IsNullOrEmpty(@event.EventLocationImg) && System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath); // 删除旧文件
+                        }
+
                         // 儲存圖片到指定路徑
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
@@ -240,6 +248,13 @@ namespace WeddingPlanningReport.Controllers
                             newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
                             filePath = Path.Combine(productPath, newFileName);
                         }
+
+                        string oldFilePath = Path.Combine(productPath, @event.EventVenueImg1);
+                        if (!string.IsNullOrEmpty(@event.EventVenueImg1) && System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath); // 删除旧文件
+                        }
+
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
                             await file1.CopyToAsync(fileStream);
@@ -265,6 +280,13 @@ namespace WeddingPlanningReport.Controllers
                             newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
                             filePath = Path.Combine(productPath, newFileName);
                         }
+
+                        string oldFilePath = Path.Combine(productPath, @event.EventVenueImg2);
+                        if (!string.IsNullOrEmpty(@event.EventVenueImg2) && System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath); // 删除旧文件
+                        }
+
                         // 儲存圖片到指定路徑
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
@@ -334,10 +356,38 @@ namespace WeddingPlanningReport.Controllers
             var @event = await _context.Events.FindAsync(id);
             if (@event != null)
             {
-                _context.Events.Remove(@event);
-            }
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string productPath = Path.Combine(wwwRootPath, @"eventImg");
 
-            await _context.SaveChangesAsync();
+                if (!string.IsNullOrEmpty(@event.EventLocationImg) && @event.EventLocationImg != "NoImage.png")
+                {
+                    string filePath = Path.Combine(productPath, @event.EventLocationImg);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
+                // 删除第二張圖片
+                if (!string.IsNullOrEmpty(@event.EventVenueImg1) && @event.EventVenueImg1 != "NoImage.png")
+                {
+                    string filePath2 = Path.Combine(productPath, @event.EventVenueImg1);
+                    if (System.IO.File.Exists(filePath2))
+                    {
+                        System.IO.File.Delete(filePath2);
+                    }
+                }
+                // 删除第三張圖片
+                if (!string.IsNullOrEmpty(@event.EventVenueImg2) && @event.EventVenueImg2 != "NoImage.png")
+                {
+                    string filePath3 = Path.Combine(productPath, @event.EventVenueImg2);
+                    if (System.IO.File.Exists(filePath3))
+                    {
+                        System.IO.File.Delete(filePath3);
+                    }
+                }
+                _context.Events.Remove(@event);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 

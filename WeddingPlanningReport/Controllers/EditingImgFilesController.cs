@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WeddingPlanningReport.Models;
 
 namespace WeddingPlanningReport.Controllers
@@ -12,10 +14,12 @@ namespace WeddingPlanningReport.Controllers
     public class EditingImgFilesController : Controller
     {
         private readonly WeddingPlanningContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public EditingImgFilesController(WeddingPlanningContext context)
+        public EditingImgFilesController(WeddingPlanningContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: EditingImgFiles
@@ -143,10 +147,19 @@ namespace WeddingPlanningReport.Controllers
             var editingImgFile = await _context.EditingImgFiles.FindAsync(id);
             if (editingImgFile != null)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string productPath = Path.Combine(wwwRootPath, @"圖片與圖層\圖片\會員提供圖");
+                if (!string.IsNullOrEmpty(editingImgFile.ImgEditingName))
+                {
+                    string filePath = Path.Combine(productPath, editingImgFile.ImgEditingName);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
                 _context.EditingImgFiles.Remove(editingImgFile);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -154,7 +154,7 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)//這會檢查表單提交的資料是否合法，確保所有資料符合模型的驗證規則
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -177,6 +177,13 @@ namespace WeddingPlanningReport.Controllers
                             newFileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
                             filePath = Path.Combine(productPath, newFileName);
                         }
+
+                        string oldFilePath = Path.Combine(productPath, venue.VenueImg);
+                        if (!string.IsNullOrEmpty(venue.VenueImg) && System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath); // 删除旧文件
+                        }
+
                         // 儲存圖片到指定路徑
                         using (var fileStream = new FileStream(filePath, FileMode.Create))
                         {
@@ -201,6 +208,13 @@ namespace WeddingPlanningReport.Controllers
                             newFileName2 = $"{fileNameWithoutExtension2}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension2}";
                             filePath2 = Path.Combine(productPath2, newFileName2);
                         }
+
+                        string oldFilePath2 = Path.Combine(productPath2, venue.VenueImg2);
+                        if (!string.IsNullOrEmpty(venue.VenueImg2) && System.IO.File.Exists(oldFilePath2))
+                        {
+                            System.IO.File.Delete(oldFilePath2); // 删除旧文件
+                        }
+
                         // 儲存第二张图片
                         using (var fileStream2 = new FileStream(filePath2, FileMode.Create))
                         {
@@ -254,10 +268,30 @@ namespace WeddingPlanningReport.Controllers
             var venue = await _context.Venues.FindAsync(id);
             if (venue != null)
             {
-                _context.Venues.Remove(venue);
-            }
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string productPath = Path.Combine(wwwRootPath, @"Ven1");
 
-            await _context.SaveChangesAsync();
+                // 删除第一张图片
+                if (!string.IsNullOrEmpty(venue.VenueImg) && venue.VenueImg!= "noimage.jpg")
+                {
+                    string filePath = Path.Combine(productPath, venue.VenueImg);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
+                // 删除第二张图片
+                if (!string.IsNullOrEmpty(venue.VenueImg2) && venue.VenueImg2 != "noimage.jpg")
+                {
+                    string filePath2 = Path.Combine(productPath, venue.VenueImg2);
+                    if (System.IO.File.Exists(filePath2))
+                    {
+                        System.IO.File.Delete(filePath2);
+                    }
+                }
+                _context.Venues.Remove(venue);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 
