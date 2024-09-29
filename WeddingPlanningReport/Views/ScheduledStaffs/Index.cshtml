@@ -196,6 +196,7 @@
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#budgetItemsTable").dataTable({
@@ -204,7 +205,8 @@
                 },
                 language: {
                     url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
-                }
+                },
+                colReorder: true,
             });
         });
     </script>
