@@ -130,6 +130,9 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("delivery");
             entity.Property(e => e.MemberId).HasColumnName("memberID");
+            entity.Property(e => e.OrderTime)
+                .HasPrecision(0)
+                .HasColumnName("orderTime");
             entity.Property(e => e.Payment)
                 .HasMaxLength(20)
                 .HasColumnName("payment");
@@ -193,6 +196,9 @@ public partial class WeddingPlanningContext : DbContext
                 .HasPrecision(0)
                 .HasColumnName("leaseDate");
             entity.Property(e => e.MemberId).HasColumnName("memberID");
+            entity.Property(e => e.OrderTime)
+                .HasPrecision(0)
+                .HasColumnName("orderTime");
             entity.Property(e => e.RentalStatus)
                 .HasMaxLength(50)
                 .HasColumnName("rentalStatus");
@@ -290,6 +296,7 @@ public partial class WeddingPlanningContext : DbContext
                 .HasColumnName("dishesSupplyDate");
             entity.Property(e => e.DishesTotalPrice).HasColumnName("dishesTotalPrice");
             entity.Property(e => e.MemberId).HasColumnName("memberID");
+            entity.Property(e => e.OrderTime).HasColumnName("orderTime");
         });
 
         modelBuilder.Entity<DishesOrderDetail>(entity =>
@@ -684,6 +691,9 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(10)
                 .HasColumnName("inOurDoor");
             entity.Property(e => e.MemberId).HasColumnName("memberID");
+            entity.Property(e => e.OrderTime)
+                .HasPrecision(0)
+                .HasColumnName("orderTime");
             entity.Property(e => e.ShopId).HasColumnName("shopID");
             entity.Property(e => e.TableCapacity).HasColumnName("tableCapacity");
             entity.Property(e => e.VenueFunction)

@@ -14,4 +14,6 @@ public partial class DishesOrder
     public DateTime? DishesSupplyDate { get; set; }
 
     public int? DishesTotalPrice { get; set; }
+
+    public DateTime? OrderTime { get; set; }
 }
