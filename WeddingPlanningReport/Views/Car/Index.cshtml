@@ -38,7 +38,7 @@
             $("table").dataTable({
                 ajax: {
                     type: "GET",
-                    url: "/Cars/IndexJson",
+                    url: "/Car/IndexJson",
                     dataSrc: function (json) {
                         return json;
                     },
@@ -50,7 +50,31 @@
                     { "data": "passengerCapacity", "width": "10%" },
                     { "data": "rentalPerDay", "width": "10%" },
                     { "data": "quantity", "width": "10%" },
-                    { "data": "carStatus", "width": "10%" },
+                    {
+                        "data": "carStatus",
+                        "render": function (data, type, row) {
+                            let badgeClass = "";
+                            switch (data) {
+                                case "可租":
+                                    badgeClass = "bg-success";
+                                    break;
+                                case "不可租":
+                                    badgeClass = "bg-danger";
+                                    break;
+                                case "維修中":
+                                    badgeClass = "bg-warning";
+                                    break;
+                                case "已預訂":
+                                    badgeClass = "bg-info";
+                                    break;
+                                default:
+                                    badgeClass = "bg-secondary";
+                                    break;
+                            }
+                            return `<span class="badge ${badgeClass}">${data}</span>`;
+                        },
+                        "width": "10%"
+                    },
                     {
                         "data": "carImg",
                         "render": function (data, type, row) {
@@ -65,9 +89,9 @@
                         "data": null,
                         "render": function (data, type, row) {
                             return `
-                         <a href="/Cars/Edit/${row.carId}" class="btn btn-info btn-margin">Edit</a>
-                         <a href="/Cars/Details/${row.carId}" class="btn btn-secondary btn-margin">Details</a>
-                         <a href="/Cars/Delete/${row.carId}" class="btn btn-danger btn-margin">Delete</a>
+                         <a href="/Car/Edit/${row.carId}" class="btn btn-info btn-margin">Edit</a>
+                         <a href="/Car/Details/${row.carId}" class="btn btn-secondary btn-margin">Details</a>
+                         <a href="/Car/Delete/${row.carId}" class="btn btn-danger btn-margin">Delete</a>
                                     `;
                         },
                         "width": "20%"
