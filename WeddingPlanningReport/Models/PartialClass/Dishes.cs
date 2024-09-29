@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WeddingPlanningReport.Metadata;
+using WeddingPlanningReport.Models.Metadata;
 
 namespace WeddingPlanningReport.Models
 {

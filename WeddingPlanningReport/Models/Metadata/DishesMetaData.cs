@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WeddingPlanningReport.Metadata
+namespace WeddingPlanningReport.Models.Metadata
 {
     public class DishesMetaData
     {

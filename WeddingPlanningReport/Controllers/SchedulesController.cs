@@ -250,8 +250,6 @@ namespace WeddingPlanningReport.Controllers
                 _context.Schedules.Remove(schedule);
                 await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(IndexNew));
         }
 

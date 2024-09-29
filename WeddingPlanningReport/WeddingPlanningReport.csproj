@@ -17,9 +17,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Matedatas\**" />
     <Compile Remove="wwwroot\Ven1\更換圖片區\**" />
+    <Content Remove="Matedatas\**" />
     <Content Remove="wwwroot\Ven1\更換圖片區\**" />
+    <EmbeddedResource Remove="Matedatas\**" />
     <EmbeddedResource Remove="wwwroot\Ven1\更換圖片區\**" />
+    <None Remove="Matedatas\**" />
     <None Remove="wwwroot\Ven1\更換圖片區\**" />
   </ItemGroup>
 
@@ -42,7 +46,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Matedatas\" />
     <Folder Include="wwwroot\cakesImg\" />
   </ItemGroup>
 
