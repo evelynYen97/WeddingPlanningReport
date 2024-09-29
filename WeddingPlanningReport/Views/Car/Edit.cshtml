@@ -1,16 +1,22 @@
-﻿@model WeddingPlanningReport.Models.Cars
+﻿@model WeddingPlanningReport.Models.Car
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Create</h1>
+<h1>Edit</h1>
 
+<!-- 顯示婚車的圖片 -->
+<div style="text-align: left;">
+    <img src="~/Car1/@Model.CarImg" alt="Car Image" class="img-fluid" style="max-width: 300px; height: auto;" />
+</div>
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <!-- 添加 enctype -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CarId" />
             <div class="form-group">
                 <label asp-for="ShopId" class="control-label"></label>
                 <input asp-for="ShopId" class="form-control" />
@@ -32,13 +38,19 @@
                 <span asp-validation-for="RentalPerDay" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="quantity" class="control-label"></label>
-                <input asp-for="quantity" class="form-control" />
-                <span asp-validation-for="quantity" class="text-danger"></span>
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CarStatus" class="control-label"></label>
-                <input asp-for="CarStatus" class="form-control" />
+                <select asp-for="CarStatus" class="form-control">
+                    <option value="">請選擇車輛狀態</option> <!-- 預設選項 -->
+                    <option value="可租">可租</option>
+                    <option value="不可租">不可租</option>
+                    <option value="維修中">維修中</option>
+                    <option value="已預訂">已預訂</option>
+                </select>
                 <span asp-validation-for="CarStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -52,7 +64,7 @@
                 <span asp-validation-for="CarDetail" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
