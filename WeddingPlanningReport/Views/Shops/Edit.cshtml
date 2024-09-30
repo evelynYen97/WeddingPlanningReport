@@ -32,11 +32,11 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="">上層頁面名稱(若無可刪)</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">首頁</li>
+                                <li class="breadcrumb-item"><a href="">商家資料管理</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">編輯</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">首頁</h5>
+                                <h5 class="currentPage">編輯商家資訊</h5>
                             </div>
                         </nav>
 
@@ -102,13 +102,13 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        <h5 class="card-header bg-light bg-gradient ">表格標題</h5>
+                        <h5 class="card-header bg-light bg-gradient ">編輯商家資訊</h5>
                         <div class="table-responsive text-nowrap">
-                            <h1>Edit</h1>
+                            <h1 style="margin:20px">以下為編輯頁面</h1>
 
-                            <h4>Shop</h4>
+                            <h4 style="margin:20px">商家資訊編輯</h4>
                             <hr />
-                            <div class="row">
+                            <div class="row" style="margin:20px">
                                 <div class="col-md-4">
                                     <form asp-action="Edit" enctype="multipart/form-data">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -118,9 +118,22 @@
                                             <input asp-for="ShopName" class="form-control" />
                                             <span asp-validation-for="ShopName" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">@*新增IsDelete*@
+                                        <div class="form-group mt-3 mb-3 ">@*新增IsDelete*@
                                             <label asp-for="IsDelete" class="control-label"></label>
-                                            <input asp-for="IsDelete" class="form-control" type="text" />
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="IsDelete" value="true" />
+                                                <label class="form-check-label" for="ShopStatusTrue">
+                                                    刪除
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="IsDelete" value="false" />
+                                                <label class="form-check-label" for="ShopStatusFalse">
+                                                    未刪除
+                                                </label>
+                                            </div>
+                                            
                                             <span asp-validation-for="IsDelete" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
@@ -169,20 +182,39 @@
                                             <input asp-for="ServiceArea" class="form-control" />
                                             <span asp-validation-for="ServiceArea" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group mb-3 mt-3"> @*加入radio button的選項*@
                                             <label asp-for="ShopStatus" class="control-label"></label>
-                                            <input asp-for="ShopStatus" class="form-control" />
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="ShopStatus" value="1" />
+                                                <label class="form-check-label" for="ShopStatusTrue">
+                                                    1.上架
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="ShopStatus" value="2" />
+                                                <label class="form-check-label" for="ShopStatusFalse">
+                                                    2.未上架
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="ShopStatus" value="3" />
+                                                <label class="form-check-label" for="ShopStatusFalse">
+                                                    3.待主管確認
+                                                </label>
+                                            </div>
                                             <span asp-validation-for="ShopStatus" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                            <input type="submit" value="儲存編輯" class="btn btn-primary" />
                                         </div>
                                     </form>
                                 </div>
                             </div>
 
                             <div>
-                                <a asp-action="Index">Back to List</a>
+                                <a asp-action="Index" class="btn btn-info">回到上層</a>
                             </div>
 
 

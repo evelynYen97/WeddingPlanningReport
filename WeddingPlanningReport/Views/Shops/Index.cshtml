@@ -37,8 +37,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="">上層頁面名稱(若無可刪)</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">首頁</li>
+                                <li class="breadcrumb-item active" aria-current="page">商家資料管理</li>
                             </ol>
                             <div class="row d-block">
                                 <h5 class="currentPage">首頁</h5>
@@ -107,14 +106,14 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        <h5 class="card-header bg-light bg-gradient ">表格標題</h5>
+                        <h5 class="card-header bg-light bg-gradient ">商家首頁</h5>
                         <div class="table-responsive text-nowrap ">
                             <h1>商家管理</h1>
 
                             <p>
                                 <a asp-action="Create" class="btn btn-success">增加廠商</a>
                             </p>
-                            <table class="table table-hover">
+                            <table class="table table-hover" >
                                 <thead class="table-primary">
                                     <tr>
                                         <th>
@@ -131,6 +130,9 @@
                                         </th>
                                         <th>
                                             狀態(是否刪除)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ShopStatus)
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.ShopName)
@@ -159,9 +161,7 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.ServiceArea)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.ShopStatus)
-                                        </th>
+                                        
 
                                     </tr>
                                 </thead>
@@ -215,7 +215,33 @@
                     }
                 },
                 { "data": "shopId", "width": "10%" },
-                { "data": "isDelete", "width": "10%" },
+
+                    {
+                        "data": "isDelete",
+                        "width": "10%",
+                        "render": function (data, type, row) {
+                            if (data) {
+                                return '已刪除';
+                            } else {
+                                return '未刪除';
+                            }
+                        }
+                    },
+
+                    {
+                        "data": "shopStatus",
+                        "width": "10%",
+                        "render": function (data, type, row) {
+                            if (data === 1) {
+                                return '上架';
+                            } else if (data === 2) {
+                                return '未上架';
+                            } else if (data === 3) {
+                                return '待主管確認';
+                            }
+                        }
+                    },
+
                 { "data": "shopName", "width": "10%" },
                 {
                     "data": "shopLogo",
@@ -246,7 +272,7 @@
                 
                 { "data": "payment", "width": "10%" },
                 { "data": "serviceArea", "width": "10%" },
-                { "data": "shopStatus", "width": "10%" }
+                   
             ],
             fixedHeader: { header: true },
             language: { url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json' }

@@ -32,8 +32,8 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="">上層頁面名稱(若無可刪)</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">首頁</li>
+                                <li class="breadcrumb-item"><a href="">商家資料管理</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">增加廠商</li>
                             </ol>
                             <div class="row d-block">
                                 <h5 class="currentPage">首頁</h5>
@@ -98,16 +98,16 @@
 
                 <!-- / Navbar -->
                 <!-- Content wrapper -->
-                <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="container-xxl flex-grow-1 container-p-y ">
 
                     <!--  Table start -->
                     <div class="card">
-                        <h5 class="card-header bg-light bg-gradient ">表格標題</h5>
-                        <div class="table-responsive text-nowrap">
+                        <h5 class="card-header bg-light bg-gradient ">在此加入新商家</h5>
+                        <div class="table-responsive text-nowrap" style="margin:20px">
 
-                            <h1>Create</h1>
+                            <h1 style="margin:20px">加入新商家</h1>
 
-                            <h4>Shop</h4>
+                            <h4 style="margin:20px">請輸入相關資訊</h4>
                             <hr />
                             <div class="row">
                                 <div class="col-md-4">
@@ -118,11 +118,13 @@
                                             <input asp-for="ShopName" class="form-control" />
                                             <span asp-validation-for="ShopName" class="text-danger"></span>
                                         </div>
+
                                         <div class="form-group" style="display:none" >@*新增IsDelete 先放起來並且預設為false*@
                                             <label asp-for="IsDelete" class="control-label"></label>
                                             <input asp-for="IsDelete" class="form-control" type="text" value="false" />
                                             <span asp-validation-for="IsDelete" class="text-danger"></span>
                                         </div>
+
                                         <div class="form-group">
                                             <label asp-for="ShopSort" class="control-label"></label>
                                             <input asp-for="ShopSort" class="form-control" />
@@ -169,20 +171,40 @@
                                             <input asp-for="ServiceArea" class="form-control" />
                                             <span asp-validation-for="ServiceArea" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
-                                            <label asp-for="ShopStatus" class="control-label"></label>
-                                            <input asp-for="ShopStatus" class="form-control" />
+                                        <div class="form-group mt-3 mb-3"> @*加入radio button並且嵌入int選項(1:上架 2:未上架 3:其他(我先放貸主管確認))*@
+                                            <label class="control-label">商家狀態</label>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="ShopStatus" value="1"/>
+                                                <label class="form-check-label" for="ShopStatusTrue">
+                                                    1.上架
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="ShopStatus" value="2"/>
+                                                <label class="form-check-label" for="ShopStatusFalse">
+                                                    2.未上架
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="ShopStatus" value="3" />
+                                                <label class="form-check-label" for="ShopStatusFalse">
+                                                    3.待主管確認
+                                                </label>
+                                            </div>
                                             <span asp-validation-for="ShopStatus" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" value="Create" class="btn btn-primary" />
+                                            <input type="submit" value="立即新增" class="btn btn-primary" />
                                         </div>
                                     </form>
                                 </div>
                             </div>
 
-                            <div>
-                                <a asp-action="Index">Back to List</a>
+                            <div class="mb-3">
+                                <a asp-action="Index" class="btn btn-info">回到上層</a>
                             </div>
 
 
