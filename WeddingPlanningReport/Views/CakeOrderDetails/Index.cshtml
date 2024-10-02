@@ -10,6 +10,8 @@
       data-theme="theme-default"
       data-assets-path="../assets/"
       data-template="vertical-menu-template-free">
+
+     
 <head>
 
 </head>
@@ -114,10 +116,16 @@
                                 <a asp-action="Create" class="btn btn-success">產生新明細</a>
                             </p>
                             <table class="table">
-                                <thead>
+                                <thead class="table-primary">
                                     <tr>
                                         <th>
                                             編輯
+                                        </th>
+                                        <th>
+                                            詳細資訊
+                                        </th>
+                                        <th>
+                                            刪除
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.CakeOrderDetailId)
@@ -208,27 +216,35 @@
                     const tr = document.createElement('tr');
 
                     //創建並填充每個 <td>
-                    const tda0 = document.createElement('a');
-                    tda0.setAttribute('asp-action', "Edit");
-                    //tda0.setAttribute('class' , "btn btn-primary");
-                    tda0.setAttribute('asp-route-id', item.cakeOrderId);
-                    tda0.setAttribute('href', "/CakeOrderDetails/Edit/" + item.cakeOrderDetailId);
-                    tda0.innerHTML = "編輯";
+                    const tda0 = document.createElement('td');
+                    const a0 = document.createElement('a');
+                    a0.setAttribute('class', "btn btn-primary btn-sm");
+                    a0.setAttribute('asp-action', "Edit");
+                    a0.setAttribute('asp-route-id', item.cakeOrderId);
+                    a0.setAttribute('href', "/CakeOrderDetails/Edit/" + item.cakeOrderDetailId);
+                    a0.innerHTML = "編輯";
+                    tda0.appendChild(a0);
                     tr.appendChild(tda0);
 
-                    const tda1 = document.createElement('a');
-                    tda1.setAttribute('asp-action', "Details");
-                    //tda1.setAttribute('class', "btn btn-info");
-                    tda1.setAttribute('href', "/CakeOrderDetails/Details/"+ item.cakeOrderDetailId);
-                    tda1.innerHTML = "詳細內容";
+                    const tda1 = document.createElement('td');
+                    const a1 = document.createElement('a');
+                    a1.setAttribute('class', "btn btn-info btn-sm");
+                    a1.setAttribute('asp-action', "Detail");
+                    a1.setAttribute('asp-route-id', item.cakeOrderId);
+                    a1.setAttribute('href', "/CakeOrderDetails/Detail/" + item.cakeOrderDetailId);
+                    a1.innerHTML = "詳細資料";
+                    tda1.appendChild(a1);
                     tr.appendChild(tda1);
 
-                    const tda2 = document.createElement('a');
-                    tda2.setAttribute('asp-action', "Delete");
-                    //tda2.setAttribute('class', "btn btn-danger");
-                    tda2.setAttribute('href', "/CakeOrderDetails/Delete/" + item.cakeOrderDetailId);
-                    tda2.innerHTML = "刪除";
-                    tr.appendChild(tda2);
+                    const tda3 = document.createElement('td');
+                    const a3 = document.createElement('a');
+                    a3.setAttribute('class', "btn btn-danger btn-sm");
+                    a3.setAttribute('asp-action', "Delete");
+                    a3.setAttribute('asp-route-id', item.cakeOrderId);
+                    a3.setAttribute('href', "/CakeOrderDetails/Delete/" + item.cakeOrderDetailId);
+                    a3.innerHTML = "刪除";
+                    tda3.appendChild(a3);
+                    tr.appendChild(tda3);
 
                     const td1 = document.createElement('td');
                     td1.textContent = item.cakeOrderDetailId;
@@ -265,20 +281,7 @@
             updateTable();
 
         });
-
-        // 取得ID
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     var cakeOrderId = localStorage.getItem("cakeOrderId");
-        //     console.log("儲存的 CakeOrderId:", cakeOrderId);
-        //     如果有儲存的 CakeOrderId，將其填入搜尋欄
-        //     if (cakeOrderId) {
-        //         var searchBox = document.getElementById("searchBox");
-        //         searchBox.value = cakeOrderId;
-
-        //         模擬點擊提交按鈕
-        //         var submitButton = document.getElementById("submitButton");
-        //         submitButton.click();
-
+      
     </script>
 
     <script>
