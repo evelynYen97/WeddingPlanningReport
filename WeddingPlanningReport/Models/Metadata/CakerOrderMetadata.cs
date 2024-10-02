@@ -27,5 +27,7 @@ namespace WeddingPlanningReport.Models.Metadata
 
         [Display(Name = "是否刪除?")]
         public bool? IsDelete { get; set; }
+        [Display(Name ="下定時間")]
+        public DateTime? OrderTime { get; set; }
     }
 }

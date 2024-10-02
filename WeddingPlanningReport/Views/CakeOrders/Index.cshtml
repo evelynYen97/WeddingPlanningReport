@@ -133,7 +133,9 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.CakeOrderStatus)
                                         </th>
-
+                                         <th>
+                                            @Html.DisplayNameFor(model => model.OrderTime)
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -166,7 +168,9 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.CakeOrderStatus)
                                             </td>
-
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.OrderTime)
+                                            </td>
                                         </tr>
                                     }
                                 </tbody>

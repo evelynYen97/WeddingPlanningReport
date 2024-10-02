@@ -26,6 +26,11 @@ namespace WeddingPlanningReport.Controllers
             return View(await _context.Schedules.ToListAsync());
         }
 
+        public async Task<IActionResult> IndexNew()
+        {
+            return View(await _context.Schedules.ToListAsync());
+        }
+
         // GET: Schedules/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -94,7 +99,7 @@ namespace WeddingPlanningReport.Controllers
                 schedule.ScheduleStageImg1 = fileName;
                 _context.Add(schedule);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexNew));
             }
             return View(schedule);
         }
@@ -189,7 +194,7 @@ namespace WeddingPlanningReport.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexNew));
             }
             return View(schedule);
         }
@@ -245,7 +250,7 @@ namespace WeddingPlanningReport.Controllers
                 _context.Schedules.Remove(schedule);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(IndexNew));
         }
 
         private bool ScheduleExists(int id)

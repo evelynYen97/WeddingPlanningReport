@@ -10,30 +10,30 @@ using WeddingPlanningReport.Models;
 
 namespace WeddingPlanningReport.Controllers
 {
-    public class CarsController : Controller
+    public class CarController : Controller
     {
         private readonly WeddingPlanningContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         // 使用建構子注入 DbContext
-        public CarsController(WeddingPlanningContext context, IWebHostEnvironment webHostEnvironment)
+        public CarController(WeddingPlanningContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
-        // GET: Cars/Index
+        // GET: Car/Index
         public IActionResult Index()
         {
             return View();
         }
 
-        // GET: Cars/IndexJson
+        // GET: Car/IndexJson
         public JsonResult IndexJson()
         {
             return Json(_context.Cars);
         }
 
-        //// GET: Cars/Index
+        //// GET: Car/Index
         //public async Task<IActionResult> Index(string searchString)
         //{
         //    // 如果有搜尋條件，將其儲存到 ViewData 供視圖顯示
@@ -55,7 +55,7 @@ namespace WeddingPlanningReport.Controllers
         //    return View(await cars.ToListAsync());
         //}
 
-        // GET: Cars/Details/5
+        // GET: Car/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -73,10 +73,10 @@ namespace WeddingPlanningReport.Controllers
             return View(car);
         }
 
-        // GET: Cars/Create
+        // GET: Car/Create
         public IActionResult Create()
         {
-            var car = new Cars(); // 確保創建一個新的模型實例
+            var car = new Car(); // 確保創建一個新的模型實例
             return View(car);
         }
 
@@ -85,18 +85,64 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CarId,ShopId,CarName,PassengerCapacity,RentalPerDay,CarStatus,CarImg,CarDetail")] Cars car)
+        public async Task<IActionResult> Create([Bind("CarId,ShopId,CarName,PassengerCapacity,RentalPerDay,CarStatus,CarImg,CarDetail,Quantity")] Car car, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(car);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    if (file != null)
+                    {
+                        string fileName = file.FileName;
+                        string productPath = Path.Combine(wwwRootPath, "Car1");
+
+                        if (!Directory.Exists(productPath))
+                        {
+                            Directory.CreateDirectory(productPath);
+                        }
+
+                        // 防止檔案名衝突處理
+                        string filePath = Path.Combine(productPath, fileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            string fileExtension = Path.GetExtension(fileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                            fileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, fileName);
+                        }
+
+
+                        // 儲存新圖片
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+
+                        car.CarImg = fileName;
+                    }
+
+                    _context.Update(car);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CarExists(car.CarId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(car);
         }
 
-        // GET: Cars/Edit/5
+        // GET: Car/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -112,12 +158,12 @@ namespace WeddingPlanningReport.Controllers
             return View(car);
         }
 
-        // POST: Cars/Edit/5
+        // POST: Car/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CarId,ShopId,CarName,PassengerCapacity,RentalPerDay,CarStatus,CarImg,CarDetail")] Cars car, IFormFile? file)
+        public async Task<IActionResult> Edit(int id, [Bind("CarId,ShopId,CarName,PassengerCapacity,RentalPerDay,CarStatus,CarImg,CarDetail,Quantity")] Car car, IFormFile? file)
         {
             if (id != car.CarId)
             {
@@ -180,7 +226,7 @@ namespace WeddingPlanningReport.Controllers
             return View(car);
         }
 
-        // GET: Cars/Delete/5
+        // GET: Car/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -198,7 +244,7 @@ namespace WeddingPlanningReport.Controllers
             return View(car);
         }
 
-        // POST: Cars/Delete/5
+        // POST: Car/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

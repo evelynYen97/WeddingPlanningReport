@@ -125,9 +125,12 @@
                                         </th>
                                          <th>
                                             刪除
-                                        </th>
+                                        </th>                                     
                                         <th>
                                             @Html.DisplayNameFor(model => model.ShopId)
+                                        </th>
+                                        <th>
+                                            狀態(是否刪除)
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.ShopName)
@@ -190,7 +193,7 @@
             ajax: {
                 type: 'GET',
                 url: "/Shops/IndexJson",
-                dataSrc: function(json){ return json; }
+                dataSrc: function (json) { return json; }
             },
             columns: [
                 {
@@ -212,6 +215,7 @@
                     }
                 },
                 { "data": "shopId", "width": "10%" },
+                { "data": "isDelete", "width": "10%" },
                 { "data": "shopName", "width": "10%" },
                 {
                     "data": "shopLogo",

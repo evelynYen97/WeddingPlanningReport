@@ -84,12 +84,58 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DishesId,ShopId,DishesName,PricePerTable,DishesDescription,DishesImg,DishesSort")] Dish dish)
+        public async Task<IActionResult> Create([Bind("DishesId,ShopId,DishesName,PricePerTable,DishesDescription,DishesImg,DishesSort")] Dish dish,IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(dish);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    if (file != null)
+                    {
+                        string fileName = file.FileName;
+                        string productPath = Path.Combine(wwwRootPath, "Dish1");
+
+                        if (!Directory.Exists(productPath))
+                        {
+                            Directory.CreateDirectory(productPath);
+                        }
+
+                        // 防止檔案名衝突處理
+                        string filePath = Path.Combine(productPath, fileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            string fileExtension = Path.GetExtension(fileName);
+                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                            fileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
+                            filePath = Path.Combine(productPath, fileName);
+                        }
+
+
+                        // 儲存新圖片
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+
+                        dish.DishesImg = fileName;
+                    }
+
+                    _context.Update(dish);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!DishExists(dish.DishesId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(dish);

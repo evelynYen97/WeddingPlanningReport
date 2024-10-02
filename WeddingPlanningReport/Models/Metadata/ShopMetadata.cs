@@ -8,6 +8,7 @@ namespace WeddingPlanningReport.Models.Metadata
         public int ShopId { get; set; }
         [Display(Name = "商家名稱")]
         public string? ShopName { get; set; }
+        
         [Display(Name = "服務項目")]
         public string? ShopSort { get; set; }
         [Display(Name = "商家聯絡人")]

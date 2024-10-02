@@ -1,27 +1,24 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.Schedule>
+﻿@model IEnumerable<WeddingPlanningReport.Models.WeddingPlan>
 @inject WeddingPlanningContext _content
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "IndexNew";
 }
 
 @section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <style>
-        .modal-body{
-            padding-top:0
-        }
-        .detail-btn{
-            background-color: #9271AC
+        .detail-btn {
+            background-color: #9271AC;
         }
 
         .button-18 {
             background-color: #ffffff;
             color: #62536F;
         }
-        .table-responsive{
-            width:1000px;
-            margin:auto;
+
+        .dataTables_filter {
+            margin-bottom: 15px;
         }
 
     </style>
@@ -54,10 +51,10 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">活動排程管理</li>
+                                <li class="breadcrumb-item active" aria-current="page">婚禮計劃書管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">活動排程管理</h5>
+                                <h5 class="currentPage">婚禮計劃書管理</h5>
                             </div>
                         </nav>
 
@@ -66,7 +63,7 @@
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -75,7 +72,7 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                                        <img src="~/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
@@ -123,59 +120,68 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        <h4 class="card-header bg-light bg-gradient ">活動排程</h4>
+                        <h4 class="card-header bg-light bg-gradient ">婚禮計劃書</h4>
                         <div id="dash" class="border-top border-bottom"></div>
                         <div class="table-responsive text-nowrap position-relative">
 
+                            <p>
+                                @* <a asp-action="Create">Create New</a> *@
+                                <a class="btn btn-primary" asp-action="Create" id="AddBtn">
+                                    <i class="bi bi-plus-lg"></i> 新增
+                                </a>
+                            </p>
                             <table class="table" id="budgetItemsTable">
                                 <thead class="table-primary">
                                     <tr>
                                         <th></th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.EventId)
+                                            @Html.DisplayNameFor(model => model.MemberId)
                                         </th>
-                                        <th>活動項目名稱</th>
+                                        <th>會員姓名</th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ScheduleStageName)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.ScheduleTime)
+                                            @Html.DisplayNameFor(model => model.WeddingName)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ScheduleStageNotes)
+                                            @Html.DisplayNameFor(model => model.WeddingTime)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.ScheduleStageImg1)
+                                            @Html.DisplayNameFor(model => model.WeddingLocation)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Introduction)
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                        var eventName = _content.Events
-                                        .Where(x => x.EventId == item.EventId)
-                                        .Select(x => x.EventName)
+                                        var memberName = _content.Members
+                                        .Where(x => x.MemberId == item.MemberId) 
+                                        .Select(x => x.MemberName)
                                         .FirstOrDefault();
                                         <tr>
                                             <td>
-                                                <a class="btn button-18 border" asp-controller="WeddingPlans" asp-action="StaffsDetails" asp-route-id="@item.EventId">查看工作人員</a> |
-                                                <a class="btn button-18 border" asp-controller="Schedules" asp-action="Edit" asp-route-id="@item.EventId">✒️</a>
+                                                <a asp-action="Details" asp-route-id="@item.CaseId" class="btn button-18 fs-6 detail-btn border">查看活動</a> |
+                                                <a asp-action="Edit" asp-route-id="@item.CaseId" class="btn button-18 fs-6 detail-btn border">✒️</a> |
+                                                <a asp-action="Delete" asp-route-id="@item.CaseId" class="btn button-18 fs-6 detail-btn border">🗑️</a>
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.EventId)
-                                            </td>
-                                            <td>@eventName</td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ScheduleStageName)
+                                                @Html.DisplayFor(modelItem => item.MemberId)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ScheduleTime)
+                                                @memberName
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ScheduleStageNotes)
+                                                @Html.DisplayFor(modelItem => item.WeddingName)
                                             </td>
                                             <td>
-                                                <partial name="_ShowScheduleImgPartial" model="item" />
+                                                @Html.DisplayFor(modelItem => item.WeddingTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.WeddingLocation)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Introduction)
                                             </td>
                                         </tr>
                                     }
@@ -214,4 +220,3 @@
         });
     </script>
 }
-

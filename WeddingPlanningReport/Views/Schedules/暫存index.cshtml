@@ -1,22 +1,34 @@
-﻿@model IEnumerable<WeddingPlanningReport.Models.Cake>
+﻿@model IEnumerable<WeddingPlanningReport.Models.Schedule>
 
 @{
     ViewData["Title"] = "Index";
 }
-@section Styles
-{
+
+@section Styles {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/css/btn18settype.min.css" rel="stylesheet" />
+    <style>
+        .modal-body{
+            padding-top:0
+        }
+        .detail-btn{
+            background-color: #9271AC
+        }
+        .table-responsive{
+            width:1000px;
+            margin:auto;
+        }
+
+    </style>
 }
-<!DOCTYPE html>
+
 <html lang="en"
       class="light-style layout-menu-fixed"
       dir="ltr"
       data-theme="theme-default"
       data-assets-path="../assets/"
       data-template="vertical-menu-template-free">
-<head>
 
-</head>
 
 <body>
     <!-- Layout wrapper -->
@@ -36,12 +48,11 @@
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb py-1 mb-0 mt-2">
-                                <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="">商品管理</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">喜餅管理</li>
+                                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">活動排程管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">首頁</h5>
+                                <h5 class="currentPage">活動排程管理</h5>
                             </div>
                         </nav>
 
@@ -107,74 +118,65 @@
 
                     <!--  Table start -->
                     <div class="card">
-                        <h5 class="card-header bg-light bg-gradient "></h5>
-                        <div class="table-responsive text-nowrap">
-                            <div style="margin-left:20px">
-                                <h1>喜餅管理</h1>
+                        <h4 class="card-header bg-light bg-gradient ">活動排程</h4>
+                        <div id="dash" class="border-top border-bottom"></div>
+                        <div class="table-responsive text-nowrap position-relative">
 
-                            </div>
                             <p>
-                                <a asp-action="Create" class="btn btn-success">新增</a>
+                                @* <a asp-action="Create">Create New</a> *@
+                                <a class="btn btn-primary" asp-action="Create" id="AddBtn">
+                                    <i class="bi bi-plus-lg"></i> 新增
+                                </a>
                             </p>
-                            <table class="table table-hover">
-                                <thead class="table-primary ">
+                            <table class="table" id="budgetItemsTable">
+                                <thead class="table-primary">
                                     <tr>
+                                        <th></th>
                                         <th>
-                                            詳細
+                                            @Html.DisplayNameFor(model => model.EventId)
                                         </th>
                                         <th>
-                                            編輯
+                                            @Html.DisplayNameFor(model => model.ScheduleStageName)
                                         </th>
                                         <th>
-                                            刪除
+                                            @Html.DisplayNameFor(model => model.ScheduleTime)
                                         </th>
                                         <th>
-                                            狀態(是否刪除)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageNotes)
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.CakeId)
+                                            @Html.DisplayNameFor(model => model.ScheduleStageImg1)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.ShopId)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeStyles)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeName)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeImg)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeDescription)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakePrice)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeStatus)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeStock)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeAnnotation)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.AllergenInfo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeContent)
-                                        </th>
-
-
+                                        <th></th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="btn button-18" asp-action="Edit" asp-route-id="@item.ScheduleId">✒️</a> |
+                                                <a class="btn button-18" asp-action="Delete" asp-route-id="@item.ScheduleId">🗑️</a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.EventId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ScheduleStageName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ScheduleTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ScheduleStageNotes)
+                                            </td>
+                                            <td>
+                                                <partial name="_ShowScheduleImgPartial" model="item" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
                             </table>
-
-
-
                         </div>
                     </div>
                     <!-- Table end -->
@@ -188,75 +190,22 @@
     </div>
 </body>
 </html>
-@section Scripts
-{
+
+@section Scripts {
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script>
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
         $(document).ready(function () {
-            //alert("ready");
-            $("table").dataTable({
-                ajax: {
-                    type: 'GET',
-                    url: "/Cakes/IndexJson",
-                    dataSrc: function (json) {
-                        return json;
-                    },
+            $("#budgetItemsTable").dataTable({
+                fixedHeader: {
+                    header: true
                 },
-                columns: [ //需使用json的欄位名稱
-                    {
-                        "data": null,
-                        "render": function (data, type, row) {
-                            return '<a href="/Cakes/Details/' + row.cakeId + '" class="btn btn-info btn-sm">詳情</a>';
-                        },
-
-                    },
-                    {
-                        "data": null,
-                        "render": function (data, type, row) { 
-                            console.log(JSON.stringify(data,null,2));
-                            return '<a href="/Cakes/Edit/' + row.cakeId + '" class="btn btn-primary btn-sm">編輯</a>';
-                        },
-
-                    },
-                    {
-                        "data": null,
-                        "render": function (data, type, row) {
-                            return '<a href="/Cakes/Delete/' + row.cakeId + '" class="btn btn-danger btn-sm">刪除</a>';
-                        },
-
-                    },
-                    { "data": "isDelete", "width": "10%" },
-                    { "data": "cakeId", "width": "10%" },
-                    { "data": "shopId", "width": "10%" },
-                    { "data": "cakeStyles", "width": "10%" },
-                    { "data": "cakeName", "width": "10%" },
-                    {
-                        "data": "cakeImg",
-                        "width": "10%",
-                        "render": function (data, type, row) {
-                            if (data) {
-                                // 將圖片檔名轉換為完整路徑
-                                return '<img src="/cakesImg/' + data + '" alt="Cake Image" style="width: 50px; height: 50px;" />';
-                            } else {
-                                return 'No Image'; // 如果沒有圖片，可以顯示預設文字或圖片
-                            }
-                        }
-                    },
-                    { "data": "cakeDescription", "width": "10%" },
-                    { "data": "cakePrice", "width": "10%" },
-                    { "data": "cakeStatus", "width": "10%" },
-                    { "data": "cakeStock", "width": "10%" },
-                    { "data": "cakeAnnotation", "width": "10%" },
-                    { "data": "allergenInfo", "width": "10%" },
-                    { "data": "cakeContent", "width": "10%" }
-                ],
-                fixedHeader: { header: true },
                 language: {
                     url: '//cdn.datatables.net/plug-ins/2.1.5/i18n/zh-HANT.json',
-                },
-            })
+                }
+            });
         });
     </script>
 }
+

@@ -10,6 +10,8 @@ namespace WeddingPlanningReport.Models.Metadata
         public int ShopId { get; set; }
         [Display(Name = "喜餅風格")]
         public string? CakeStyles { get; set; }
+        [Display(Name ="是否刪除")]
+        public bool? IsDelete { get; set; }
         [Display(Name = "喜餅名稱")]
         public string? CakeName { get; set; }
         [Display(Name = "喜餅圖片")]

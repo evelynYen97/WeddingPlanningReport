@@ -17,7 +17,7 @@ public partial class CarRentalDetail
 
     public int? Quantity { get; set; }
 
-    public int? MemberId { get; set; }
-
     public string? CarName { get; set; }
+
+    public int? MemberId { get; set; }
 }
