@@ -4,6 +4,8 @@
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/css/btn18settype.min.css" rel="stylesheet" />
     <link href="~/css/cantablestyle.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet"/>
+
     <style>
         .modal-body{
             padding-top:0
@@ -19,6 +21,20 @@
         #ItemsTable tr:hover {
             background-color: #A6FFFF !important; /* 懸停時高亮顏色 */
             cursor: pointer; /* 鼠標移到行上時顯示指針 */
+        }
+        .fa-pen-to-square{
+            font-size:25px;
+            color:darkblue;
+            margin-right: 8px;
+        }
+        .fa-circle-info{
+            font-size: 25px;
+            color: darkblue;
+            margin-right:8px;
+        }
+        .fa-trash-can{
+            font-size: 25px;
+            color: darkblue;
         }
     </style>
 }
@@ -170,9 +186,9 @@
                                     {
                                         <tr>
                                             <td>
-                                                <a asp-action="Edit" asp-route-id="@item.VenueId">Edit</a> |
-                                                <a asp-action="Details" asp-route-id="@item.VenueId">Details</a> |
-                                                <a asp-action="Delete" asp-route-id="@item.VenueId">Delete</a>
+                                                <a asp-action="Edit" asp-route-id="@item.VenueId"><i class="fa-regular fa-pen-to-square"></i></a>
+                                                <a asp-action="Details" asp-route-id="@item.VenueId"><i class="fa-solid fa-circle-info"></i></a>
+                                                <a asp-action="Delete" asp-route-id="@item.VenueId"><i class="fa-regular fa-trash-can"></i></a>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ShopId)
