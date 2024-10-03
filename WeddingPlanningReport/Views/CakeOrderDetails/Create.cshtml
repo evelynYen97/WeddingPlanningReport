@@ -36,7 +36,7 @@
                                 <li class="breadcrumb-item active" aria-current="page">喜餅管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">首頁</h5>
+                                <h5 class="currentPage">喜餅訂單詳情</h5>
                             </div>
                         </nav>
 
@@ -101,13 +101,13 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
 
                     <!--  Table start -->
-                    <div class="card">
-                        <h5 class="card-header bg-light bg-gradient ">表格標題</h5>
+                    <div class="card" style="padding:20px">
+                        <h5 class="card-header bg-light bg-gradient "></h5> @*暫時不放任何文字*@
                         <div class="table-responsive text-nowrap">
                             <table class="table table-hover ">
-                                <h1>Create</h1>
+                                <h1>生成新明細</h1>
 
-                                <h4>CakeOrderDetail</h4>
+                                <h4>請輸入以下資訊</h4>
                                 <hr />
                                 <div class="row">
                                     <div class="col-md-4">
@@ -139,14 +139,14 @@
                                                 <span asp-validation-for="CakeSubtotal" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <input type="submit" value="Create" class="btn btn-primary" />
+                                                <input type="submit" value="儲存編輯" class="btn btn-primary" />
                                             </div>
                                         </form>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <a asp-action="Index">Back to List</a>
+                                    <a asp-action="Index" class="btn btn-info">回到上層</a>
                                 </div>
 
                             </table>
