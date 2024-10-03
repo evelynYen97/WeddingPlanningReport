@@ -1,0 +1,15 @@
+﻿@model WeddingPlanningReport.Models.ViewModel.MailViewModel
+
+<div class="card my-3">
+    <div class="card-body">
+        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.MemberName) :</strong> @Model.MemberName</p>
+        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.MemberEmail) :</strong> @Model.MemberEmail</p>
+        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.MailDate) :</strong> @Model.MailDate</p>
+        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.MailTitle) :</strong> @Model.MailTitle</p>
+        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.MailContent) :</strong> @Model.MailContent</p>
+        <hr />
+        <p class="card-text"><strong>@Html.DisplayNameFor(model => model.ReplyContent) :</strong> @Model.ReplyContent</p>
+    </div>
+</div>
+
+
