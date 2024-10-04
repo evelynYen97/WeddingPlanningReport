@@ -21,8 +21,14 @@ namespace WeddingPlanningReport.Controllers
         // GET: CakeOrders
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CakeOrders.ToListAsync());
+            return View();
         }
+
+        public async Task<IActionResult> IndexJson()
+        {
+            return Json(_context.CakeOrders);
+        }
+
 
         // GET: CakeOrders/Details/5
         public async Task<IActionResult> Details(int? id)

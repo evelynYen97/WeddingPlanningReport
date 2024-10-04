@@ -38,7 +38,7 @@
                                 <li class="breadcrumb-item active" aria-current="page">喜餅管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">首頁</h5>
+                                <h5 class="currentPage">喜餅</h5>
                             </div>
                         </nav>
 
@@ -103,12 +103,12 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
 
                     <!--  Table start -->
-                    <div class="card">
+                    <div class="card" style="padding:20px">
                         <h5 class="card-header bg-light bg-gradient "></h5>
                         <div class="table-responsive text-nowrap">
-                            <h1>Create</h1>
+                            <h1>加入新商品</h1>
 
-                            <h4>Cake</h4>
+                            <h4>加入喜餅</h4>
                             <hr />
                             <div class="row">
                                 <div class="col-md-4">
@@ -151,10 +151,22 @@
                                             <input asp-for="CakePrice" class="form-control" />
                                             <span asp-validation-for="CakePrice" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group mt-3 mb-3">
                                             <label asp-for="CakeStatus" class="control-label"></label>
-                                            <input asp-for="CakeStatus" class="form-control" />
-                                            <span asp-validation-for="CakeStatus" class="text-danger"></span>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="CakeStatus" value="true" />
+                                                <label class="form-check-label" for="ShopStatusTrue">
+                                                    1.上架
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" asp-for="CakeStatus" value="false" />
+                                                <label class="form-check-label" for="ShopStatusFalse">
+                                                    2.下架
+                                                </label>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label asp-for="CakeStock" class="control-label"></label>
@@ -176,15 +188,15 @@
                                             <input asp-for="CakeContent" class="form-control" />
                                             <span asp-validation-for="CakeContent" class="text-danger"></span>
                                         </div>
-                                        <div class="form-group">
-                                            <input type="submit" value="Create" class="btn btn-primary" />
+                                        <div class="form-group mt-3">
+                                            <input type="submit" value="確認新增" class="btn btn-primary" />
                                         </div>
                                     </form>
                                 </div>
                             </div>
 
                             <div>
-                                <a asp-action="Index">Back to List</a>
+                                <a asp-action="Index" class="btn btn-info">回到上層</a>
                             </div>
                         </div>
                     </div>

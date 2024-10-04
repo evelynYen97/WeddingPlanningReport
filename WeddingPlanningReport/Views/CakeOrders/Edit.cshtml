@@ -33,10 +33,10 @@
                             <ol class="breadcrumb py-1 mb-0 mt-2">
                                 <li class="breadcrumb-item"><a href="./Home.html">Home</a></li>
                                 <li class="breadcrumb-item"><a href="">會員訂單管理</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">喜餅管理</li>
+                                <li class="breadcrumb-item active" aria-current="page">訂單管理</li>
                             </ol>
                             <div class="row d-block">
-                                <h5 class="currentPage">首頁</h5>
+                                <h5 class="currentPage">喜餅訂單管理</h5>
                             </div>
                         </nav>
 
@@ -101,13 +101,13 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
 
                     <!--  Table start -->
-                    <div class="card">
-                        <h5 class="card-header bg-light bg-gradient ">表格標題</h5>
+                    <div class="card" style="padding:20px">
+                        <h5 class="card-header bg-light bg-gradient ">編輯訂單初步資訊-喜餅訂單</h5>
                         <div class="table-responsive text-nowrap">
                             <table class="table table-hover ">
-                                <h1>Edit</h1>
+                                <h1>請修改以下資訊</h1>
 
-                                <h4>CakeOrder</h4>
+                                <h4>喜餅訂單</h4>
                                 <hr />
                                 <div class="row">
                                     <div class="col-md-4">
@@ -150,14 +150,14 @@
                                                 <span asp-validation-for="OrderTime" class="text-danger"></span>
                                             </div>
                                             <div class="form-group">
-                                                <input type="submit" value="Save" class="btn btn-primary" />
+                                                <input type="submit" value="儲存修改" class="btn btn-primary" />
                                             </div>
                                         </form>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <a asp-action="Index">Back to List</a>
+                                    <a asp-action="Index" class="btn btn-info">回到上層</a>
                                 </div>
 
                             </table>

@@ -106,7 +106,7 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
 
                     <!--  Table start -->
-                    <div class="card">
+                    <div class="card" style="padding:50px">
                         <h5 class="card-header bg-light bg-gradient "></h5>
                         <div class="table-responsive text-nowrap">
                             <div style="margin-left:20px">
@@ -132,6 +132,9 @@
                                             狀態(是否刪除)
                                         </th>
                                         <th>
+                                            @Html.DisplayNameFor(model => model.CakeStatus)
+                                        </th>
+                                        <th>
                                             @Html.DisplayNameFor(model => model.CakeId)
                                         </th>
                                         <th>
@@ -146,15 +149,11 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.CakeImg)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeDescription)
-                                        </th>
+                                       
                                         <th>
                                             @Html.DisplayNameFor(model => model.CakePrice)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeStatus)
-                                        </th>
+                                       
                                         <th>
                                             @Html.DisplayNameFor(model => model.CakeStock)
                                         </th>
@@ -163,9 +162,6 @@
                                         </th>
                                         <th>
                                             @Html.DisplayNameFor(model => model.AllergenInfo)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.CakeContent)
                                         </th>
 
 
@@ -227,7 +223,26 @@
                         },
 
                     },
-                    { "data": "isDelete", "width": "10%" },
+                    {
+                        "data": "isDelete", "width": "10%",
+                        "render": function (data, type, row) {
+                            if (data) {
+                                return '已刪除';
+                            } else {
+                                return '未刪除';
+                            }
+                        }
+                    },
+                    {
+                        "data": "cakeStatus", "width": "10%", 
+                        "render": function (data, type, row) {
+                            if (data) {
+                                return '上架';
+                            } else {
+                                return '下架';
+                            }
+                        }
+                    },
                     { "data": "cakeId", "width": "10%" },
                     { "data": "shopId", "width": "10%" },
                     { "data": "cakeStyles", "width": "10%" },
@@ -244,13 +259,10 @@
                             }
                         }
                     },
-                    { "data": "cakeDescription", "width": "10%" },
                     { "data": "cakePrice", "width": "10%" },
-                    { "data": "cakeStatus", "width": "10%" },
                     { "data": "cakeStock", "width": "10%" },
                     { "data": "cakeAnnotation", "width": "10%" },
                     { "data": "allergenInfo", "width": "10%" },
-                    { "data": "cakeContent", "width": "10%" }
                 ],
                 fixedHeader: { header: true },
                 language: {
