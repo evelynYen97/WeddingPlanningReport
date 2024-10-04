@@ -44,7 +44,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="RentalStatus" class="control-label"></label>
-                <input asp-for="RentalStatus" class="form-control" />
+                <select asp-for="RentalStatus" class="form-control">
+                    <option value="">請選擇訂單狀態</option> <!-- 預設選項 -->
+                    <option value="已完成">已完成</option>
+                    <option value="進行中">進行中</option>
+                    <option value="已取消交易">已取消交易</option>
+                </select>
                 <span asp-validation-for="RentalStatus" class="text-danger"></span>
             </div>
             <div class="form-group">

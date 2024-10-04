@@ -5,34 +5,149 @@
         .btn-margin {
             margin-right: 5px; /* 調整按鈕之間的間距 */
         }
+
+        tfoot input {
+            width: 100%; /* 設定進階搜尋欄位的寬度 */
+            box-sizing: border-box;
+        }
     </style>
 }
+<!-- Navbar -->
+<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+     id="layout-navbar">
+    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+            <i class="bx bx-menu bx-sm"></i>
+        </a>
+    </div>
+    <!-- header start  -->
+    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb py-1 mb-0 mt-2">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a href="">會員訂單管理</a></li>
+                <li class="breadcrumb-item active" aria-current="page">宴菜管理</li>
+            </ol>
+            <div class="row d-block">
+                <h5 class="currentPage">首頁</h5>
+            </div>
+        </nav>
 
-<h1>菜色管理介面</h1>
-<p>
-    <a asp-action="Create" class="btn btn-success"><i class="fa-solid fa-user-plus mb-3"></i> 新增菜色</a>
-</p>
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>dishesID</th>
-            <th>shopID</th>
-            <th>dishesName</th>
-            <th>pricePerTable</th>
-            <th>dishesDescription</th>
-            <th>dishesImg</th>
-            <th>dishesSort</th>
-            <th>Actions</th> <!-- 新增一個表頭用於動作按鈕 -->
-        </tr>
-    </thead>
-</table>
+        <ul class="navbar-nav flex-row align-items-center ms-auto">
+            <!-- User -->
+            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                    </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="avatar avatar-online">
+                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <span class="fw-semibold d-block">登入者姓名</span>
+                                    <small class="text-muted">Admin</small>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <i class="bx bx-user me-2"></i>
+                            <span class="align-middle">My Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <i class="bx bx-cog me-2"></i>
+                            <span class="align-middle">Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="login.html">
+                            <i class="bx bx-power-off me-2"></i>
+                            <span class="align-middle">Log Out</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!--/ User -->
+        </ul>
+    </div>
+    <!-- header end  -->
+</nav>
+
+<!-- / Navbar -->
+
+<div class="container">
+    <h1>菜色管理介面</h1>
+    
+    <div class="card">
+        <div class="card-body">
+            <p>
+                <a asp-action="Create" class="btn btn-success">
+                    <i class="fa-solid fa-user-plus mb-3"></i> 新增菜色
+                </a>
+            </p>
+            <!-- 新增搜尋欄位 -->
+            <div class="mb-3">
+                <select id="searchColumn" class="form-control mb-2">
+                    <option value="2">菜餚名稱</option>
+                    <option value="3">價格</option>
+                    <option value="6">類型</option>
+                </select>
+                <input type="text" id="searchValue" placeholder="輸入搜尋條件" class="form-control mb-2" />
+                <button id="searchButton" class="btn btn-primary">進行搜尋</button>
+            </div>
+
+            <table class="table table-striped table-hover" id="dishesTable">
+                <thead>
+                    <tr>
+                        <th>菜餚ID</th>
+                        <th>店家ID</th>
+                        <th>菜餚名稱</th>
+                        <th>價格</th>
+                        <th>描述</th>
+                        <th>圖片</th>
+                        <th>類型</th>
+                        <th>Actions</th> <!-- 新增一個表頭用於動作按鈕 -->
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th><input type="text" placeholder="搜尋 菜餚ID" /></th>
+                        <th><input type="text" placeholder="搜尋 店家ID" /></th>
+                        <th><input type="text" placeholder="搜尋 菜餚名稱" /></th>
+                        <th><input type="text" placeholder="搜尋 價格" /></th>
+                        <th><input type="text" placeholder="搜尋 描述" /></th>
+                        <th></th> <!-- 圖片不設置搜尋欄位 -->
+                        <th><input type="text" placeholder="搜尋 類型" /></th>
+                        <th></th> <!-- 動作欄不設置搜尋欄位 -->
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
 
 @section Scripts
 {
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("table").dataTable({
+            var table = $('#dishesTable').DataTable({
                 ajax: {
                     type: "GET",
                     url: "/Dishes/IndexJson",
@@ -50,7 +165,7 @@
                         "data": "dishesImg",
                         "render": function (data, type, row) {
                             return `<img src="/Dish1/${data}" alt="Dish Image" style="width:100px;height:auto;cursor:pointer;"
-                                                data-bs-toggle="modal" data-bs-target="#imageModal-${row.dishesId}" />`;
+                                                                        data-bs-toggle="modal" data-bs-target="#imageModal-${row.dishesId}" />`;
                         },
                         "width": "10%"
                     },
@@ -60,36 +175,61 @@
                         "data": null,
                         "render": function (data, type, row) {
                             return `
-                                        <a href="/Dishes/Edit/${row.dishesId}" class="btn btn-info btn-margin">Edit</a>
-                                        <a href="/Dishes/Details/${row.dishesId}" class="btn btn-secondary btn-margin">Details</a>
-                                        <a href="/Dishes/Delete/${row.dishesId}" class="btn btn-danger btn-margin">Delete</a>
-                                    `;
+                                <a href="/Dishes/Edit/${row.dishesId}" class="btn btn-info btn-margin">Edit</a>
+                                <a href="/Dishes/Details/${row.dishesId}" class="btn btn-secondary btn-margin">Details</a>
+                                <a href="/Dishes/Delete/${row.dishesId}" class="btn btn-danger btn-margin">Delete</a>
+                            `;
                         },
                         "width": "20%"
                     }
                 ],
-                fixedHeader: {},
-                language: {},
-                "initComplete": function (settings, json) {
-                    // 生成模態框結構
-                    json.forEach(function (item) {
-                        $("body").append(`
-                                    <div class="modal fade" id="imageModal-${item.dishesId}" tabindex="-1" aria-labelledby="exampleModalLabel-${item.dishesId}" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel-${item.dishesId}">菜色圖片</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                            <img src="/Dish1/${item.dishesImg}" alt="Dish Image" class="modal-img" style="width:100%;height:auto;" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `);
+                fixedHeader: true,
+                language: {
+                    // 可以自定義語言設置
+                },
+                "initComplete": function () {
+                    this.api().columns().every(function () {
+                        var that = this;
+                        $('input', this.footer()).on('keyup change', function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
                     });
                 }
+            });
+
+            // 外部進階搜尋
+            $('#searchButton').on('click', function () {
+                var columnToSearch = $('#searchColumn').val();  // 取得選擇的欄位 index
+                var searchValue = $('#searchValue').val();      // 取得搜尋條件
+
+                table
+                    .column(columnToSearch)                    // 根據選擇的欄位進行搜尋
+                    .search(searchValue)
+                    .draw();                                   // 重新繪製表格
+            });
+
+            // 生成模態框結構
+            table.on('xhr', function () {
+                var json = table.ajax.json();
+                json.forEach(function (item) {
+                    $("body").append(`
+                        <div class="modal fade" id="imageModal-${item.dishesId}" tabindex="-1" aria-labelledby="exampleModalLabel-${item.dishesId}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel-${item.dishesId}">菜色圖片</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="/Dish1/${item.dishesImg}" alt="Dish Image" class="modal-img" style="width:100%;height:auto;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                });
             });
         });
     </script>

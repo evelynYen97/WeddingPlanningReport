@@ -1,14 +1,9 @@
-﻿@section Styles
+@section Styles
 {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <style>
         .btn-margin {
             margin-right: 5px; /* 調整按鈕之間的間距 */
-        }
-
-        tfoot input {
-            width: 100%; /* 設定進階搜尋欄位的寬度 */
-            box-sizing: border-box;
         }
     </style>
 }
@@ -26,7 +21,7 @@
             <ol class="breadcrumb py-1 mb-0 mt-2">
                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li class="breadcrumb-item"><a href="">會員訂單管理</a></li>
-                <li class="breadcrumb-item active" aria-current="page">菜餚訂單介面</li>
+                <li class="breadcrumb-item active" aria-current="page">租車訂單介面</li>
             </ol>
             <div class="row d-block">
                 <h5 class="currentPage">首頁</h5>
@@ -90,8 +85,8 @@
 </nav>
 
 <div class="container">
-    <h1>菜餚訂單介面</h1>
-
+    <h1>租車明細管理介面</h1>
+    
     <div class="card">
         <div class="card-body">
             <p>
@@ -99,26 +94,17 @@
                     <i class="fa-solid fa-user-plus mb-3"></i> 新增明細
                 </a>
             </p>
-            <!-- 新增下拉選單和搜尋框 -->
-            <div class="mb-3">
-                <select id="searchColumn" class="form-control mb-2">
-                    <option value="0">點餐ID</option>
-                    <option value="1">會員ID</option>
-                    <option value="2">餐點名</option>
-                    <option value="3">供餐日期</option>
-                    <option value="4">餐點總價</option>
-                </select>
-                <input type="text" id="searchValue" placeholder="輸入搜尋條件" class="form-control mb-2" />
-                <button id="searchButton" class="btn btn-primary">搜尋</button>
-            </div>
-            <table class="table table-striped table-hover" id="dishesTable">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>點餐ID</th>
-                        <th>會員ID</th>
-                        <th>餐點名</th>
-                        <th>供餐日期</th>
-                        <th>餐點總價</th>
+                        <th>rentalId</th>
+                        <th>memberId</th>
+                        <th>clientName</th>
+                        <th>clientPhone</th>
+                        <th>leaseDate</th>
+                        <th>returnDate</th>
+                        <th>rentalTotal</th>
+                        <th>rentalStatus</th>
                         <th>Actions</th> <!-- 新增一個表頭用於動作按鈕 -->
                     </tr>
                 </thead>
@@ -127,49 +113,47 @@
     </div>
 </div>
 
+
 @section Scripts
 {
     <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
     <script>
         $(document).ready(function () {
-            var table = $('#dishesTable').DataTable({
+            $("table").dataTable({
                 ajax: {
                     type: "GET",
-                    url: "/DishesOrders/IndexJson",
+                    url: "/CarRentals/IndexJson",
                     dataSrc: function (json) {
                         return json;
                     },
                 },
                 columns: [
-                    { "data": "dishesOrderId", "width": "10%" },
+                    { "data": "rentalId", "width": "10%" },
                     { "data": "memberId", "width": "10%" },
-                    { "data": "dishesOrderName", "width": "10%" },
-                    { "data": "dishesSupplyDate", "width": "10%" },
-                    { "data": "dishesTotalPrice", "width": "10%" },
+                    { "data": "clientName", "width": "10%" },
+                    { "data": "clientPhone", "width": "10%" },
+                    { "data": "leaseDate", "width": "10%" },
+                    { "data": "returnDate", "width": "10%" },
+                    { "data": "rentalTotal", "width": "10%" },
+                    { "data": "rentalStatus", "width": "10%" },
                     {
                         // 動作按鈕列
                         "data": null,
                         "render": function (data, type, row) {
                             return `
-                                                <a href="/DishesOrders/Edit/${row.dishesOrderId}" class="btn btn-info btn-margin">Edit</a>
-                                                <a href="/DishesOrders/Details/${row.dishesOrderId}" class="btn btn-secondary btn-margin">Details</a>
-                                                <a href="/DishesOrders/Delete/${row.dishesOrderId}" class="btn btn-danger btn-margin">Delete</a>
-                                            `;
+                         <a href="/CarRentals/Edit/${row.rentalId}" class="btn btn-info btn-margin">Edit</a>
+                         <a href="/CarRentals/Details/${row.rentalId}" class="btn btn-secondary btn-margin">Details</a>
+                         <a href="/CarRentals/Delete/${row.rentalId}" class="btn btn-danger btn-margin">Delete</a>
+                                    `;
                         },
                         "width": "20%"
                     }
                 ],
                 fixedHeader: {},
-                language: {}
-            });
+                language: {},
+                        "initComplete": function (settings, json) {
 
-            // 搜尋按鈕點擊事件
-            $('#searchButton').on('click', function () {
-                var columnToSearch = $('#searchColumn').val(); // 獲取選擇的欄位索引
-                var searchValue = $('#searchValue').val(); // 獲取搜尋條件
-
-                // 根據選擇的欄位進行搜尋
-                table.column(columnToSearch).search(searchValue).draw();
+                }
             });
         });
     </script>

@@ -1,4 +1,4 @@
-﻿@section Styles
+@section Styles
 {
     <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
     <style>
@@ -13,136 +13,53 @@
         }
     </style>
 }
-<!-- Navbar -->
-<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-     id="layout-navbar">
-    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-            <i class="bx bx-menu bx-sm"></i>
-        </a>
-    </div>
-    <!-- header start  -->
-    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb py-1 mb-0 mt-2">
-                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li class="breadcrumb-item"><a href="">會員訂單管理</a></li>
-                <li class="breadcrumb-item active" aria-current="page">租車管理</li>
-            </ol>
-            <div class="row d-block">
-                <h5 class="currentPage">首頁</h5>
-            </div>
-        </nav>
 
-        <ul class="navbar-nav flex-row align-items-center ms-auto">
-            <!-- User -->
-            <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                    </div>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0 me-3">
-                                    <div class="avatar avatar-online">
-                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">登入者姓名</span>
-                                    <small class="text-muted">Admin</small>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="bx bx-user me-2"></i>
-                            <span class="align-middle">My Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="bx bx-cog me-2"></i>
-                            <span class="align-middle">Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="login.html">
-                            <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle">Log Out</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <!--/ User -->
-        </ul>
-    </div>
-    <!-- header end  -->
-</nav>
+<h1>租車管理介面</h1>
+<p>
+    <a asp-action="Create" class="btn btn-success"><i class="fa-solid fa-user-plus mb-3"></i>新增車輛</a>
+</p>
 
-<div class="container">
-    <h1>租車管理介面</h1>
-
-    <div class="card">
-        <div class="card-body">
-            <p>
-                <a asp-action="Create" class="btn btn-success">
-                    <i class="fa-solid fa-user-plus mb-3"></i> 新增車輛
-                </a>
-            </p>
-            <div class="mb-3">
-                <select id="searchColumn" class="form-control mb-2">
-                    <option value="2">車名</option> <!-- 對應 carName 欄位 -->
-                    <option value="6">狀態</option> <!-- 對應 carStatus 欄位 -->
-                    <!-- 你可以繼續加入其他欄位 -->
-                </select>
-                <input type="text" id="searchValue" placeholder="輸入搜尋條件" class="form-control mb-2" />
-                <button id="searchButton" class="btn btn-primary">進行搜尋</button>
-            </div>
-
-            <table class="table table-striped table-hover" id="example">
-                <thead>
-                    <tr>
-                        <th>車輛ID</th>
-                        <th>商家ID</th>
-                        <th>車輛名稱</th>
-                        <th>載客數量</th>
-                        <th>每日租費</th>
-                        <th>數量</th>
-                        <th>車況</th>
-                        <th>圖片</th>
-                        <th>描述</th>
-                        <th>Actions</th> <!-- 新增一個表頭用於動作按鈕 -->
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th>車輛</th>
-                        <th>商家</th>
-                        <th>車輛名稱</th>
-                        <th>載客數量</th>
-                        <th>每日租費</th>
-                        <th>數量</th>
-                        <th>車況</th>
-                        <th>圖片</th>
-                        <th>描述</th>
-                        <th>Actions</th> <!-- 用於 footer 的搜尋欄位 -->
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
+<div class="mb-3">
+    <select id="searchColumn" class="form-control mb-2">
+        <option value="2">車名</option> <!-- 對應 carName 欄位 -->
+        <option value="6">狀態</option> <!-- 對應 carStatus 欄位 -->
+        <option value="1">店家ID</option> <!-- 對應 shopID 欄位 -->
+        <!-- 你可以繼續加入其他欄位 -->
+    </select>
+    <input type="text" id="searchValue" placeholder="輸入搜尋條件" class="form-control mb-2" />
+    <button id="searchButton" class="btn btn-primary">進行搜尋</button>
 </div>
+
+<table class="table table-striped table-hover" id="example">
+    <thead>
+        <tr>
+            <th>carId</th>
+            <th>shopID</th>
+            <th>carName</th>
+            <th>passengerCapacity</th>
+            <th>rentalPerDay</th>
+            <th>quantity</th>
+            <th>carStatus</th>
+            <th>carImg</th>
+            <th>carDetail</th>
+            <th>Actions</th> <!-- 新增一個表頭用於動作按鈕 -->
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>carId</th>
+            <th>shopID</th>
+            <th>carName</th>
+            <th>passengerCapacity</th>
+            <th>rentalPerDay</th>
+            <th>quantity</th>
+            <th>carStatus</th>
+            <th>carImg</th>
+            <th>carDetail</th>
+            <th>Actions</th> <!-- 用於 footer 的搜尋欄位 -->
+        </tr>
+    </tfoot>
+</table>
 
 @section Scripts
 {
