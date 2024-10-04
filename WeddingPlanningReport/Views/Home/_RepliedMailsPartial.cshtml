@@ -1,0 +1,30 @@
+﻿@model IEnumerable<WeddingPlanningReport.Models.ViewModel.MailViewModel>
+
+<thead class="table-primary">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.MemberName)</th>
+        <th>@Html.DisplayNameFor(model => model.MemberEmail)</th>
+        <th>@Html.DisplayNameFor(model => model.MailTitle)</th>
+        <th>@Html.DisplayNameFor(model => model.ReplyDate)</th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+    @foreach (var mail in Model)
+    {
+        <tr>
+            <td>@mail.MemberName</td>
+            <td>@mail.MemberEmail</td>
+            <td>@mail.MailTitle</td>
+            <td>@mail.ReplyDate</td>
+            <td>
+                <button class="btn btn-info btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#viewMailModal"
+                        onclick="loadModalContent('@Url.Action("LoadMailContent", "Home", new { mailId = mail.MailId })', '#viewMailModal')">
+                    查看內容
+                </button>
+            </td>
+        </tr>
+    }
+</tbody>

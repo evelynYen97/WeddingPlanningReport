@@ -1,0 +1,28 @@
+﻿@model WeddingPlanningReport.Models.ViewModel.MailViewModel
+
+<form id="replyForm" asp-action="Reply" method="post">
+    @Html.AntiForgeryToken() <!-- 確保表單安全性 -->
+    <input type="hidden" asp-for="MailId" />
+
+    <div class="form-group">
+        <label asp-for="MemberName"></label>
+        <input type="text" class="form-control" asp-for="MemberName" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="MailTitle"></label>
+        <input type="text" class="form-control" asp-for="MailTitle" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="MailContent"></label>
+        <textarea class="form-control" asp-for="MailContent" readonly></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReplyContent"></label>
+        <textarea class="form-control" asp-for="ReplyContent" placeholder="輸入您的回覆"></textarea>
+        <div class="my-3">
+            <span asp-validation-for="ReplyContent" class="text-danger"></span>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">發送回覆</button>
+</form>
