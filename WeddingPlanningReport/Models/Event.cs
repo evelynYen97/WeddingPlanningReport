@@ -18,8 +18,4 @@ public partial class Event
     public string? EventNotes { get; set; }
 
     public string? EventLocationImg { get; set; }
-
-    public string? EventVenueImg1 { get; set; }
-
-    public string? EventVenueImg2 { get; set; }
 }

@@ -14,6 +14,4 @@ public partial class Schedule
     public string? ScheduleStageName { get; set; }
 
     public string? ScheduleStageNotes { get; set; }
-
-    public string? ScheduleStageImg1 { get; set; }
 }

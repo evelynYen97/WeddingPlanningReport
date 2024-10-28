@@ -18,4 +18,8 @@ public partial class MemberBudgetItem
     public int? BudgetItemSubtotal { get; set; }
 
     public string? BudgetItemSort { get; set; }
+
+    public int? ActualPay { get; set; }
+
+    public int? AlreadyPay { get; set; }
 }

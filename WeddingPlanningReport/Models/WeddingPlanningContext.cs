@@ -356,12 +356,6 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.EventTime)
                 .HasPrecision(0)
                 .HasColumnName("eventTime");
-            entity.Property(e => e.EventVenueImg1)
-                .HasMaxLength(200)
-                .HasColumnName("eventVenueImg1");
-            entity.Property(e => e.EventVenueImg2)
-                .HasMaxLength(200)
-                .HasColumnName("eventVenueImg2");
         });
 
         modelBuilder.Entity<ImgUsing>(entity =>
@@ -435,7 +429,7 @@ public partial class WeddingPlanningContext : DbContext
 
         modelBuilder.Entity<Member>(entity =>
         {
-            entity.HasKey(e => e.MemberId).HasName("PK__member__7FD7CFF67197028E");
+            entity.HasKey(e => e.MemberId).HasName("PK__member__7FD7CFF69D2A9C5A");
 
             entity.ToTable("member");
 
@@ -444,50 +438,22 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("address");
             entity.Property(e => e.Birthday).HasColumnName("birthday");
-            entity.Property(e => e.BudgetCakeChart)
-                .HasMaxLength(100)
-                .HasColumnName("budgetCakeChart");
-            entity.Property(e => e.BudgetCarChart)
-                .HasMaxLength(100)
-                .HasColumnName("budgetCarChart");
-            entity.Property(e => e.BudgetDishesChart)
-                .HasMaxLength(100)
-                .HasColumnName("budgetDishesChart");
-            entity.Property(e => e.BudgetOtherChart)
-                .HasMaxLength(100)
-                .HasColumnName("budgetOtherChart");
-            entity.Property(e => e.BudgetPieChart)
-                .HasMaxLength(100)
-                .HasColumnName("budgetPieChart");
-            entity.Property(e => e.BudgetTableImg)
-                .HasMaxLength(100)
-                .HasColumnName("budgetTableImg");
-            entity.Property(e => e.BudgetVenueChart)
-                .HasMaxLength(100)
-                .HasColumnName("budgetVenueChart");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .HasColumnName("email");
-            entity.Property(e => e.LastLoginTime)
-                .HasDefaultValueSql("(sysdatetime())")
-                .HasColumnName("lastLoginTime");
-            entity.Property(e => e.MemberGrade)
+            entity.Property(e => e.EventImgName)
                 .HasMaxLength(50)
-                .HasColumnName("memberGrade");
+                .HasColumnName("eventImgName");
+            entity.Property(e => e.LastLoginTime).HasColumnName("lastLoginTime");
+            entity.Property(e => e.MemberBudget).HasColumnName("memberBudget");
             entity.Property(e => e.MemberName)
                 .HasMaxLength(50)
                 .HasColumnName("memberName");
             entity.Property(e => e.MemberStatus)
                 .HasMaxLength(20)
                 .HasColumnName("memberStatus");
-            entity.Property(e => e.Notes)
-                .HasMaxLength(200)
-                .HasColumnName("notes");
-            entity.Property(e => e.PartnerName)
-                .HasMaxLength(50)
-                .HasColumnName("partnerName");
             entity.Property(e => e.Password)
-                .HasMaxLength(64)
+                .HasMaxLength(256)
                 .HasColumnName("password");
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(50)
@@ -495,15 +461,15 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.Preference)
                 .HasMaxLength(200)
                 .HasColumnName("preference");
-            entity.Property(e => e.RegistrationTime)
-                .HasDefaultValueSql("(sysdatetime())")
-                .HasColumnName("registrationTime");
+            entity.Property(e => e.RegistrationTime).HasColumnName("registrationTime");
+            entity.Property(e => e.Salt)
+                .HasMaxLength(256)
+                .HasColumnName("salt");
             entity.Property(e => e.Sex)
                 .HasMaxLength(10)
                 .HasColumnName("sex");
             entity.Property(e => e.VerifyByEmail)
                 .HasMaxLength(10)
-                .HasDefaultValue("未驗證")
                 .HasColumnName("verifyByEmail");
             entity.Property(e => e.WeddingStatus)
                 .HasMaxLength(20)
@@ -517,7 +483,15 @@ public partial class WeddingPlanningContext : DbContext
             entity.ToTable("memberBudgetItems");
 
             entity.Property(e => e.BudgetItemId).HasColumnName("budgetItemID");
-            entity.Property(e => e.BudgetItemAmount).HasColumnName("budgetItemAmount");
+            entity.Property(e => e.ActualPay)
+                .HasDefaultValue(0)
+                .HasColumnName("actualPay");
+            entity.Property(e => e.AlreadyPay)
+                .HasDefaultValue(0)
+                .HasColumnName("alreadyPay");
+            entity.Property(e => e.BudgetItemAmount)
+                .HasDefaultValue(1)
+                .HasColumnName("budgetItemAmount");
             entity.Property(e => e.BudgetItemDetail)
                 .HasMaxLength(200)
                 .HasColumnName("budgetItemDetail");
@@ -550,14 +524,12 @@ public partial class WeddingPlanningContext : DbContext
 
             entity.Property(e => e.ScheduleId).HasColumnName("scheduleID");
             entity.Property(e => e.EventId).HasColumnName("eventID");
-            entity.Property(e => e.ScheduleStageImg1)
-                .HasMaxLength(200)
-                .HasColumnName("scheduleStageImg1");
             entity.Property(e => e.ScheduleStageName)
                 .HasMaxLength(50)
                 .HasColumnName("scheduleStageName");
             entity.Property(e => e.ScheduleStageNotes)
                 .HasMaxLength(500)
+                .HasDefaultValue("無")
                 .HasColumnName("scheduleStageNotes");
             entity.Property(e => e.ScheduleTime)
                 .HasPrecision(0)
