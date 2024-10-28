@@ -145,19 +145,13 @@
                                         <input asp-for="ScheduleStageNotes" class="form-control" />
                                         <span asp-validation-for="ScheduleStageNotes" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group">
-                                        <label asp-for="ScheduleStageImg1" class="control-label"></label>
-                                        <input asp-for="ScheduleStageImg1" class="form-control" name="file" type="file" accept="image/*" />
-                                        <input type="hidden" asp-for="ScheduleStageImg1" />
-                                        @* <span asp-validation-for="ScheduleStageImg1" class="text-danger"></span> *@
-                                    </div>
                                     <hr />
                                     <div class="form-group">
                                         <input type="submit" value="Save" class="btn btn-primary" />
                                     </div>
                                 </form>
                                 <div>
-                                    <a asp-action="IndexNew">返回</a>
+                                    <a asp-controller="Schedules" asp-action="IndexNew">返回</a>
                                 </div>
                             </div>
                         </div>
@@ -169,17 +163,6 @@
                     <!-- Table end -->
                 </div>
 
-                <div class="container-xxl flex-grow-1 container-p-y">
-                    <div class="card">
-                        <div>
-                            <div>
-                                <h4>排程相關圖片</h4>
-                            </div>
-                            <partial name="_ShowScheduleImgPartial" />
-                        </div>
-
-                    </div>
-                </div>
                 <!-- Content wrapper -->
             </div>
             <!-- / Layout page -->

@@ -80,7 +80,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation,IsDelete")] WeddingPlan weddingPlan)
+        public async Task<IActionResult> Create([Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation")] WeddingPlan weddingPlan)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation,IsDelete")] WeddingPlan weddingPlan)
+        public async Task<IActionResult> Edit(int id, [Bind("CaseId,MemberId,WeddingName,Introduction,WeddingTime,WeddingLocation")] WeddingPlan weddingPlan)
         {
             if (id != weddingPlan.CaseId)
             {

@@ -13,11 +13,9 @@ namespace WeddingPlanningReport.Controllers
     public class SchedulesController : Controller
     {
         private readonly WeddingPlanningContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        public SchedulesController(WeddingPlanningContext context, IWebHostEnvironment webHostEnvironment)
+        public SchedulesController(WeddingPlanningContext context)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Schedules
@@ -67,36 +65,11 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,IsDelete")] Schedule schedule, IFormFile? file)
+        public async Task<IActionResult> Create([Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes")] Schedule schedule)
         {
+
             if (ModelState.IsValid)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                string fileName = schedule.ScheduleStageImg1; // 保留现有的图片名
-                if (file != null)
-                {
-                   
-                    string newFileName = file.FileName;
-                    string productPath = Path.Combine(wwwRootPath, @"scheduleImg");
-                    // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
-                    string filePath = Path.Combine(productPath, newFileName);
-                    if (System.IO.File.Exists(filePath))
-                    {
-                        // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
-                        string fileExtension = Path.GetExtension(newFileName);
-                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
-                        newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
-                        filePath = Path.Combine(productPath, newFileName);
-                    }
-                    // 儲存圖片到指定路徑
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(fileStream);
-                    }
-                    fileName = newFileName;
-                }
-
-                schedule.ScheduleStageImg1 = fileName;
                 _context.Add(schedule);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(IndexNew));
@@ -137,49 +110,16 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes,ScheduleStageImg1,IsDelete")] Schedule schedule, IFormFile? file)
+        public async Task<IActionResult> Edit(int id, [Bind("ScheduleId,EventId,ScheduleTime,ScheduleStageName,ScheduleStageNotes")] Schedule schedule)
         {
             if (id != schedule.ScheduleId)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    string fileName = schedule.ScheduleStageImg1; // 保留现有的图片名
-                    if (file != null)
-                    {
-                        string newFileName = file.FileName;
-                        string productPath = Path.Combine(wwwRootPath, @"scheduleImg");
-                        // 防止檔名衝突，如果檔案已存在，可以加後綴或處理邏輯
-                        string filePath = Path.Combine(productPath, newFileName);
-                        if (System.IO.File.Exists(filePath))
-                        {
-                            // 檔案已存在，這裡可以根據需求修改，例如在檔名後加上時間戳
-                            string fileExtension = Path.GetExtension(newFileName);
-                            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(newFileName);
-                            newFileName = $"{fileNameWithoutExtension}{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
-                            filePath = Path.Combine(productPath, newFileName);
-                        }
-
-                        string oldFilePath = Path.Combine(productPath, schedule.ScheduleStageImg1);
-                        if (!string.IsNullOrEmpty(schedule.ScheduleStageImg1) && System.IO.File.Exists(oldFilePath))
-                        {
-                            System.IO.File.Delete(oldFilePath); // 删除旧文件
-                        }
-
-                        // 儲存圖片到指定路徑
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(fileStream);
-                        }
-                        fileName = newFileName;
-                    }
-
-                    schedule.ScheduleStageImg1 = fileName;
                     _context.Update(schedule);
                     await _context.SaveChangesAsync();
                 }
@@ -237,16 +177,6 @@ namespace WeddingPlanningReport.Controllers
             var schedule = await _context.Schedules.FindAsync(id);
             if (schedule != null)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                string productPath = Path.Combine(wwwRootPath, @"scheduleImg");
-                if (!string.IsNullOrEmpty(schedule.ScheduleStageImg1))
-                {
-                    string filePath = Path.Combine(productPath, schedule.ScheduleStageImg1);
-                    if (System.IO.File.Exists(filePath))
-                    {
-                        System.IO.File.Delete(filePath);
-                    }
-                }
                 _context.Schedules.Remove(schedule);
                 await _context.SaveChangesAsync();
             }

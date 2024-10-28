@@ -151,12 +151,6 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.EventLocationImg)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventVenueImg1)
-                                        </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.EventVenueImg2)
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -188,14 +182,7 @@
                                                 @Html.DisplayFor(modelItem => item.EventNotes)
                                             </td>
                                             <td>
-                                                @* @Html.DisplayFor(modelItem => item.EventLocationImg) *@
                                                 <span style="width:25px;height:50px"><partial name="_ShowImgPartial" model="item"></partial></span>
-                                            </td>
-                                            <td>
-                                                <span style="width:25px;height:50px"><partial name="_ShowVenue1Img" model="item"></partial></span>
-                                            </td>
-                                            <td>
-                                                <span style="width:25px;height:50px"><partial name="_ShowVenue2Img" model="item"></partial></span>
                                             </td>
                                             
                                         </tr>

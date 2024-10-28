@@ -6,11 +6,7 @@
     <input type="hidden" asp-for="MemberId" />
     <input type="hidden" asp-for="RegistrationTime" />
     <input type="hidden" asp-for="LastLoginTime" />
-    <input type="hidden" asp-for="Notes" />
     <input type="hidden" asp-for="VerifyByEmail" />
-    <input type="hidden" asp-for="BudgetPieChart" />
-    <input type="hidden" asp-for="BudgetTableImg" />
-
     <div class="form-group">
         <label asp-for="MemberName" class="control-label"></label>
         <input asp-for="MemberName" class="form-control" />
@@ -30,12 +26,6 @@
         <label asp-for="Birthday" class="control-label"></label>
         <input asp-for="Birthday" class="form-control" type="date" />
         <span asp-validation-for="Birthday" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="PartnerName" class="control-label"></label>
-        <input asp-for="PartnerName" class="form-control" />
-        <span asp-validation-for="PartnerName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -77,15 +67,6 @@
         <span asp-validation-for="WeddingStatus" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="MemberGrade" class="control-label"></label>
-        <select asp-for="MemberGrade" class="form-control">
-            <option value="金卡">金卡</option>
-            <option value="銀卡">銀卡</option>
-            <option value="銅卡">銅卡</option>
-        </select>
-        <span asp-validation-for="MemberGrade" class="text-danger"></span>
-    </div>
 
     <div class="form-group">
         <label asp-for="MemberStatus" class="control-label"></label>

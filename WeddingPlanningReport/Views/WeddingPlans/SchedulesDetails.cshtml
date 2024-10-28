@@ -144,9 +144,6 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.ScheduleStageNotes)
                                         </th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => model.ScheduleStageImg1)
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -159,7 +156,7 @@
                                         <tr>
                                             <td>
                                                 <a class="btn button-18 border" asp-controller="WeddingPlans" asp-action="StaffsDetails" asp-route-id="@item.EventId">查看工作人員</a> |
-                                                <a class="btn button-18 border" asp-controller="Schedules" asp-action="Edit" asp-route-id="@item.EventId">✒️</a>
+                                                <a class="btn button-18 border" asp-controller="Schedules" asp-action="Edit" asp-route-id="@item.ScheduleId">✒️</a>
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EventId)
@@ -173,9 +170,6 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ScheduleStageNotes)
-                                            </td>
-                                            <td>
-                                                <partial name="_ShowScheduleImgPartial" model="item" />
                                             </td>
                                         </tr>
                                     }

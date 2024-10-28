@@ -150,6 +150,9 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.EventNotes)
                                         </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.EventLocationImg)
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -179,6 +182,9 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.EventNotes)
+                                            </td>
+                                            <td>
+                                                <span style="width:25px;height:50px"><partial name="_ShowImgPartial" model="item"></partial></span>
                                             </td>
                                         </tr>
                                     }

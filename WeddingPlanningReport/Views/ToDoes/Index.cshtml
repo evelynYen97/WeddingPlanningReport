@@ -124,7 +124,6 @@
                                         <th>@Html.DisplayNameFor(model => model.First().MemberId)</th>
                                         <th>@Html.DisplayNameFor(model => model.First().MemberName)</th>
                                         <th>@Html.DisplayNameFor(model => model.First().Sex)</th>
-                                        <th>@Html.DisplayNameFor(model => model.First().MemberGrade)</th>
                                         <th>@Html.DisplayNameFor(model => model.First().MemberStatus)</th>
                                         <th></th>
                                     </tr>
@@ -136,7 +135,6 @@
                                             <td>@Html.DisplayFor(modelItem => item.MemberId)</td>
                                             <td>@Html.DisplayFor(modelItem => item.MemberName)</td>
                                             <td>@Html.DisplayFor(modelItem => item.Sex)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.MemberGrade)</td>
                                             <td>@Html.DisplayFor(modelItem => item.MemberStatus)</td>
                                             <td>
                                                 <button class="btn btn-sm btn-primary" onclick="loadToDos(@item.MemberId)">查看待辦事項</button>
