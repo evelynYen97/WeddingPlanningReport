@@ -13,10 +13,12 @@ namespace WeddingPlanningReport.Controllers
     public class ShopReviewsController : Controller
     {
         private readonly WeddingPlanningContext _context;
+        private readonly IWebHostEnvironment _host;
 
-        public ShopReviewsController(WeddingPlanningContext context)
+        public ShopReviewsController(WeddingPlanningContext context, IWebHostEnvironment host)
         {
             _context = context;
+            _host = host;   
         }
 
         // GET: ShopReviews
@@ -95,12 +97,25 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var shopReview = await _context.ShopReviews.FindAsync(id);
-            if (shopReview == null)
+            var review = await _context.ShopReviews.FindAsync(id);
+            if (review == null)
             {
                 return NotFound();
             }
-            return View(shopReview);
+              ReviewsViewModel rvm = new ReviewsViewModel
+                {
+                  ShopId=review.ShopId,
+                  MemberId=review.MemberId,
+                    ShopReviewId = review.ShopReviewId,
+                    ShopName = _context.Shops?.Where(sn => sn.ShopId == review.ShopId).Select(s => s.ShopName).FirstOrDefault(),
+                    MemberName = _context.Members.Where(m => m.MemberId == review.MemberId).Select(s => s.MemberName).FirstOrDefault(),
+                    Rating = review.Rating,
+                    Comment = review.Comment,
+                    OrderYet = review.OrderYet,
+                    CreatedTime = review.CreatedTime,
+                };
+              
+            return View(rvm);
         }
 
         // POST: ShopReviews/Edit/5
@@ -146,14 +161,25 @@ namespace WeddingPlanningReport.Controllers
                 return NotFound();
             }
 
-            var shopReview = await _context.ShopReviews
+            var reviews = await _context.ShopReviews
                 .FirstOrDefaultAsync(m => m.ShopReviewId == id);
-            if (shopReview == null)
+            if (reviews == null)
             {
                 return NotFound();
             }
-
-            return View(shopReview);
+            ReviewsViewModel rvm = new ReviewsViewModel
+            {
+                ShopId = reviews.ShopId,
+                MemberId = reviews.MemberId,
+                ShopReviewId = reviews.ShopReviewId,
+                ShopName = _context.Shops?.Where(sn => sn.ShopId == reviews.ShopId).Select(s => s.ShopName).FirstOrDefault(),
+                MemberName = _context.Members.Where(m => m.MemberId == reviews.MemberId).Select(s => s.MemberName).FirstOrDefault(),
+                Rating = reviews.Rating,
+                Comment = reviews.Comment,
+                OrderYet = reviews.OrderYet,
+                CreatedTime = reviews.CreatedTime,
+            };
+            return View(rvm);
         }
 
         // POST: ShopReviews/Delete/5
@@ -166,7 +192,22 @@ namespace WeddingPlanningReport.Controllers
             {
                 _context.ShopReviews.Remove(shopReview);
             }
+            var reviewImgs = _context.ReviewImages.Where(rimg => rimg.ShopReviewId == id).ToArray();
 
+            // 刪除相關圖片
+            if (reviewImgs.Any()) {
+                foreach (var image in reviewImgs)
+                {
+                    // 這裡可以選擇刪除檔案
+                    string filePath = Path.Combine(_host.WebRootPath, "reviewImg", image.ImageName);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath); // 刪除圖片檔案
+                    }
+                }
+                _context.ReviewImages.RemoveRange(reviewImgs);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
