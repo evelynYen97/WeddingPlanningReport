@@ -1,16 +1,21 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WeddingPlanningReport;
 using WeddingPlanningReport.Data;
 using WeddingPlanningReport.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
+string WeddingPlanningName = "WeddingPlanningCors"; //變數名稱FuenPolicyName 内容值(策略名稱)FuenCors
+builder.Services.AddCors(options => {
+    options.AddPolicy(WeddingPlanningName, policy => {
+        policy.WithOrigins("*").WithMethods("*").WithHeaders("*");
+    });
+});
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
-// MailService���O�`�J
+// MailService類別注入
 builder.Services.AddScoped<MailService>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDbContext<WeddingPlanningContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("WeddingPlanning")));
@@ -31,7 +36,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
