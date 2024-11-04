@@ -5,7 +5,7 @@ using WeddingPlanningReport.Data;
 using WeddingPlanningReport.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-string WeddingPlanningName = "WeddingPlanningCors"; //變數名稱FuenPolicyName 内容值(策略名稱)FuenCors
+string WeddingPlanningName = "WeddingPlanningCors"; 
 builder.Services.AddCors(options => {
     options.AddPolicy(WeddingPlanningName, policy => {
         policy.WithOrigins("*").WithMethods("*").WithHeaders("*");
@@ -22,7 +22,7 @@ builder.Services.AddDbContext<WeddingPlanningContext>(options => options.UseLazy
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddControllers();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,17 +36,17 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-app.UseCors();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseCors();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
+app.MapControllers();
 app.Run();

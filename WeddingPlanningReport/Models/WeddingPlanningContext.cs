@@ -49,6 +49,8 @@ public partial class WeddingPlanningContext : DbContext
 
     public virtual DbSet<MemberMaterial> MemberMaterials { get; set; }
 
+    public virtual DbSet<ReviewImage> ReviewImages { get; set; }
+
     public virtual DbSet<Schedule> Schedules { get; set; }
 
     public virtual DbSet<ScheduledStaff> ScheduledStaffs { get; set; }
@@ -56,6 +58,8 @@ public partial class WeddingPlanningContext : DbContext
     public virtual DbSet<SharingWeddingPlan> SharingWeddingPlans { get; set; }
 
     public virtual DbSet<Shop> Shops { get; set; }
+
+    public virtual DbSet<ShopReview> ShopReviews { get; set; }
 
     public virtual DbSet<ToDo> ToDos { get; set; }
 
@@ -518,6 +522,15 @@ public partial class WeddingPlanningContext : DbContext
                 .HasColumnName("memberImgName");
         });
 
+        modelBuilder.Entity<ReviewImage>(entity =>
+        {
+            entity.Property(e => e.ImageName)
+                .HasMaxLength(50)
+                .HasColumnName("imageName");
+            entity.Property(e => e.ImageUrl).HasColumnName("image_url");
+            entity.Property(e => e.ShopReviewId).HasColumnName("shopReviewId");
+        });
+
         modelBuilder.Entity<Schedule>(entity =>
         {
             entity.ToTable("schedule");
@@ -606,6 +619,26 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("shopSort");
             entity.Property(e => e.ShopStatus).HasColumnName("shopStatus");
+        });
+
+        modelBuilder.Entity<ShopReview>(entity =>
+        {
+            entity.ToTable("shopReviews");
+
+            entity.Property(e => e.ShopReviewId).HasColumnName("shopReviewId");
+            entity.Property(e => e.Comment)
+                .HasMaxLength(500)
+                .HasColumnName("comment");
+            entity.Property(e => e.CreatedTime)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("createdTime");
+            entity.Property(e => e.MemberId).HasColumnName("memberId");
+            entity.Property(e => e.OrderYet)
+                .HasDefaultValue(false)
+                .HasColumnName("orderYet");
+            entity.Property(e => e.Rating).HasColumnName("rating");
+            entity.Property(e => e.ShopId).HasColumnName("shopId");
         });
 
         modelBuilder.Entity<ToDo>(entity =>
