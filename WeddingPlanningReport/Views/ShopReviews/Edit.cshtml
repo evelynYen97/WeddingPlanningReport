@@ -163,6 +163,20 @@
                                         <input asp-for="CreatedTime" class="form-control" />
                                         <span asp-validation-for="CreatedTime" class="text-danger"></span>
                                     </div>
+                                    <div class="form-group">
+                                        <label asp-for="Status" class="control-label"></label>
+                                        <div>
+                                            <label>
+                                                <input type="radio" asp-for="Status" value="false" default />
+                                                啓用
+                                            </label>
+                                            <label>
+                                                <input type="radio" asp-for="Status" value="true" />
+                                                停權
+                                            </label>
+                                        </div>
+                                        <span asp-validation-for="OrderYet" class="text-danger"></span>
+                                    </div>
                                     <hr />
                                     <div class="form-group">
                                         <input type="submit" value="保存" class="btn btn-primary" />

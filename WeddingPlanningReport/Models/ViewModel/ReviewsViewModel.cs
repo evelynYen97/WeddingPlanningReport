@@ -37,7 +37,7 @@ namespace WeddingPlanningReport.Models.ViewModel
         [Display(Name = "狀態")]
         public bool? Status { get; set; }
         public string StatusText { get{
-                return Status.HasValue ? (Status.Value ? "啓用" : "停權") : "啓用";
+                return Status.HasValue ? (Status.Value ? "停權" : "啓用") : "啓用";
             } 
         }
 

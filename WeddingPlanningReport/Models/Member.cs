@@ -40,4 +40,8 @@ public partial class Member
     public int? MemberBudget { get; set; }
 
     public string? EventImgName { get; set; }
+
+    public string? ResetToken { get; set; }
+
+    public DateTime? TokenExpiration { get; set; }
 }

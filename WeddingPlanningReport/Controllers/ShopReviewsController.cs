@@ -43,6 +43,7 @@ namespace WeddingPlanningReport.Controllers
                     Comment = review.Comment,
                     OrderYet = review.OrderYet,
                     CreatedTime = review.CreatedTime,
+                    Status = review.Status,
                 };
                 reviewsViewModel.Add(rvm);
             }
@@ -78,7 +79,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ShopReviewId,ShopId,MemberId,Rating,Comment,OrderYet,CreatedTime")] ShopReview shopReview)
+        public async Task<IActionResult> Create([Bind("ShopReviewId,ShopId,MemberId,Rating,Comment,OrderYet,CreatedTime,Status")] ShopReview shopReview)
         {
             if (ModelState.IsValid)
             {
@@ -113,6 +114,7 @@ namespace WeddingPlanningReport.Controllers
                     Comment = review.Comment,
                     OrderYet = review.OrderYet,
                     CreatedTime = review.CreatedTime,
+                    Status = review.Status,
                 };
               
             return View(rvm);
@@ -123,7 +125,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ShopReviewId,ShopId,MemberId,Rating,Comment,OrderYet,CreatedTime")] ShopReview shopReview)
+        public async Task<IActionResult> Edit(int id, [Bind("ShopReviewId,ShopId,MemberId,Rating,Comment,OrderYet,CreatedTime,Status")] ShopReview shopReview)
         {
             if (id != shopReview.ShopReviewId)
             {
@@ -150,7 +152,20 @@ namespace WeddingPlanningReport.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(shopReview);
+            var review = await _context.ShopReviews.FindAsync(id);
+            ReviewsViewModel rvm = new ReviewsViewModel
+            {
+                ShopId = review.ShopId,
+                MemberId = review.MemberId,
+                ShopReviewId = review.ShopReviewId,
+                ShopName = _context.Shops?.Where(sn => sn.ShopId == review.ShopId).Select(s => s.ShopName).FirstOrDefault(),
+                MemberName = _context.Members.Where(m => m.MemberId == review.MemberId).Select(s => s.MemberName).FirstOrDefault(),
+                Rating = review.Rating,
+                Comment = review.Comment,
+                OrderYet = review.OrderYet,
+                CreatedTime = review.CreatedTime,
+            };
+            return View(rvm);
         }
 
         // GET: ShopReviews/Delete/5

@@ -466,6 +466,7 @@ public partial class WeddingPlanningContext : DbContext
                 .HasMaxLength(200)
                 .HasColumnName("preference");
             entity.Property(e => e.RegistrationTime).HasColumnName("registrationTime");
+            entity.Property(e => e.ResetToken).HasMaxLength(255);
             entity.Property(e => e.Salt)
                 .HasMaxLength(256)
                 .HasColumnName("salt");
@@ -639,7 +640,9 @@ public partial class WeddingPlanningContext : DbContext
                 .HasColumnName("orderYet");
             entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.ShopId).HasColumnName("shopId");
-            entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.Status)
+                .HasDefaultValue(false)
+                .HasColumnName("status");
         });
 
         modelBuilder.Entity<ToDo>(entity =>
