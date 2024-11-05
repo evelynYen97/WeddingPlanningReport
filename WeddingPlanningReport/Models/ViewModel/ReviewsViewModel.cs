@@ -34,6 +34,13 @@ namespace WeddingPlanningReport.Models.ViewModel
                 : "否";
             }
         }
+        [Display(Name = "狀態")]
+        public bool? Status { get; set; }
+        public string StatusText { get{
+                return Status.HasValue ? (Status.Value ? "啓用" : "停權") : "啓用";
+            } 
+        }
+
         [Display(Name = "評價時間")]
 
         public DateTime? CreatedTime { get; set; }

@@ -639,6 +639,7 @@ public partial class WeddingPlanningContext : DbContext
                 .HasColumnName("orderYet");
             entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.ShopId).HasColumnName("shopId");
+            entity.Property(e => e.Status).HasColumnName("status");
         });
 
         modelBuilder.Entity<ToDo>(entity =>

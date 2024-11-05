@@ -18,4 +18,6 @@ public partial class ShopReview
     public bool? OrderYet { get; set; }
 
     public DateTime? CreatedTime { get; set; }
+
+    public bool? Status { get; set; }
 }
