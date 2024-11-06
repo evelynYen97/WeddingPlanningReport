@@ -37,6 +37,7 @@ else
     app.UseHsts();
 }
 
+app.UseCors(WeddingPlanningName);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
