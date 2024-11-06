@@ -16,89 +16,39 @@ namespace WeddingPlanningReport.Controllers
     public class EventsAPIController : ControllerBase
     {
         private readonly WeddingPlanningContext _context;
+        //private readonly IWebHostEnvironment _env;
 
         public EventsAPIController(WeddingPlanningContext context)
         {
             _context = context;
         }
 
-        // GET: api/EventsAPI
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+        //api/EventsAPI/upload
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadImage(IFormFile image)
         {
-            return await _context.Events.ToListAsync();
-        }
+            if (image == null || image.Length == 0)
+                return BadRequest("沒有檔案上傳");
 
-        // GET: api/EventsAPI/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Event>> GetEvent(int id)
-        {
-            var @event = await _context.Events.FindAsync(id);
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "eventImg");
+            var fileName = Path.GetFileName(image.FileName);
+            var filePath = Path.Combine(uploadsFolder, fileName);
 
-            if (@event == null)
+            // 確保上傳資料夾存在
+            if (!Directory.Exists(uploadsFolder))
             {
-                return NotFound();
+                Directory.CreateDirectory(uploadsFolder);
             }
 
-            return @event;
-        }
-
-        // PUT: api/EventsAPI/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvent(int id, Event @event)
-        {
-            if (id != @event.EventId)
+            // 將圖片儲存到伺服器上
+            using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                return BadRequest();
+                await image.CopyToAsync(stream);
             }
 
-            _context.Entry(@event).State = EntityState.Modified;
+            var fileUrl = $"{Request.Scheme}://{Request.Host}/eventImg/{fileName}";
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/EventsAPI
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Event>> PostEvent(Event @event)
-        {
-            _context.Events.Add(@event);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetEvent", new { id = @event.EventId }, @event);
-        }
-
-        // DELETE: api/EventsAPI/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvent(int id)
-        {
-            var @event = await _context.Events.FindAsync(id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            _context.Events.Remove(@event);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok(new { filePath = fileUrl });
         }
 
         private bool EventExists(int id)
