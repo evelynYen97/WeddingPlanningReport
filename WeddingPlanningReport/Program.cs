@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 string WeddingPlanningName = "WeddingPlanningCors"; 
 builder.Services.AddCors(options => {
     options.AddPolicy(WeddingPlanningName, policy => {
-        policy.WithOrigins("*").WithMethods("*").WithHeaders("*");
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });
 // Add services to the container.
@@ -17,6 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 // MailService類別注入
 builder.Services.AddScoped<MailService>();
+builder.Services.AddScoped<ViolationNoticeMailService>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDbContext<WeddingPlanningContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("WeddingPlanning")));
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

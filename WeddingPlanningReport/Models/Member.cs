@@ -44,4 +44,8 @@ public partial class Member
     public string? ResetToken { get; set; }
 
     public DateTime? TokenExpiration { get; set; }
+
+    public string? VerificationToken { get; set; }
+
+    public DateTime? VerificationExpire { get; set; }
 }

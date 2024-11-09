@@ -473,6 +473,7 @@ public partial class WeddingPlanningContext : DbContext
             entity.Property(e => e.Sex)
                 .HasMaxLength(10)
                 .HasColumnName("sex");
+            entity.Property(e => e.VerificationToken).HasMaxLength(255);
             entity.Property(e => e.VerifyByEmail)
                 .HasMaxLength(10)
                 .HasColumnName("verifyByEmail");

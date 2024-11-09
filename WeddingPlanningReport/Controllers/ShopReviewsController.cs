@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MailKit.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using MimeKit;
 using WeddingPlanningReport.Models;
 using WeddingPlanningReport.Models.ViewModel;
 
@@ -14,11 +17,13 @@ namespace WeddingPlanningReport.Controllers
     {
         private readonly WeddingPlanningContext _context;
         private readonly IWebHostEnvironment _host;
+        private readonly ViolationNoticeMailService _violationNoticeMailService;
 
-        public ShopReviewsController(WeddingPlanningContext context, IWebHostEnvironment host)
+        public ShopReviewsController(WeddingPlanningContext context, IWebHostEnvironment host,ViolationNoticeMailService vnms)
         {
             _context = context;
             _host = host;   
+            _violationNoticeMailService = vnms;
         }
 
         // GET: ShopReviews
@@ -135,9 +140,15 @@ namespace WeddingPlanningReport.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                {   string memberEmail = _context.Members.Where(m => m.MemberId == shopReview.MemberId).Select(m => m.Email).FirstOrDefault();
+                    string memberName = _context.Members.Where(m => m.MemberId == shopReview.MemberId).Select(m => m.MemberName).FirstOrDefault();
+                    string shopName = _context.Shops.Where(m => m.ShopId == shopReview.ShopId).Select(s=>s.ShopName).FirstOrDefault();
                     _context.Update(shopReview);
                     await _context.SaveChangesAsync();
+                    if (shopReview.Status == true)
+                    {
+                        Task.Run(() => _violationNoticeMailService.SendEmailAsync(memberEmail, memberName, shopReview.Comment, shopReview.CreatedTime,shopName));
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -167,6 +178,34 @@ namespace WeddingPlanningReport.Controllers
             };
             return View(rvm);
         }
+
+
+        // 使用 MailKit 發送停權通知郵件
+        //private async Task SendAccountSuspensionEmail(string memberEmail, string memberName)
+        //{
+        //    var emailMessage = new MimeMessage();
+        //    emailMessage.From.Add(new MailboxAddress("Admin", "admin@example.com"));
+        //    emailMessage.To.Add(new MailboxAddress(memberName, memberEmail));
+        //    emailMessage.Subject = "帳號停權通知";
+
+        //    var bodyBuilder = new BodyBuilder
+        //    {
+        //        TextBody = $"親愛的 {memberName}，\n\n您的帳號已被停權。如有任何疑問，請與我們的客服部門聯繫。\n\n謝謝！"
+        //    };
+
+        //    emailMessage.Body = bodyBuilder.ToMessageBody();
+
+        //    using (var smtpClient = new SmtpClient())
+        //    {
+        //        // 連接到 SMTP 伺服器並發送郵件
+        //        await smtpClient.ConnectAsync("smtp.example.com", 587, SecureSocketOptions.StartTls);
+        //        await smtpClient.AuthenticateAsync("your-email@example.com", "your-email-password");
+        //        await smtpClient.SendAsync(emailMessage);
+        //        await smtpClient.DisconnectAsync(true);
+        //    }
+        //}
+
+
 
         // GET: ShopReviews/Delete/5
         public async Task<IActionResult> Delete(int? id)
