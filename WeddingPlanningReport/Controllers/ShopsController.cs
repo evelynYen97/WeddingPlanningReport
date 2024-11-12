@@ -91,7 +91,7 @@ namespace WeddingPlanningReport.Controllers
                 else
                 {
                     // 使用預設圖片
-                    shop.ShopImg = "default.jpg";
+                    shop.ShopImg = "NoImage.png";
                 }
 
                 // 處理 ShopLogo 上傳
@@ -122,7 +122,7 @@ namespace WeddingPlanningReport.Controllers
                 else
                 {
                     // 使用預設圖片
-                    shop.ShopLogo = "default.jpg";
+                    shop.ShopLogo = "NoImage.png";
                 }
 
                 // 儲存其他資料
