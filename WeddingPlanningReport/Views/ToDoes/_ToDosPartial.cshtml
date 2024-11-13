@@ -5,13 +5,13 @@
 @foreach (var toDo in Model)
 {
     <div>
-        <h5>@toDo.ToDoName</h5>
+        @* <h5>@toDo.ToDoName</h5> *@
         <dl>         
             <dt>
-                @Html.DisplayNameFor(m => toDo.ToDoDetail)
+                @Html.DisplayNameFor(m => toDo.ToDoName)
             </dt>
             <dd>
-                @Html.DisplayFor(m => toDo.ToDoDetail)
+                @Html.DisplayFor(m => toDo.ToDoName)
             </dd>                     
             <dt>
                 @Html.DisplayNameFor(m => toDo.TaskSort)

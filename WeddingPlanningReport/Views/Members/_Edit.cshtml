@@ -6,7 +6,7 @@
     <input type="hidden" asp-for="MemberId" />
     <input type="hidden" asp-for="RegistrationTime" />
     <input type="hidden" asp-for="LastLoginTime" />
-    <input type="hidden" asp-for="VerifyByEmail" />
+    @* <input type="hidden" asp-for="VerifyByEmail" /> *@
     <div class="form-group">
         <label asp-for="MemberName" class="control-label"></label>
         <input asp-for="MemberName" class="form-control" />
@@ -34,10 +34,16 @@
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
+    @* <div class="form-group">
         <label asp-for="Password" class="control-label"></label>
         <input asp-for="Password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
+    </div> *@
+
+    <div class="form-group">
+        <label asp-for="MemberBudget" class="control-label"></label>
+        <input asp-for="MemberBudget" class="form-control" />
+        <span asp-validation-for="MemberBudget" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -78,7 +84,7 @@
     </div>
 
     <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
+        <input type="submit" value="儲存" class="btn btn-primary" />
     </div>
 </form>
 

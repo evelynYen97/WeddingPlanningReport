@@ -10,23 +10,23 @@ namespace WeddingPlanningReport.Models.Metadata
 
 
         [Display(Name = "會員名稱", Prompt = "請輸入會員名稱")]
-        [Required(ErrorMessage = "請輸入會員名稱")]
+        //[Required(ErrorMessage = "請輸入會員名稱")]
         [StringLength(50, ErrorMessage = "會員名稱長度不能超過 50 個字元")]
         public string? MemberName { get; set; }
 
 
         [Display(Name = "電子郵件", Prompt = "請輸入電子郵件")]
-        [Required(ErrorMessage = "請輸入電子郵件")]
+        //[Required(ErrorMessage = "請輸入電子郵件")]
         [EmailAddress(ErrorMessage = "請輸入有效的電子郵件")]
         public string? Email { get; set; }
 
 
-        [Display(Name = "密碼", Prompt = "請輸入密碼")]
-        [Required(ErrorMessage = "請輸入密碼")]
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "密碼長度需在 8 到 50 個字元之間")]
-        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
-        //ErrorMessage = "密碼必須包含至少一個大寫字母、一個小寫字母、一個數字和一個特殊字元")]
-        public string? Password { get; set; }
+        //[Display(Name = "密碼", Prompt = "請輸入密碼")]
+        //[Required(ErrorMessage = "請輸入密碼")]
+        //[StringLength(50, MinimumLength = 8, ErrorMessage = "密碼長度需在 8 到 50 個字元之間")]
+        ////[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+        ////ErrorMessage = "密碼必須包含至少一個大寫字母、一個小寫字母、一個數字和一個特殊字元")]
+        //public string? Password { get; set; }
 
 
         [Display(Name = "手機號碼", Prompt = "請輸入手機號碼")]
@@ -79,13 +79,7 @@ namespace WeddingPlanningReport.Models.Metadata
         public string? WeddingStatus { get; set; }
 
 
-        [Display(Name = "預算圓餅圖")]
-        public string? BudgetPieChart { get; set; }
-
-
-        [Display(Name = "預算表格")]
-        public string? BudgetTableImg { get; set; }
-
-
+        [Display(Name = "預算金額", Prompt = "請輸入預算金額")]
+        public int? MemberBudget { get; set; }
     }
 }

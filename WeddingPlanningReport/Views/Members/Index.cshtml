@@ -136,10 +136,9 @@
                                         <th>
                                             @Html.DisplayNameFor(model => model.Email)
                                         </th>
-                                        <th>
+                                   @*      <th>
                                             @Html.DisplayNameFor(model => model.Password)
-                                        </th>
-
+                                        </th> *@
                                         <th>
                                             @Html.DisplayNameFor(model => model.WeddingStatus)
                                         </th>
@@ -217,6 +216,8 @@
     <script src="~/lib/datatables/js/jquery.datatables.js"></script>
     @* <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.min.js"></script> *@
     <script src="//cdn.datatables.net/fixedheader/3.3.2/js/dataTables.fixedHeader.js"></script>
+    <script src="https://cdn.datatables.net/colreorder/1.5.0/js/dataTables.colReorder.min.js"></script>
+
 
     <script>
         $(document).ready(function () {
@@ -233,9 +234,9 @@
                     { "data": "memberName", "width": "10%" },
                     { "data": "sex", "width": "10%" },
                     { "data": "email", "width": "10%" },
-                    { "data": "password", "width": "10%" },
+                    // { "data": "password", "width": "10%" },
                     { "data": "weddingStatus", "width": "10%" },
-                    { "data": "memberGrade", "width": "10%" },
+                    // { "data": "memberGrade", "width": "10%" },  
                     { "data": "memberStatus", "width": "10%" },
                     {
                         "data": null, // 動態生成操作列的數據
@@ -271,6 +272,8 @@
                 language: {
                     url: "//cdn.datatables.net/plug-ins/2.1.6/i18n/zh-HANT.json",
                 },
+                responsive: true,
+                colReorder: true,
             });
         });
 
