@@ -10,7 +10,7 @@ namespace WeddingPlanningReport.Models.Metadata
         [Display(Name = "會員ID")]
         public int MemberId { get; set; }
 
-        [Display(Name = "待辦事項名稱")]
+        [Display(Name = "事項名稱")]
         public string? ToDoName { get; set; }
 
         [Display(Name = "事項詳情")]

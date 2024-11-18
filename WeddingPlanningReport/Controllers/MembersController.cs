@@ -66,7 +66,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MemberId,MemberName,Email,Password,PhoneNumber,Address,RegistrationTime,LastLoginTime,MemberGrade,MemberStatus,Sex,Birthday,Preference,Notes,VerifyByPhone,PartnerName,WeddingStatus,BudgetPieChart,BudgetTableImg")] Member member)
+        public async Task<IActionResult> Create([Bind("MemberId,MemberName,Email,Password,PhoneNumber,Address,RegistrationTime,LastLoginTime,MemberGrade,MemberStatus,Sex,Birthday,Preference,Notes,VerifyByPhone,PartnerName,WeddingStatus,BudgetPieChart,BudgetTableImg,MemberBudget")] Member member)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace WeddingPlanningReport.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MemberId,MemberName,Email,Password,PhoneNumber,Address,RegistrationTime,LastLoginTime,MemberGrade,MemberStatus,Sex,Birthday,Preference,Notes,VerifyByPhone,PartnerName,WeddingStatus,BudgetPieChart,BudgetTableImg")] Member member)
+        public async Task<IActionResult> Edit(int id, [Bind("MemberId,MemberName,Email,Password,PhoneNumber,Address,RegistrationTime,LastLoginTime,MemberGrade,MemberStatus,Sex,Birthday,Preference,Notes,VerifyByPhone,PartnerName,WeddingStatus,BudgetPieChart,BudgetTableImg,MemberBudget")] Member member)
         {
             if (id != member.MemberId)
             {
